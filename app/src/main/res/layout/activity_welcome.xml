@@ -37,7 +37,7 @@
             tools:ignore="UselessParent">
 
             <Button
-            android:id="@+id/signIn"
+            android:id="@+id/signInWelc"
             style="?metaButtonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

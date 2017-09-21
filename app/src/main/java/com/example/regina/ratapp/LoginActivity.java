@@ -3,6 +3,7 @@ package com.example.regina.ratapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -82,16 +83,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.signIn);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+
+//                Button butt2 = (Button) findViewById(R.id.signIn);
+//                butt2.setOnClickListener(new View.OnClickListener(){ @Override
+//                public void onClick(View v) {
+//                    // TODO Auto-generated method stub
+//                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+//                    startActivity(i);
+//                }});
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        Button butt = (Button) findViewById(R.id.cancel);
+        butt.setOnClickListener(new View.OnClickListener(){ @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
+            startActivity(i);
+        }});
+
+
     }
 
     private void populateAutoComplete() {
@@ -187,6 +205,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(i);
         }
     }
 
