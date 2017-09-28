@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //cancel button operation
         Button butt = (Button) findViewById(R.id.buttonC);
         register();
         butt.setOnClickListener(new View.OnClickListener(){ @Override
@@ -38,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
                         String userType = radioButton.getText().toString();
                         makeNewAccount(email.getText().toString(),password.getText().toString(),
                                 userType);
+                        Intent r = new Intent(getApplicationContext(),MainActivity.class);
+                        startActivity(r);
 
 
                     }
@@ -46,15 +50,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
     // a helper that checks if account information exists already. If not it checks if it is a user or admin and then adds
     // information to account list
-    public Boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
+    public void makeNewAccount(String emailAddress, String givenPassword, String userType) {
         User newUser = new User(emailAddress, givenPassword);
+        //Log.d("UserType", userType);
+        Boolean test =newUser.doesAccountExist(emailAddress);
+        //Log.d("account exiting", test.toString());
         if (!(newUser.doesAccountExist(emailAddress))) {
             if (userType.equals("User")) {
                 newUser.addNewUser(newUser);
-                return true;
+                if (newUser.getAccounts().containsKey(emailAddress)) {
+                    //Log.d("true","True");
+                }
             }
         }
-        return true;
     }
 
 }

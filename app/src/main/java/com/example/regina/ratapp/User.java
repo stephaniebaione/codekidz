@@ -13,7 +13,7 @@ public class User {
     Boolean locked;
     int numberOfReports;
     userTitle title;
-    HashMap<String, String> accountList = new HashMap<>();
+    static HashMap<String, String> accountList = new HashMap<>();
     ArrayList<User> userInformation = new ArrayList<>();
 
     public User(String emailaddress, String password) {
@@ -21,6 +21,7 @@ public class User {
         this.password = password;
         locked = false;
         title = userTitle.MOUSE;
+        numberOfReports = 0;
     }
 
     public String getEmailaddress() {
@@ -58,6 +59,7 @@ public class User {
     public userTitle getTitle() {
         return title;
     }
+    public HashMap<String, String> getAccounts() {return accountList;}
 
     public void setTitle(userTitle title) {
         this.title = title;
