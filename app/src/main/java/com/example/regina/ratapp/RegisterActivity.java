@@ -16,6 +16,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Button butt = (Button) findViewById(R.id.buttonC);
+        register();
         butt.setOnClickListener(new View.OnClickListener(){ @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
@@ -23,7 +24,14 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(i);
         }});
     }
-    EditText email = (EditText) findViewById(R.id.editText);
-    EditText password = (EditText) findViewById(R.id.passwordtext);
-    //RadioGroup userbutton = userType
+
+    private void register() {
+        EditText email = (EditText) findViewById(R.id.editText);
+        EditText password = (EditText) findViewById(R.id.passwordtext);
+        final RadioGroup userButton = (RadioGroup) findViewById(R.id.userType);
+        Button registerButton = (Button) findViewById(R.id.buttonR);
+        registerButton.setOnClickListener((v) -> {
+            userButton.getCheckedRadioButtonId();
+        });
+    }
 }
