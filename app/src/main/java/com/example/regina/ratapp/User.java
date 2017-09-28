@@ -1,5 +1,8 @@
 package com.example.regina.ratapp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by Abby on 9/27/2017.
  */
@@ -10,6 +13,8 @@ public class User {
     Boolean locked;
     int numberOfReports;
     userTitle title;
+    HashMap<String, String> accountList = new HashMap<>();
+    ArrayList<User> userInformation = new ArrayList<>();
 
     public User(String emailaddress, String password) {
         this.emailaddress = emailaddress;
@@ -57,4 +62,22 @@ public class User {
     public void setTitle(userTitle title) {
         this.title = title;
     }
+    // Checks if the email is already in the system or not
+    public Boolean doesAccountExist(String emailAddress) {
+
+        return accountList.containsKey(emailAddress.toLowerCase());
+    }
+
+    /*  adds user to list of users and adds their email to the account list... I think the account
+    list might be able to be deleted
+     */
+    public void addNewUser(User newUser) {
+        userInformation.add(newUser);
+        accountList.put(newUser.getEmailaddress().toLowerCase(),
+                newUser.getPassword().toLowerCase());
+
+    }
+
+
+
 }

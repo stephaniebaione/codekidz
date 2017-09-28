@@ -117,6 +117,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }});
         findViewById(R.id.register).setOnTouchListener(mDelayHideTouchListener);
         Button but2 = (Button) findViewById(R.id.register);
+
         but2.setOnClickListener(new View.OnClickListener(){ @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub

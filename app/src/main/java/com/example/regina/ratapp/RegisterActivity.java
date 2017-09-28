@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -24,14 +25,36 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(i);
         }});
     }
-
+    //This gets all of the information the user put into the Register page
     private void register() {
-        EditText email = (EditText) findViewById(R.id.editText);
-        EditText password = (EditText) findViewById(R.id.passwordtext);
+        final EditText email = (EditText) findViewById(R.id.editText);
+        final EditText password = (EditText) findViewById(R.id.passwordtext);
         final RadioGroup userButton = (RadioGroup) findViewById(R.id.userType);
         Button registerButton = (Button) findViewById(R.id.buttonR);
-        registerButton.setOnClickListener((v) -> {
-            userButton.getCheckedRadioButtonId();
+        registerButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        int userTypeId = userButton.getCheckedRadioButtonId();
+                        RadioButton radioButton = (RadioButton) userButton.findViewById(userTypeId);
+                        String userType = radioButton.getText().toString();
+                        makeNewAccount(email.getText().toString(),password.getText().toString(),
+                                userType);
+
+
+                    }
         });
+
     }
+    // a helper that checks if account information exists already. If not it checks if it is a user or admin and then adds
+    // information to account list
+    public Boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
+        User newUser = new User(emailAddress, givenPassword);
+        if (!(newUser.doesAccountExist(emailAddress))) {
+            if (userType.equals("User")) {
+                newUser.addNewUser(newUser);
+                return true;
+            }
+        }
+        return true;
+    }
+
 }
