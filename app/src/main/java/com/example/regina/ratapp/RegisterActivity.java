@@ -38,10 +38,13 @@ public class RegisterActivity extends AppCompatActivity {
                         int userTypeId = userButton.getCheckedRadioButtonId();
                         RadioButton radioButton = (RadioButton) userButton.findViewById(userTypeId);
                         String userType = radioButton.getText().toString();
-                        makeNewAccount(email.getText().toString(),password.getText().toString(),
-                                userType);
-                        Intent r = new Intent(getApplicationContext(),MainActivity.class);
-                        startActivity(r);
+                        if (makeNewAccount(email.getText().toString(),password.getText().toString(),
+                                userType)) {
+                            Intent r = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(r);
+                        } else{
+                            email.setError("Email is already taken.");
+                        }
 
 
                     }
@@ -50,19 +53,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
     // a helper that checks if account information exists already. If not it checks if it is a user or admin and then adds
     // information to account list
-    public void makeNewAccount(String emailAddress, String givenPassword, String userType) {
+    public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
         User newUser = new User(emailAddress, givenPassword);
-        //Log.d("UserType", userType);
-        Boolean test =newUser.doesAccountExist(emailAddress);
-        //Log.d("account exiting", test.toString());
         if (!(newUser.doesAccountExist(emailAddress))) {
             if (userType.equals("User")) {
                 newUser.addNewUser(newUser);
                 if (newUser.getAccounts().containsKey(emailAddress)) {
-                    //Log.d("true","True");
+                    return true;
                 }
             }
         }
+        return false;
     }
 
 }
