@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1047191456249",
+    "firebase_url": "https://dirtyrat-72570.firebaseio.com",
+    "project_id": "dirtyrat-72570",
+    "storage_bucket": "dirtyrat-72570.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047191456249:android:21c99d300758e895",
+        "android_client_info": {
+          "package_name": "com.example.regina.ratapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047191456249-ua1vv0u3qut6t1c3dpvgi5c69t41fgl9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE1IUThy8EqAqY_Re5dVwORnjFxYXl3qQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
