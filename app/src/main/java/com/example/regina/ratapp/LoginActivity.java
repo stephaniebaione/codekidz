@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private User dum;
+    private Admin dummer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         dum = new User("foo@example.com","hello");
-        dum.addNewUser(dum);
+        //dum.addNewUser(dum);
+        dummer = new Admin("admin@test.com", "pass");
+        //dummer.addNewAdmin(dummer);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -218,14 +221,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         HashMap<String, String> x = dum.getAccounts();
-        return x.containsKey(email);
+        HashMap<String, String> x2 = dummer.getAdmins();
+        if (x.containsKey(email) || x2.containsKey(email)){
+            return true;
+        }
+        return false;
         //return email.contains(dum.getEmailaddress());
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         HashMap<String, String> y = dum.getAccounts();
-        return y.containsValue(password);
+        HashMap<String, String> y2 = dummer.getAdmins();
+        if (y.containsValue(password) || y2.containsValue(password)){
+            return true;
+        }
+        return false;
+        //return y.containsValue(password);
         //return password.contentEquals(dum.getPassword());
     }
 

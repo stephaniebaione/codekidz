@@ -55,10 +55,19 @@ public class RegisterActivity extends AppCompatActivity {
     // information to account list
     public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
         User newUser = new User(emailAddress, givenPassword);
+        Admin newAdmin = new Admin(emailAddress, givenPassword);
         if (!(newUser.doesAccountExist(emailAddress))) {
             if (userType.equals("User")) {
                 newUser.addNewUser(newUser);
                 if (newUser.getAccounts().containsKey(emailAddress)) {
+                    return true;
+                }
+            }
+        }
+        if (!(newAdmin.doesAccountExist(emailAddress))) {
+            if (userType.equals("Admin")) {
+                newAdmin.addNewAdmin(newAdmin);
+                if (newAdmin.getAdmins().containsKey(emailAddress)) {
                     return true;
                 }
             }
