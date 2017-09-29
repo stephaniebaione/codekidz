@@ -5,5 +5,5 @@ package com.example.regina.ratapp;
  */
 
 public enum userTitle {
-    MOUSE, RAT, DIRTYRAT, SNITCH, PIEDPIPER
+    MOUSE, RAT, DIRTYRAT, SNITCH, PIEDPIPER;
 }
