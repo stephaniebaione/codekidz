@@ -44,4 +44,18 @@ public class Admin {
 
     }
 
+    public void lockAccount(User user) {
+        if (!(user.locked))
+            user.setLocked(true);
+    }
+
+    public void unlockAccount(User user) {
+        if (user.locked)
+            user.setLocked(false);
+    }
+
+    public boolean isBanned(User user) {
+        return user.getLocked();
+    }
+
 }
