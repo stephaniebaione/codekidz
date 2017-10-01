@@ -14,7 +14,8 @@ public class User {
     int numberOfReports;
     userTitle title;
     static HashMap<String, String> accountList = new HashMap<>();
-    ArrayList<User> userInformation = new ArrayList<>();
+    static ArrayList<User> userInformation = new ArrayList<>();
+    static HashMap<String, Boolean> lockList = new HashMap<>();
 
     public User(String emailaddress, String password) {
         this.emailaddress = emailaddress;
@@ -56,6 +57,10 @@ public class User {
         this.numberOfReports = numberOfReports;
     }
 
+    public HashMap<String, Boolean> getLockList() {
+        return lockList;
+    }
+
     public userTitle getTitle() {
         return title;
     }
@@ -76,7 +81,9 @@ public class User {
     public void addNewUser(User newUser) {
         userInformation.add(newUser);
         accountList.put(newUser.getEmailaddress().toLowerCase(),
-                newUser.getPassword());
+                newUser.getPassword().toLowerCase());
+        lockList.put(newUser.getEmailaddress().toLowerCase(),
+                newUser.getLocked());
 
     }
 

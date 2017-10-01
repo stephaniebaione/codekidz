@@ -229,8 +229,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //TODO: Replace this with your own logic
         HashMap<String, String> x = dum.getAccounts();
         HashMap<String, String> x2 = dummer.getAdmins();
-        if (x.containsKey(email) || x2.containsKey(email)){
-            return true;
+        HashMap<String, Boolean> x3 = dum.getLockList();
+        if (x.containsKey(email) || x2.containsKey(email)) {
+            if (!(x3.get(email))) {
+                return true;
+            }
         }
         return false;
         //return email.contains(dum.getEmailaddress());
