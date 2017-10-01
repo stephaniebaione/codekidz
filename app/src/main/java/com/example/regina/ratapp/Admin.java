@@ -40,7 +40,7 @@ public class Admin {
      */
     public void addNewAdmin(Admin newUser) {
         adminList.put(newUser.getEmailaddress().toLowerCase(),
-                newUser.getPassword().toLowerCase());
+                newUser.getPassword());
 
     }
 

@@ -76,7 +76,7 @@ public class User {
     public void addNewUser(User newUser) {
         userInformation.add(newUser);
         accountList.put(newUser.getEmailaddress().toLowerCase(),
-                newUser.getPassword().toLowerCase());
+                newUser.getPassword());
 
     }
 
