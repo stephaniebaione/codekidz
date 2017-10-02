@@ -224,9 +224,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             startActivity(i);
         }
     }
+    /* Checks to see if the email is in the account list or the admin list.
+        It also checks whether it is locked or not.
+    */
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         HashMap<String, String> x = dum.getAccounts();
         HashMap<String, String> x2 = dummer.getAdmins();
         HashMap<String, Boolean> x3 = dum.getLockList();
@@ -238,6 +240,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return false;
         //return email.contains(dum.getEmailaddress());
     }
+    /* Checks to see if password matches the email they are typing in
+    */
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic

@@ -43,17 +43,17 @@ public class Admin {
                 newUser.getPassword());
 
     }
-
+    // Allows admin to block a user
     public void lockAccount(User user) {
         if (!(user.locked))
             user.setLocked(true);
     }
-
+    // Allows admin to unlock a user
     public void unlockAccount(User user) {
         if (user.locked)
             user.setLocked(false);
     }
-
+    // Checks whether an account is blocked or not
     public boolean isBanned(User user) {
         return user.getLocked();
     }

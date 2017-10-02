@@ -17,6 +17,11 @@ public class User {
     static ArrayList<User> userInformation = new ArrayList<>();
     static HashMap<String, Boolean> lockList = new HashMap<>();
 
+    /**
+     * Constructor for creating a user. Sets username and password, also title
+     * @param emailaddress
+     * @param password
+     */
     public User(String emailaddress, String password) {
         this.emailaddress = emailaddress;
         this.password = password;
@@ -69,15 +74,26 @@ public class User {
     public void setTitle(userTitle title) {
         this.title = title;
     }
-    // Checks if the email is already in the system or not
+
+    /**
+     * Looks at the account list to see if there is an email in the system
+     * @param emailAddress
+     * @return Boolean stating whether the account exists or not
+     */
     public Boolean doesAccountExist(String emailAddress) {
 
         return accountList.containsKey(emailAddress.toLowerCase());
     }
 
-    /*  adds user to list of users and adds their email to the account list... I think the account
-    list might be able to be deleted
+    /**
+     * Passes the new user in ands their information to the account list. It also checks whether the
+     * username is associated with a locked account. If it is associated with a locked account it
+     * will not create the new user
+     * @param newUser
      */
+
+    
+
     public void addNewUser(User newUser) {
         userInformation.add(newUser);
         accountList.put(newUser.getEmailaddress().toLowerCase(),
