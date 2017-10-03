@@ -92,7 +92,7 @@ public class User {
      * @param newUser
      */
 
-    
+
 
     public void addNewUser(User newUser) {
         userInformation.add(newUser);
