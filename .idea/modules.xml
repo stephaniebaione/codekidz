@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RatApp.iml" filepath="$PROJECT_DIR$/RatApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/codekidz.iml" filepath="$PROJECT_DIR$/codekidz.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/codekidz.iml" filepath="$PROJECT_DIR$/.idea/codekidz.iml" />
     </modules>
   </component>
 </project>
