@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -30,6 +31,13 @@ public class RegisterActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
     private FirebaseAuth.AuthStateListener mAuthListener;
+    /* UI references.
+    private AutoCompleteTextView mEmailView;
+    private EditText mPasswordView;
+    private View mProgressView;
+    private View mLoginFormView;
+    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         // if it cannot make new account then it will give a message saying why
                         if (!task.isSuccessful()) {
-                            email.setError("Bad");
+                            email.setError(task.getException().getMessage().toString());
+                            email.requestFocus();
                         }
 
                     }
