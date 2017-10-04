@@ -2,6 +2,7 @@ package com.example.regina.ratapp;
 
 import android.content.Intent;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class RegisterActivity extends AppCompatActivity {
+    private static FirebaseAuth mAuth;
+    private static final String TAG = "MainActivity";
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,18 +37,59 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         //cancel button operation
         Button butt = (Button) findViewById(R.id.buttonC);
-        register();
         butt.setOnClickListener(new View.OnClickListener(){ @Override
         public void onClick(View v) {
+
+
             // TODO Auto-generated method stub
             Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
             startActivity(i);
         }});
+        Button secondRegisterButton = (Button) findViewById(R.id.buttonR);
+        secondRegisterButton.setOnClickListener(new View.OnClickListener(){ @Override
+        public void onClick(View v) {
+            register();
+
+        }});
+
     }
     //This gets all of the information the user put into the Register page
     private void register() {
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
         final EditText email = (EditText) findViewById(R.id.editText);
         final EditText password = (EditText) findViewById(R.id.passwordtext);
+        String emailString = email.getText().toString();
+        String passwordString = email.getText().toString();
+        // Creates a Firebase User based on email and password passed in
+        mAuth.createUserWithEmailAndPassword(emailString, passwordString)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        // if it cannot make new account then it will give a message saying why
+                        if (!task.isSuccessful()) {
+                            email.setError("Bad");
+                        }
+
+                    }
+                });
+
+
         final RadioGroup userButton = (RadioGroup) findViewById(R.id.userType);
         Button registerButton = (Button) findViewById(R.id.buttonR);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 userType)) {
                             Intent r = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(r);
-                        } else{
-                            email.setError("Email is already taken.");
                         }
 
 
@@ -53,9 +110,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
     // a helper that checks if account information exists already. If not it checks if it is a user or admin and then adds
     // information to account list
+
     public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
         User newUser = new User(emailAddress, givenPassword);
         Admin newAdmin = new Admin(emailAddress, givenPassword);
+
         if (!(newUser.doesAccountExist(emailAddress))) {
             if (userType.equals("User")) {
                 newUser.addNewUser(newUser);

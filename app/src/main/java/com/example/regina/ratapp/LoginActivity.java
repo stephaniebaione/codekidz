@@ -31,6 +31,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -204,6 +207,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         boolean cancel = false;
         View focusView = null;
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail: onComplete:" + task.isSuccessful());
+                    }
+
+                });
+
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -241,6 +253,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         It also checks whether it is locked or not.
     */
 
+
     private boolean isEmailValid(String email) {
         HashMap<String, String> x = dum.getAccounts();
         HashMap<String, String> x2 = dummer.getAdmins();
@@ -253,6 +266,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return false;
         //return email.contains(dum.getEmailaddress());
     }
+
+
     /* Checks to see if password matches the email they are typing in
     */
 
