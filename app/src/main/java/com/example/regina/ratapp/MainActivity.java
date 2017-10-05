@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,5 +21,9 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
             startActivity(i);
         }});
+    }
+    public void ratDataManipulator() {
+        DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
+
     }
 }
