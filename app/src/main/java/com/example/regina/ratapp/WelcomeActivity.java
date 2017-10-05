@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
-    private static final boolean AUTO_HIDE = true;
+    private static final boolean AUTO_HIDE = false;
 
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -67,7 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            hide();
+            show();
         }
     };
     /**
@@ -107,7 +107,7 @@ public class WelcomeActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.signInWelc).setOnTouchListener(mDelayHideTouchListener);
+        //findViewById(R.id.signInWelc).setOnTouchListener(mDelayHideTouchListener);
         Button butt = (Button) findViewById(R.id.signInWelc);
         butt.setOnClickListener(new View.OnClickListener(){ @Override
         public void onClick(View v) {
@@ -139,7 +139,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void toggle() {
         if (mVisible) {
-            hide();
+            show();
         } else {
             show();
         }
