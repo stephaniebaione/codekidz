@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
-
+import com.google.firebase.database.DataSnapshot;
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         }});
     }
     public void ratDataManipulator() {
-        DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
-
+        DatabaseReference ratData = FirebaseDatabase.getInstance().getReference(
+                "https://dirtyrat-72570.firebaseio.com/");
+        
     }
 }
