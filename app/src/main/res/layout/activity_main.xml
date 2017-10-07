@@ -40,6 +40,22 @@
         tools:layout_editor_absoluteY="447dp"
         tools:layout_editor_absoluteX="16dp" />
 
+    <Button
+        android:id="@+id/getData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Rat Data"
+        tools:layout_editor_absoluteX="205dp"
+        tools:layout_editor_absoluteY="447dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="462dp" />
+
 
     <!--</RelativeLayout>-->
 </android.support.constraint.ConstraintLayout>
