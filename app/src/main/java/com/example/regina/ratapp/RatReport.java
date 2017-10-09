@@ -1,6 +1,8 @@
 package com.example.regina.ratapp;
 
 
+import java.util.ArrayList;
+
 public class RatReport {
     int uniqueKey;
     String createdData;
@@ -11,6 +13,7 @@ public class RatReport {
     String borough; //gonna change to enum
     double latitude;
     double longitude;
+    ArrayList<RatReport> reportList;
 
     public RatReport(int uniqueKey, String createdData, String locationType,
                      int incidentZip, String incidentAddress, String city,
@@ -96,5 +99,9 @@ public class RatReport {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public void addToReportList(RatReport ratReport) {
+        reportList.add(ratReport);
     }
 }

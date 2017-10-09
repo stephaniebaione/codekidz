@@ -36,17 +36,23 @@ public class MainActivity extends AppCompatActivity {
     }
     public void ratDataManipulator() {
         DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference dataValues = ratData.child("99099");
         final Button getDataButton = (Button) findViewById(R.id.getData);
-        /*
-        var ratRef = database.ref();
-        ratRef.on('value', function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-                var childData = childSnapshot.val();
-                childData.
-            });
+
+        // Attach a listener to read the data at our posts reference
+        ratData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
+                    ratSnapshot.getValue(RatReport.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
         });
-        */
+
 
 
 
