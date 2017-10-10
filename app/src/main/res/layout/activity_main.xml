@@ -23,38 +23,64 @@
 
             <!--</RelativeLayout>-->
     <ListView
-        android:layout_width="378dp"
-        android:layout_height="442dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/ratList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="6dp" />
-    <Button
-        android:id="@+id/logOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log Out"
-        android:layout_below="@+id/ratList"
-        tools:layout_editor_absoluteY="447dp"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/newSighting"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="1dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/getData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Rat Data"
-        tools:layout_editor_absoluteX="205dp"
-        tools:layout_editor_absoluteY="447dp" />
+        android:id="@+id/logOut"
+        android:layout_width="95dp"
+        android:layout_height="49dp"
+        android:text="Log Out"
+        android:layout_below="@+id/ratList"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/ratList"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        tools:layout_editor_absoluteX="14dp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="462dp" />
+        app:layout_constraintRight_toLeftOf="@+id/newSighting"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newSighting"
+        tools:layout_constraintBaseline_creator="1"
+        android:layout_marginRight="3dp" />
+
+    <Button
+        android:id="@+id/newSighting"
+        android:layout_width="147dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:text="New Sighting"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp" />
 
 
     <!--</RelativeLayout>-->

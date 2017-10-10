@@ -26,17 +26,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ratDataManipulator();
-        Button butt = (Button) findViewById(R.id.logOut);
-        butt.setOnClickListener(new View.OnClickListener(){ @Override
-        public void onClick(View v) {
-            // TODO Auto-generated method stub
-            Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
-            startActivity(i);
-        }});
+        buttonLogic();
     }
     public void ratDataManipulator() {
         DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
-        final Button getDataButton = (Button) findViewById(R.id.getData);
+//        final Button getDataButton = (Button) findViewById(R.id.getData);
 
         // Attach a listener to read the data at our posts reference
         ratData.addValueEventListener(new ValueEventListener() {
@@ -53,10 +47,22 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+    }
 
-
-
-
-
+    public void buttonLogic() {
+        Button buttLogout = (Button) findViewById(R.id.logOut);
+        Button buttNewSighting = (Button) findViewById(R.id.newSighting);
+        buttLogout.setOnClickListener(new View.OnClickListener() { @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
+            startActivity(i);
+        }});
+        buttNewSighting.setOnClickListener(new View.OnClickListener() { @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),NewSighting.class);
+            startActivity(i);
+        }});
     }
 }
