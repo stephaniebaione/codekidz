@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
-                    ratSnapshot.getValue(RatReport.class);
+                    RatReport ratData = ratSnapshot.getValue(RatReport.class);
+
                 }
             }
 
