@@ -13,7 +13,8 @@ public class RatReport {
     String borough; //gonna change to enum
     double latitude;
     double longitude;
-    ArrayList<RatReport> reportList;
+    ArrayList<String> reportList;
+    String data;
 
     public RatReport(int uniqueKey, String createdData, String locationType,
                      int incidentZip, String incidentAddress, String city,
@@ -32,6 +33,8 @@ public class RatReport {
     public int getUniqueKey() {
         return uniqueKey;
     }
+
+    public String uniqueKeyToString() { return String.valueOf(uniqueKey);}
 
     public void setUniqueKey(int uniqueKey) {
         this.uniqueKey = uniqueKey;
@@ -56,6 +59,8 @@ public class RatReport {
     public int getIncidentZip() {
         return incidentZip;
     }
+
+    public String incidentZipToString() { return String.valueOf(incidentZip);}
 
     public void setIncidentZip(int incidentZip) {
         this.incidentZip = incidentZip;
@@ -89,6 +94,8 @@ public class RatReport {
         return latitude;
     }
 
+    public String latitudeToString() { return String.valueOf(latitude);}
+
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
@@ -97,11 +104,23 @@ public class RatReport {
         return longitude;
     }
 
+    public String longitudeToString() { return String.valueOf(longitude);}
+
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
+    public String createDataString(RatReport ratReport) {
+        String thing = "Key: ";
+        thing = thing + ratReport.uniqueKeyToString() + "\nCreated Data: "
+                + ratReport.getCreatedData() + "\nLocation Type: " + ratReport.getLocationType() + "\nIncident Zip: "
+                + ratReport.incidentZipToString() + "\nIncident Address: " + ratReport.getIncidentAddress()
+                + "\nCity: " + ratReport.getCity() + "\nBorough: " + ratReport.getBorough() + "\nLatitude: "
+                + ratReport.latitudeToString() + "\nLongitude: " + ratReport.longitudeToString();
+        return thing;
+    }
+
     public void addToReportList(RatReport ratReport) {
-        reportList.add(ratReport);
+        reportList.add(createDataString(ratReport));
     }
 }
