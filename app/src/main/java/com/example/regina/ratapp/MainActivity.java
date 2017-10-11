@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Query query = FirebaseDatabase.getInstance().getReference().child("dirtyrat-72570").limitToLast(50);
 
 
-        final DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference ratData = FirebaseDatabase.getInstance().getReference("dirtyrat-72570");
         //PROJ=new ArrayList<String>();
         DatabaseReference topRef = ratData.child("dirtyrat-72570");
         //ratData=ratData.child("dirtyrat-72570");
