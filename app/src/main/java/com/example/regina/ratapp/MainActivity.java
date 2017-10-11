@@ -67,10 +67,17 @@ public class MainActivity extends AppCompatActivity {
 //                PROJ.add(address2);
                 Log.d("Testing", "actul add");
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
-                    RatReport ratR = new RatReport(ratSnapshot.child("Unique Key").getValue(),
-                            ratSnapshot.child("Created Data").getValue(),
-                            ratSnapshot.child("Lo").getValue(),
-                            ratSnapshot);
+                    RatReport ratR = new RatReport(
+                            ratSnapshot.child("Unique Key").getValue(Integer.class),
+                            ratSnapshot.child("Created Data").getValue().toString(),
+                            ratSnapshot.child("Location Type").getValue().toString(),
+                            ratSnapshot.child("Incident Zip").getValue(Integer.class),
+                            ratSnapshot.child("Incident Address").getValue().toString(),
+                            ratSnapshot.child("City").getValue().toString(),
+                            ratSnapshot.child("Borough").getValue().toString(),
+                            ratSnapshot.child("Latitude").getValue(Double.class),
+                            ratSnapshot.child("Longitude").getValue(Double.class)
+                    );
                     String address = ratR.getIncidentAddress() + " " + ratR.getCreatedData();
                     PROJ.add(address);
                     Log.d("Testing", "actul add");
