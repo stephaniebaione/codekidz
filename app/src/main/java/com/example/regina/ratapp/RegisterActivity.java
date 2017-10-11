@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText email = (EditText) findViewById(R.id.editText);
         final EditText password = (EditText) findViewById(R.id.passwordtext);
         String emailString = email.getText().toString();
-        String passwordString = email.getText().toString();
+        String passwordString = password.getText().toString();
         // Creates a Firebase User based on email and password passed in
         mAuth.createUserWithEmailAndPassword(emailString, passwordString)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

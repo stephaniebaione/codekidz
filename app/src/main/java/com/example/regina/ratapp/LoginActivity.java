@@ -211,20 +211,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail: onComplete:" + task.isSuccessful());
+                        //Log.d(TAG, "signInWithEmail: onComplete:" + task.isSuccessful());
+                        if (!task.isSuccessful()) {
+                            mPasswordView.setError("Log in attempt failed");
+                        } else {
+                            showProgress(true);
+                            mAuthTask = new UserLoginTask(mEmailView.getText().toString(), mPasswordView.getText().toString());
+                            mAuthTask.execute((Void) null);
+                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(i);
+                        }
                     }
 
+
                 });
+    }
 
-
-        // Check for a valid password, if the user entered one.
+        /*Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError("Incorrect Password");
             focusView = mPasswordView;
             cancel = true;
-        }
+        } */
 
-        // Check for a valid email address.
+        /* Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -233,8 +243,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
-        }
-
+        } */
+/*
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -249,9 +259,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             startActivity(i);
         }
     }
+    */
     /* Checks to see if the email is in the account list or the admin list.
         It also checks whether it is locked or not.
-    */
+
 
 
     private boolean isEmailValid(String email) {
@@ -282,6 +293,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //return y.containsValue(password);
         //return password.contentEquals(dum.getPassword());
     }
+    
 
     /**
      * Shows the progress UI and hides the login form.
