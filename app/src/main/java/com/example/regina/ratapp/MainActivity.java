@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Query query = FirebaseDatabase.getInstance().getReference().child("dirtyrat-72570").limitToLast(50);
 
 
-        final DatabaseReference ratData = FirebaseDatabase.getInstance().getReference("dirtyrat");
+        final DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
         //PROJ=new ArrayList<String>();
         DatabaseReference topRef = ratData.child("dirtyrat-72570");
         //ratData=ratData.child("dirtyrat-72570");
@@ -67,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
 //                PROJ.add(address2);
                 Log.d("Testing", "actul add");
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
-                    RatReport ratR = ratSnapshot.getValue(RatReport.class);
+                    RatReport ratR = new RatReport(ratSnapshot.child("Unique Key").getValue(),
+                            ratSnapshot.child("Created Data").getValue(),
+                            ratSnapshot.child("Lo").getValue(),
+                            ratSnapshot);
                     String address = ratR.getIncidentAddress() + " " + ratR.getCreatedData();
                     PROJ.add(address);
                     Log.d("Testing", "actul add");
