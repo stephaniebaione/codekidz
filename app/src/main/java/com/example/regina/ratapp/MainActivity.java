@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -36,31 +37,46 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         listView= (ListView) findViewById(R.id.ratList);
+        Log.d("Testing", "created things");
 
-        DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
+        Query query = FirebaseDatabase.getInstance().getReference().child("dirtyrat-72570").limitToLast(50);
+
+
+        final DatabaseReference ratData = FirebaseDatabase.getInstance().getReference("dirtyrat");
         //PROJ=new ArrayList<String>();
         DatabaseReference topRef = ratData.child("dirtyrat-72570");
-        ratData=ratData.child("Incident Address");
+        //ratData=ratData.child("dirtyrat-72570");
         //final Button getDataButton = (Button) findViewById(R.id.getData);
-
+        Log.d("Testing", "did access database");
         // Attach a listener to read the data at our posts reference
-        ratData.addValueEventListener(new ValueEventListener() {
+        ratData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("Testing", "data changed caleled");
+                if (dataSnapshot.hasChildren()){
+                    Log.d("Testing", "Has children");
+                }
+                //this is an ugly solution, will change
+//                try{
+//                    Thread.sleep(1000);
+//                }catch(Exception ignored){};
+                //
+//                RatReport ratR2 = dataSnapshot.getValue(RatReport.class);
+//                String address2 = ratR2.getIncidentAddress() + " " + ratR2.getCreatedData();
+//                PROJ.add(address2);
+                Log.d("Testing", "actul add");
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
-                    String address = ratSnapshot.child("Incident Address").getValue(String.class);
+                    RatReport ratR = ratSnapshot.getValue(RatReport.class);
+                    String address = ratR.getIncidentAddress() + " " + ratR.getCreatedData();
                     PROJ.add(address);
-                    if (PROJ.size() == 1){
-                        adapt = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,PROJ);
-                        listView.setAdapter(adapt);
-                        adapt.notifyDataSetChanged();
-                    }
-                    else if (PROJ.size() > 1){
-                        adapt.notifyDataSetChanged();
-                    }
-                    //formats the datasnapshot entries to strings
+                    Log.d("Testing", "actul add");
+
+
+//                    else if (PROJ.size() > 1){
+//                        adapt.notifyDataSetChanged();
+//                    }
+//                    //formats the datasnapshot entries to strings
 
                     Log.d("Testing", "This actually worked");
 //                    RatReport ratData = ratSnapshot.getValue(RatReport.class);
@@ -68,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("TAG","please just work");
 
                 }
+                //listView.setAdapter(adapt);
+                Log.d("Testing", "gained adapter");
+                //adapt.notifyDataSetChanged();
             }
 
             @Override
@@ -75,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+        Log.d("Testing", "went through that");
         //ratData.addValueEventListener(eventListener);
 //        adapt=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, PROJ);
 //        ListView listView= (ListView) findViewById(R.id.ratList);
@@ -107,6 +127,14 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
             startActivity(i);
         }});
+        Log.d("Testing", "what the what");
+
+        adapt = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,PROJ);
+        listView.setAdapter(adapt);
+        //listView.setTextFilterEnabled(true);
+        Log.d("Testing", "Size is: " + PROJ.size());
+
+        adapt.notifyDataSetChanged();
     }
     public void ratDataManipulator() {
         DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1047191456249-v0efd63ekbj4snqbdef2ltasfn6crkve.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.regina.ratapp",
+            "certificate_hash": "45ba3a90f4dcaa6980744de9dc3b6da085a170a1"
+          }
+        },
+        {
           "client_id": "1047191456249-og6150uuosapr74hhi4hdm1ut9lu1lf4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
