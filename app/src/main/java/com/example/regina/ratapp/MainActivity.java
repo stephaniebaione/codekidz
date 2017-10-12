@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
                             ratSnapshot.child("Incident Zip").getValue().toString(),
                             ratSnapshot.child("Incident Address").getValue().toString(),
                             ratSnapshot.child("City").getValue().toString(),
-                            ratSnapshot.child("Borough").getValue().toString(),
-                            ratSnapshot.child("Latitude").getValue(Double.class),
-                            ratSnapshot.child("Longitude").getValue(Double.class)
+                            ratSnapshot.child("Borough").getValue().toString(),0,0
+                            //ratSnapshot.child("Latitude").getValue(Double.class),
+                            //ratSnapshot.child("Longitude").getValue(Double.class)
                     );
                     String address = ratR.getIncidentAddress() + " " + ratR.getCreatedData();
                     PROJ.add(address);
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //listView.setAdapter(adapt);
                 Log.d("Testing", "gained adapter");
-                //adapt.notifyDataSetChanged();
+                adapt.notifyDataSetChanged();
             }
 
             @Override
