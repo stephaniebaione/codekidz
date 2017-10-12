@@ -72,6 +72,22 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
+                    Double latitude;
+                    try {
+                        latitude = ratSnapshot.child("Latitude").getValue(Double.class);
+                        latitude+=5;
+                        latitude-=5;
+                    } catch (Exception e) {
+                        latitude = 0.0;
+                    }
+                    Double longitude;
+                    try {
+                        longitude = ratSnapshot.child("Longitude").getValue(Double.class);
+                        longitude+=5;
+                        longitude-=5;
+                    } catch (Exception e) {
+                        longitude = 0.0;
+                    }
                     RatReport ratR = new RatReport(
                             ratSnapshot.child("Unique Key").getValue(Integer.class),
                             ratSnapshot.child("Created Date").getValue().toString(),
@@ -79,9 +95,8 @@ public class MainActivity extends AppCompatActivity {
                             ratSnapshot.child("Incident Zip").getValue().toString(),
                             ratSnapshot.child("Incident Address").getValue().toString(),
                             ratSnapshot.child("City").getValue().toString(),
-                            ratSnapshot.child("Borough").getValue().toString(),0,0
-                            //ratSnapshot.child("Latitude").getValue(Double.class),
-                            //ratSnapshot.child("Longitude").getValue(Double.class)
+                            ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
+
                     );
                     String address = ratR.getIncidentAddress() + " " + ratR.getCreatedData();
                     PROJ.add(address);
