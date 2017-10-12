@@ -7,7 +7,7 @@ public class RatReport {
     int uniqueKey;
     String createdData;
     String locationType; //gonna change to enum
-    int incidentZip;
+    String incidentZip;
     String incidentAddress;
     String city; //might change to enum
     String borough; //gonna change to enum
@@ -17,7 +17,7 @@ public class RatReport {
     String data;
 
     public RatReport(int uniqueKey, String createdData, String locationType,
-                     int incidentZip, String incidentAddress, String city,
+                     String incidentZip, String incidentAddress, String city,
                      String borough, double latitude, double longitude) {
         this.uniqueKey = uniqueKey;
         this.createdData = createdData;
@@ -58,13 +58,13 @@ public class RatReport {
         this.locationType = locationType;
     }
 
-    public int getIncidentZip() {
+    public String getIncidentZip() {
         return incidentZip;
     }
 
     public String incidentZipToString() { return String.valueOf(incidentZip);}
 
-    public void setIncidentZip(int incidentZip) {
+    public void setIncidentZip(String incidentZip) {
         this.incidentZip = incidentZip;
     }
 

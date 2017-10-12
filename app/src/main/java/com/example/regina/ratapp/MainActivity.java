@@ -27,7 +27,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     //SimpleCursorAdapter mAdapter;
-    static RatReport dummy = new RatReport(0,"a","a",3,"a","a","",22,22);
+    //static RatReport dummy = new RatReport(0,"a","a",3,"a","a","",22,22);
     public ListView listView;
     public ArrayAdapter adapt;
     public List<String> PROJ = new ArrayList<String>(); //dummy.getReportList(); //new ArrayList<String>(Arrays.asList("bla","ble", "blo"));
@@ -39,18 +39,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView= (ListView) findViewById(R.id.ratList);
         Log.d("Testing", "created things");
+        FirebaseDatabase database = getDatabase();
+        //Query query = database.getReference().child("dirtyrat-72570").limitToLast(50);
+        Query query = database.getReference().getRoot().limitToLast(50);
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("dirtyrat-72570").limitToLast(50);
 
-
-        final DatabaseReference ratData = FirebaseDatabase.getInstance().getReference("dirtyrat-72570");
+        final DatabaseReference ratData = database.getReference("dirtyrat-72570");
         //PROJ=new ArrayList<String>();
         DatabaseReference topRef = ratData.child("dirtyrat-72570");
+
         //ratData=ratData.child("dirtyrat-72570");
         //final Button getDataButton = (Button) findViewById(R.id.getData);
         Log.d("Testing", "did access database");
         // Attach a listener to read the data at our posts reference
-        ratData.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("Testing", "data changed caleled");
@@ -65,13 +67,16 @@ public class MainActivity extends AppCompatActivity {
 //                RatReport ratR2 = dataSnapshot.getValue(RatReport.class);
 //                String address2 = ratR2.getIncidentAddress() + " " + ratR2.getCreatedData();
 //                PROJ.add(address2);
-                Log.d("Testing", "actul add");
+                if (dataSnapshot.hasChildren()) {
+                    Log.d("Testing", "actul add");
+
+                }
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
                     RatReport ratR = new RatReport(
                             ratSnapshot.child("Unique Key").getValue(Integer.class),
-                            ratSnapshot.child("Created Data").getValue().toString(),
+                            ratSnapshot.child("Created Date").getValue().toString(),
                             ratSnapshot.child("Location Type").getValue().toString(),
-                            ratSnapshot.child("Incident Zip").getValue(Integer.class),
+                            ratSnapshot.child("Incident Zip").getValue().toString(),
                             ratSnapshot.child("Incident Address").getValue().toString(),
                             ratSnapshot.child("City").getValue().toString(),
                             ratSnapshot.child("Borough").getValue().toString(),
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     );
                     String address = ratR.getIncidentAddress() + " " + ratR.getCreatedData();
                     PROJ.add(address);
-                    Log.d("Testing", "actul add");
+                    Log.d("Testing", "actul add2");
 
 
 //                    else if (PROJ.size() > 1){
@@ -152,8 +157,10 @@ public class MainActivity extends AppCompatActivity {
         //final Button getDataButton = (Button) findViewById(R.id.getData);
 
         // Attach a listener to read the data at our posts reference
-       ValueEventListener eventListener = new ValueEventListener() {
-            @Override
+       //ValueEventListener eventListener = new ValueEventListener() {
+        topRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
                     RatReport ratData = ratSnapshot.getValue(RatReport.class);
@@ -167,12 +174,18 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        };
-        topRef.addListenerForSingleValueEvent(eventListener);
+        });
+        //topRef.addListenerForSingleValueEvent(eventListener);
 
 
 
 
+
+    }
+    public FirebaseDatabase getDatabase() {
+        FirebaseDatabase mBase = FirebaseDatabase.getInstance();
+        mBase.setPersistenceEnabled(true);
+        return mBase;
 
     }
 }
