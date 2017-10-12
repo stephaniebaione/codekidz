@@ -2,10 +2,12 @@ package com.example.regina.ratapp;
 
 import android.app.LauncherActivity;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -98,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
                             ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
 
                     );
-                    String address = ratR.getIncidentAddress() + " " + ratR.getCreatedData();
+                    ratR.addToReportList(ratR);
+                    String address = ratR.getIncidentAddress() + " " + ratR.getUniqueKey();
                     PROJ.add(address);
                     Log.d("Testing", "actul add2");
 
@@ -165,6 +168,17 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Testing", "Size is: " + PROJ.size());
 
         adapt.notifyDataSetChanged();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder adb = new AlertDialog.Builder(
+                        MainActivity.this);
+                adb.setTitle("Details");
+                adb.setMessage("details of the list");
+                adb.setPositiveButton("Ok", null);
+                adb.show();
+            }
+        });
     }
     public void ratDataManipulator() {
         DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
