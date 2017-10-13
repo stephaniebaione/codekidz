@@ -29,54 +29,34 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //SimpleCursorAdapter mAdapter;
-    //RatReport dummy = new RatReport(0,"a","a","3","a","a","",22,22);
     public ListView listView;
     public ArrayAdapter adapt;
     public HashMap<Integer, RatReport> reportHashMap = new HashMap<>();
-    public List<String> PROJ = new ArrayList<String>(); //dummy.getReportList(); //new ArrayList<String>(Arrays.asList("bla","ble", "blo"));
-    //public String[] lv_arr = {};
+    public List<String> PROJ = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //creates our listview
         listView= (ListView) findViewById(R.id.ratList);
         Log.d("Testing", "created things");
-        //FirebaseDatabase mBase = FirebaseDatabase.getInstance();
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        //our database references
         FirebaseDatabase database = getDatabase();
-        //Query query = database.getReference().child("dirtyrat-72570").limitToLast(50);
         Query query = database.getReference().getRoot().limitToLast(50);
-
-
         final DatabaseReference ratData = database.getReference("dirtyrat-72570");
-        //PROJ=new ArrayList<String>();
         DatabaseReference topRef = ratData.child("dirtyrat-72570");
-
-        //ratData=ratData.child("dirtyrat-72570");
-        //final Button getDataButton = (Button) findViewById(R.id.getData);
         Log.d("Testing", "did access database");
         // Attach a listener to read the data at our posts reference
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //troubleshooting
                 Log.d("Testing", "data changed caleled");
                 if (dataSnapshot.hasChildren()){
                     Log.d("Testing", "Has children");
                 }
-                //this is an ugly solution, will change
-//                try{
-//                    Thread.sleep(1000);
-//                }catch(Exception ignored){};
-                //
-//                RatReport ratR2 = dataSnapshot.getValue(RatReport.class);
-//                String address2 = ratR2.getIncidentAddress() + " " + ratR2.getCreatedData();
-//                PROJ.add(address2);
-                if (dataSnapshot.hasChildren()) {
-                    Log.d("Testing", "actul add");
-
-                }
+                //enables longitude and latitude to be read from our database
                 for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
                     Double latitude;
                     try {
@@ -94,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         longitude = 0.0;
                     }
+                    //creates a new rat report and then adds it to a hashmap for later reference
+                    //and adds the key to an arraylist so it can be viewed in app
                     RatReport ratR = new RatReport(
                             ratSnapshot.child("Unique Key").getValue(Integer.class),
                             ratSnapshot.child("Created Date").getValue().toString(),
@@ -104,25 +86,11 @@ public class MainActivity extends AppCompatActivity {
                             ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
 
                     );
-                    //ratR.addToReportList(ratR);
                     reportHashMap.put(ratR.getUniqueKey(), ratR);
                     String address = ""+ ratR.getUniqueKey();
                     PROJ.add(address);
                     Log.d("Testing", "actul add2");
-
-
-//                    else if (PROJ.size() > 1){
-//                        adapt.notifyDataSetChanged();
-//                    }
-//                    //formats the datasnapshot entries to strings
-
-                    Log.d("Testing", "This actually worked");
-//                    RatReport ratData = ratSnapshot.getValue(RatReport.class);
-//                    PROJ.add(ratSnapshot.child("Incident Address").getValue(String.class));
-//                    Log.d("TAG","please just work");
-
                 }
-                //listView.setAdapter(adapt);
                 Log.d("Testing", "gained adapter");
                 adapt.notifyDataSetChanged();
             }
@@ -133,31 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Log.d("Testing", "went through that");
-        //ratData.addValueEventListener(eventListener);
-//        adapt=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, PROJ);
-//        ListView listView= (ListView) findViewById(R.id.ratList);
-//        listView.setAdapter(adapt);
-
-        //topRef.addListenerForSingleValueEvent(eventListener);
-        //ratDataManipulator();
-
-        // Get a handle to the list view
-//        ListView lv = (ListView) findViewById(R.id.ratList);
-//
-//        // Convert ArrayList to array
-//        //lv_arr = (String[]) PROJ.toArray();
-//        lv.setAdapter(new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, android.R.id.text1,PROJ));
-//        lol = (ListView) findViewById(R.id.ratList);
-//        List<String> ratList = PROJ;
-//        ArrayAdapter<String> arrayA = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,ratList);
-//        lol.setAdapter(arrayA);
-
-//        String[] fromColumns = {PROJ};
-//        int[] toViews = {android.R.id.text1};
-//        mAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,null,PROJ,toViews,0 );
-//        setList
-
+        //button that logs the user out
         Button butt = (Button) findViewById(R.id.logOut);
         butt.setOnClickListener(new View.OnClickListener(){ @Override
         public void onClick(View v) {
@@ -166,13 +110,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         }});
         Log.d("Testing", "what the what");
-
+        //adapter for list view and puts data in view
         adapt = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,PROJ);
         listView.setAdapter(adapt);
-        //listView.setTextFilterEnabled(true);
         Log.d("Testing", "Size is: " + PROJ.size());
 
         adapt.notifyDataSetChanged();
+        //pulls up details pop up on item click
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -182,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder adb = new AlertDialog.Builder(
                         MainActivity.this);
                 adb.setTitle("Details");
-                adb.setMessage("details of the list" + listR.createDataString(listR) );
+                adb.setMessage(listR.createDataString(listR) );
                 adb.setPositiveButton("Ok", null);
                 adb.show();
             }
@@ -213,12 +157,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //topRef.addListenerForSingleValueEvent(eventListener);
-
-
-
-
-
     }
+    //gets the instance of our firebase database
     public FirebaseDatabase getDatabase() {
         FirebaseDatabase mBase = FirebaseDatabase.getInstance();
         //mBase.setPersistenceEnabled(true);
