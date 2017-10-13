@@ -23,15 +23,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     //SimpleCursorAdapter mAdapter;
-    //static RatReport dummy = new RatReport(0,"a","a",3,"a","a","",22,22);
+    //RatReport dummy = new RatReport(0,"a","a","3","a","a","",22,22);
     public ListView listView;
     public ArrayAdapter adapt;
+    public HashMap<Integer, RatReport> reportHashMap = new HashMap<>();
     public List<String> PROJ = new ArrayList<String>(); //dummy.getReportList(); //new ArrayList<String>(Arrays.asList("bla","ble", "blo"));
     //public String[] lv_arr = {};
 
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView= (ListView) findViewById(R.id.ratList);
         Log.d("Testing", "created things");
+        //FirebaseDatabase mBase = FirebaseDatabase.getInstance();
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         FirebaseDatabase database = getDatabase();
         //Query query = database.getReference().child("dirtyrat-72570").limitToLast(50);
         Query query = database.getReference().getRoot().limitToLast(50);
@@ -100,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
                             ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
 
                     );
-                    ratR.addToReportList(ratR);
-                    String address = ratR.getIncidentAddress() + " " + ratR.getUniqueKey();
+                    //ratR.addToReportList(ratR);
+                    reportHashMap.put(ratR.getUniqueKey(), ratR);
+                    String address = ""+ ratR.getUniqueKey();
                     PROJ.add(address);
                     Log.d("Testing", "actul add2");
 
@@ -171,10 +176,13 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String reportId = (String) parent.getItemAtPosition(position);
+                RatReport listR = reportHashMap.get(Integer.parseInt(reportId));
+
                 AlertDialog.Builder adb = new AlertDialog.Builder(
                         MainActivity.this);
                 adb.setTitle("Details");
-                adb.setMessage("details of the list");
+                adb.setMessage("details of the list" + listR.createDataString(listR) );
                 adb.setPositiveButton("Ok", null);
                 adb.show();
             }
@@ -213,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public FirebaseDatabase getDatabase() {
         FirebaseDatabase mBase = FirebaseDatabase.getInstance();
-        mBase.setPersistenceEnabled(true);
+        //mBase.setPersistenceEnabled(true);
         return mBase;
 
     }

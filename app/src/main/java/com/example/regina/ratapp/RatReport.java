@@ -114,11 +114,11 @@ public class RatReport {
 
     public String createDataString(RatReport ratReport) {
         String thing = "Key: ";
-//        thing = thing + ratReport.uniqueKeyToString() + "\nCreated Data: "
-//                + ratReport.getCreatedData() + "\nLocation Type: " + ratReport.getLocationType() + "\nIncident Zip: "
-//                + ratReport.incidentZipToString() + "\nIncident Address: " + ratReport.getIncidentAddress()
-//                + "\nCity: " + ratReport.getCity() + "\nBorough: " + ratReport.getBorough() + "\nLatitude: "
-//                + ratReport.latitudeToString() + "\nLongitude: " + ratReport.longitudeToString();
+        thing = thing + ratReport.uniqueKeyToString() + "\nCreated Data: "
+                + ratReport.getCreatedData() + "\nLocation Type: " + ratReport.getLocationType() + "\nIncident Zip: "
+                + ratReport.incidentZipToString() + "\nIncident Address: " + ratReport.getIncidentAddress()
+                + "\nCity: " + ratReport.getCity() + "\nBorough: " + ratReport.getBorough() + "\nLatitude: "
+                + ratReport.latitudeToString() + "\nLongitude: " + ratReport.longitudeToString();
         return thing;
     }
 
