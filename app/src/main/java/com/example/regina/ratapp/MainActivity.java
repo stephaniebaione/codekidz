@@ -101,14 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Log.d("Testing", "went through that");
-        //button that logs the user out
-        Button butt = (Button) findViewById(R.id.logOut);
-        butt.setOnClickListener(new View.OnClickListener(){ @Override
-        public void onClick(View v) {
-            // TODO Auto-generated method stub
-            Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
-            startActivity(i);
-        }});
+        buttonClicks();
         Log.d("Testing", "what the what");
         //adapter for list view and puts data in view
         adapt = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,PROJ);
@@ -164,5 +157,24 @@ public class MainActivity extends AppCompatActivity {
         //mBase.setPersistenceEnabled(true);
         return mBase;
 
+    }
+
+    public void buttonClicks() {
+        //button that logs the user out
+        Button logoutBtn = (Button) findViewById(R.id.logOut);
+        logoutBtn.setOnClickListener(new View.OnClickListener(){ @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
+            startActivity(i);
+        }});
+        //button that takes user to sightingd
+        Button newReportBtn = (Button) findViewById(R.id.logOut);
+        newReportBtn.setOnClickListener(new View.OnClickListener(){ @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),NewSighting.class);
+            startActivity(i);
+        }});
     }
 }
