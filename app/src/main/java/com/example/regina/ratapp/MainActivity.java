@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
             startActivity(i);
         }});
-        //button that takes user to sightingd
-        Button newReportBtn = (Button) findViewById(R.id.logOut);
+        //button that takes user to sightings
+        Button newReportBtn = (Button) findViewById(R.id.newSighting);
         newReportBtn.setOnClickListener(new View.OnClickListener(){ @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
