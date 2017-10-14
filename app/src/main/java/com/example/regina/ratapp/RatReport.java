@@ -29,7 +29,6 @@ public class RatReport {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-    public RatReport(){}
 
     public int getUniqueKey() {
         return uniqueKey;

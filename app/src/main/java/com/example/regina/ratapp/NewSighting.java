@@ -19,6 +19,8 @@ public class NewSighting extends AppCompatActivity {
     private EditText longView;
     private Boolean uncompleted = false;
 
+    private static int uniquekey = 4000000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,9 @@ public class NewSighting extends AppCompatActivity {
 
         //cancels making the report and goes back to main
         Button goBack = (Button) findViewById(R.id.cancelNR);
-        goBack.setOnClickListener(new View.OnClickListener(){ @Override
+        goBack.setOnClickListener(new View.OnClickListener(){
+
+        @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
@@ -53,7 +57,7 @@ public class NewSighting extends AppCompatActivity {
         ArrayAdapter<CharSequence> locationAdapter = ArrayAdapter.createFromResource(this,
                 R.array.location_types, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> boroughAdapter = ArrayAdapter.createFromResource(this,
-                R.array.location_types, android.R.layout.simple_spinner_item);
+                R.array.borough_choices, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         boroughAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,7 +88,7 @@ public class NewSighting extends AppCompatActivity {
         if (uncompleted){
             focusView.requestFocus();
         } else {
-            Intent back =new Intent(getApplicationContext(),MainActivity.class);
+            Intent back = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(back);
         }
     }
