@@ -16,127 +16,123 @@
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/textView40"
+                android:id="@+id/dateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Date"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <DatePicker
-                android:id="@+id/datePicker3"
+                android:id="@+id/datePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.09" />
 
             <TextView
-                android:id="@+id/textView41"
+                android:id="@+id/locationTypeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Location Type"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/editText40"
+            <Spinner
+                android:id="@+id/locationSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView42"
+                android:id="@+id/addressText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Address"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editText47"
+                android:id="@+id/addressEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPostalAddress" />
+                android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/textView43"
+                android:id="@+id/cityText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="City"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editText42"
+                android:id="@+id/cityEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/textView44"
+                android:id="@+id/zipcodeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Zipcode"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editText43"
+                android:id="@+id/zipcodeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/textView45"
+                android:id="@+id/boroughText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Borough"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/editText44"
+            <Spinner
+                android:id="@+id/boroughSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textMultiLine" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView46"
+                android:id="@+id/latitudeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Latitude"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editText45"
+                android:id="@+id/latitudeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/textView47"
+                android:id="@+id/longitudeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Longitude"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editText46"
+                android:id="@+id/longitudeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
