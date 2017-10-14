@@ -10,6 +10,14 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.regina.ratapp.R.id.parent;
+
 
 public class NewSighting extends AppCompatActivity {
 
@@ -100,6 +108,20 @@ public class NewSighting extends AppCompatActivity {
 
         return true;
     }
+    public void pushRatDataToFirebase(RatReport rat) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        Map newRatReport = new HashMap();
+        newRatReport.put("Unique Key", rat.getUniqueKey());
+        newRatReport.put("Borough", rat.getBorough());
+        newRatReport.put("City", rat.getCity());
+        newRatReport.put("Created Date", rat.getCreatedData());
+        newRatReport.put("Incident Address", rat.getIncidentAddress());
+        newRatReport.put("Incident Zip", rat.getIncidentZip());
+        newRatReport.put("Latitude", rat.getLatitude());
+        newRatReport.put("Location Type", rat.getLocationType());
+        newRatReport.put("Longitude", rat.getLongitude());
+        database.push().setValue(newRatReport);
+    }
 
     private void onItemSelected(AdapterView<?> parent, View view,
                                 int pos, long id) {
@@ -109,7 +131,6 @@ public class NewSighting extends AppCompatActivity {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
     }
-
 }
 
 
