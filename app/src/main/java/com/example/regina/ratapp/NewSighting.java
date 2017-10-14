@@ -113,6 +113,13 @@ public class NewSighting extends AppCompatActivity {
             focusView=longView;
             longView.setError("Field cannot be empty.");
         }
+        /*
+         else if (locationSpinner.getSelectedItemPosition() == 0) {
+            longView.setError("Field cannot be empty.");
+
+            //this crashes, but this is the idea of what we want to do if we are adding a "PLEASE SELECT ONE" item for the spinners
+        }
+         */
         if (uncompleted){
             focusView.requestFocus();
         } else {
@@ -151,15 +158,6 @@ public class NewSighting extends AppCompatActivity {
         newRatReport.put("Longitude", rat.getLongitude());
         database.push().setValue(newRatReport);
     }
-
-/*    private void onItemSelected(AdapterView<?> parent, View view,
-                                int pos, long id) {
-        if (parent.getItemAtPosition(pos) == 0) {
-            //needs to tell the user to select an item
-        }
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-    }*/
 }
 
 

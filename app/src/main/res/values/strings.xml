@@ -20,7 +20,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string-array name="location_types">
-        <item>PLEASE SELECT ONE</item>
+        <!--<item>PLEASE SELECT ONE</item>-->
         <item>1-2 Family Dwelling</item>
         <item>3+ Family Apt. Building</item>
         <item>3+ Family Mixed Use Building</item>
@@ -32,7 +32,7 @@
     </string-array>
 
     <string-array name="borough_choices">
-        <item>PLEASE SELECT ONE</item>
+        <!--<item>PLEASE SELECT ONE</item>-->
         <item>MANHATTAN</item>
         <item>STATEN ISLAND</item>
         <item>QUEENS</item>
