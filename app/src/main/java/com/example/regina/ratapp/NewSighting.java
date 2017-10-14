@@ -94,18 +94,23 @@ public class NewSighting extends AppCompatActivity {
         View focusView = null;
         if (checkIfEmpty(addressView)){
             uncompleted = true;
+            focusView=addressView;
             addressView.setError("Field cannot be empty.");
         } else if (checkIfEmpty(cityView)){
             uncompleted = true;
+            focusView=cityView;
             cityView.setError("Field cannot be empty.");
         } else if (checkIfEmpty(zipView)){
             uncompleted = true;
+            focusView=zipView;
             zipView.setError("Field cannot be empty.");
         } else if (checkIfEmpty(latView)){
             uncompleted = true;
+            focusView=latView;
             latView.setError("Field cannot be empty.");
         } else if (checkIfEmpty(longView)){
             uncompleted = true;
+            focusView=longView;
             longView.setError("Field cannot be empty.");
         }
         if (uncompleted){
