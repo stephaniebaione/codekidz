@@ -123,14 +123,14 @@ public class NewSighting extends AppCompatActivity {
         database.push().setValue(newRatReport);
     }
 
-    private void onItemSelected(AdapterView<?> parent, View view,
+/*    private void onItemSelected(AdapterView<?> parent, View view,
                                 int pos, long id) {
         if (parent.getItemAtPosition(pos) == 0) {
             //needs to tell the user to select an item
         }
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
-    }
+    }*/
 }
 
 
