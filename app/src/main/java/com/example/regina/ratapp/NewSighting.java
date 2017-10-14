@@ -2,11 +2,13 @@ package com.example.regina.ratapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.EditText;
 
@@ -21,14 +23,18 @@ import static com.example.regina.ratapp.R.id.parent;
 
 public class NewSighting extends AppCompatActivity {
 
-    private EditText locTypeView;
+    private EditText cityView;
     private EditText addressView;
     private EditText zipView;
     private EditText latView;
     private EditText longView;
     private Boolean uncompleted = false;
+    private Spinner boroughSpinner;
+    private Spinner locationSpinner;
+    private DatePicker createdDate;
 
     private static int uniquekey = 4000000;
+    private static int counter =1;
 
 
     @Override
@@ -37,6 +43,14 @@ public class NewSighting extends AppCompatActivity {
         setContentView(R.layout.activity_newreport);
         //instantiating the spinners
         instantiateSpinners();
+
+        cityView = (EditText) findViewById(R.id.cityEdit);
+        addressView = (EditText) findViewById(R.id.addressEdit);
+        zipView = (EditText) findViewById(R.id.zipcodeEdit);
+        latView= (EditText) findViewById(R.id.latitudeEdit);
+        longView= (EditText) findViewById(R.id.longitudeEdit);
+        createdDate = (DatePicker) findViewById(R.id.datePicker);
+
 
         //cancels making the report and goes back to main
         Button goBack = (Button) findViewById(R.id.cancelNR);
@@ -60,8 +74,8 @@ public class NewSighting extends AppCompatActivity {
     }
 
     public void instantiateSpinners() {
-        Spinner locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
-        Spinner boroughSpinner = (Spinner) findViewById(R.id.boroughSpinner);
+        locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
+        boroughSpinner = (Spinner) findViewById(R.id.boroughSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> locationAdapter = ArrayAdapter.createFromResource(this,
                 R.array.location_types, android.R.layout.simple_spinner_item);
@@ -78,12 +92,12 @@ public class NewSighting extends AppCompatActivity {
     //check if any entry is empty or invalid then either alerts the user to a mistake or makes the report
     private void attemptReport(){
         View focusView = null;
-        if (checkIfEmpty(locTypeView)){
-            uncompleted = true;
-            locTypeView.setError("Field cannot be empty.");
-        } else if (checkIfEmpty(addressView)){
+        if (checkIfEmpty(addressView)){
             uncompleted = true;
             addressView.setError("Field cannot be empty.");
+        } else if (checkIfEmpty(cityView)){
+            uncompleted = true;
+            cityView.setError("Field cannot be empty.");
         } else if (checkIfEmpty(zipView)){
             uncompleted = true;
             zipView.setError("Field cannot be empty.");
@@ -97,6 +111,16 @@ public class NewSighting extends AppCompatActivity {
         if (uncompleted){
             focusView.requestFocus();
         } else {
+            int day = createdDate.getDayOfMonth();
+            int month = createdDate.getMonth() + 1;
+            int year = createdDate.getYear();
+            RatReport newReport = new RatReport(4000000+counter*7,""+month+"/"+day+"/"+year,
+                    locationSpinner.getSelectedItem().toString(),zipView.getText().toString(),
+                    addressView.getText().toString(),
+                    cityView.getText().toString(), boroughSpinner.getSelectedItem().toString(),
+                    Double.parseDouble(latView.getText().toString()),Double.parseDouble(longView.getText().toString()));
+            counter++;
+
             Intent back = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(back);
         }
