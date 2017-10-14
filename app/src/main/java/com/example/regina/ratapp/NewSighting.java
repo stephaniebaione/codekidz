@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
+import android.widget.EditText;
 public class NewSighting extends AppCompatActivity {
 
     @Override
@@ -17,8 +17,6 @@ public class NewSighting extends AppCompatActivity {
 
         //instantiating the spinners
         instantiateSpinners();
-
-
     }
 
     public void instantiateSpinners() {
@@ -35,5 +33,11 @@ public class NewSighting extends AppCompatActivity {
         // Apply the adapter to the spinner
         locationSpinner.setAdapter(locationAdapter);
         boroughSpinner.setAdapter(boroughAdapter);
+    }
+
+    public void zipCodeCheck() {
+        EditText zipCodeText = (EditText) findViewById(R.id.zipcodeEdit);
+        String zipCodeValue = zipCodeText.getText().toString();
+
     }
 }
