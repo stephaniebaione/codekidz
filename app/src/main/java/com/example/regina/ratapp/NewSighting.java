@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -98,6 +99,15 @@ public class NewSighting extends AppCompatActivity {
             return false;
 
         return true;
+    }
+
+    private void onItemSelected(AdapterView<?> parent, View view,
+                                int pos, long id) {
+        if (parent.getItemAtPosition(pos) == 0) {
+            //needs to tell the user to select an item
+        }
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
     }
 
 }
