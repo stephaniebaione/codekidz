@@ -8,15 +8,42 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.EditText;
+
+
 public class NewSighting extends AppCompatActivity {
+
+    private EditText locTypeView;
+    private EditText addressView;
+    private EditText zipView;
+    private EditText latView;
+    private EditText longView;
+    private Boolean uncompleted = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newreport);
-
         //instantiating the spinners
         instantiateSpinners();
+
+        //cancels making the report and goes back to main
+        Button goBack = (Button) findViewById(R.id.cancelNR);
+        goBack.setOnClickListener(new View.OnClickListener(){ @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(i);
+        }});
+
+        //confirms if report is valid and makes it
+        Button makeReport = (Button) findViewById(R.id.confirm);
+        makeReport.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                attemptReport();
+            }
+        });
     }
 
     public void instantiateSpinners() {
@@ -35,9 +62,40 @@ public class NewSighting extends AppCompatActivity {
         boroughSpinner.setAdapter(boroughAdapter);
     }
 
-    public void zipCodeCheck() {
-        EditText zipCodeText = (EditText) findViewById(R.id.zipcodeEdit);
-        String zipCodeValue = zipCodeText.getText().toString();
-
+    //check if any entry is empty or invalid then either alerts the user to a mistake or makes the report
+    private void attemptReport(){
+        View focusView = null;
+        if (checkIfEmpty(locTypeView)){
+            uncompleted = true;
+            locTypeView.setError("Field cannot be empty.");
+        } else if (checkIfEmpty(addressView)){
+            uncompleted = true;
+            addressView.setError("Field cannot be empty.");
+        } else if (checkIfEmpty(zipView)){
+            uncompleted = true;
+            zipView.setError("Field cannot be empty.");
+        } else if (checkIfEmpty(latView)){
+            uncompleted = true;
+            latView.setError("Field cannot be empty.");
+        } else if (checkIfEmpty(longView)){
+            uncompleted = true;
+            longView.setError("Field cannot be empty.");
+        }
+        if (uncompleted){
+            focusView.requestFocus();
+        } else {
+            Intent back =new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(back);
+        }
     }
+
+    private boolean checkIfEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0)
+            return false;
+
+        return true;
+    }
+
 }
+
+
