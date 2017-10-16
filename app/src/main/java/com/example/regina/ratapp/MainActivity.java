@@ -125,32 +125,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void ratDataManipulator() {
-        DatabaseReference ratData = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference topRef = ratData.child("dirtyrat-72570");
-        //final Button getDataButton = (Button) findViewById(R.id.getData);
 
-        // Attach a listener to read the data at our posts reference
-       //ValueEventListener eventListener = new ValueEventListener() {
-        topRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-        @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ratSnapshot: dataSnapshot.getChildren()) {
-                    RatReport ratData = ratSnapshot.getValue(RatReport.class);
-                    PROJ.add(ratSnapshot.child("Incident Address").getValue(String.class));
-                    Log.d("TAG","worked");
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-        //topRef.addListenerForSingleValueEvent(eventListener);
-    }
     //gets the instance of our firebase database
     public FirebaseDatabase getDatabase() {
         FirebaseDatabase mBase = FirebaseDatabase.getInstance();

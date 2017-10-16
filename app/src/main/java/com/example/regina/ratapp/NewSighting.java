@@ -132,18 +132,28 @@ public class NewSighting extends AppCompatActivity {
                     cityView.getText().toString(), boroughSpinner.getSelectedItem().toString(),
                     Double.parseDouble(latView.getText().toString()),Double.parseDouble(longView.getText().toString()));
             counter++;
-
+            pushRatDataToFirebase(newReport);
             Intent back = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(back);
         }
     }
 
+    /**
+     * Checks whether the user provide information in the Report
+     * @param etText an EditText box from the New Sighting Page
+     * @return a boolean value representing whether the EditText was empty
+     */
     private boolean checkIfEmpty(EditText etText) {
         if (etText.getText().toString().trim().length() > 0)
             return false;
 
         return true;
     }
+
+    /**
+     *  Method that makes a HashMap from the RatReport and pushes the data to Firebase
+     * @param rat takes in a Rat Report that needs to be added to Firebase
+     */
     public void pushRatDataToFirebase(RatReport rat) {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         Map newRatReport = new HashMap();
