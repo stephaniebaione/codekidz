@@ -60,6 +60,22 @@ public class NewSighting extends AppCompatActivity {
         longView= (EditText) findViewById(R.id.longitudeEdit);
         createdDate = (DatePicker) findViewById(R.id.datePicker);
 
+        FirebaseDatabase mBase = FirebaseDatabase.getInstance();
+        Query prevReport = mBase.getReference().getRoot().limitToLast(1);
+        prevReport.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot prev: dataSnapshot.getChildren()) {
+                    prevKey = prev.child("Unique Key").getValue(Double.class).intValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         //cancels making the report and goes back to main
         Button goBack = (Button) findViewById(R.id.cancelNR);
@@ -135,25 +151,11 @@ public class NewSighting extends AppCompatActivity {
         if (uncompleted){
             focusView.requestFocus();
         } else {
-            FirebaseDatabase mBase = FirebaseDatabase.getInstance();
-            Query prevReport = mBase.getReference().getRoot().limitToLast(1);
-            prevReport.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for(DataSnapshot prev: dataSnapshot.getChildren()) {
-                        prevKey = prev.child("Unique Key").getValue(Double.class).intValue();
-                    }
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
             int day = createdDate.getDayOfMonth();
             int month = createdDate.getMonth() + 1;
             int year = createdDate.getYear();
-            prevKey+=1;
+            prevKey+=7;
             RatReport newReport = new RatReport(prevKey,""+month+"/"+day+"/"+year,
                     locationSpinner.getSelectedItem().toString(),zipView.getText().toString(),
                     addressView.getText().toString(),
