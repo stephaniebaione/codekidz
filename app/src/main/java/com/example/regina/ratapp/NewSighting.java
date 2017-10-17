@@ -12,8 +12,12 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +36,7 @@ public class NewSighting extends AppCompatActivity {
     private Spinner boroughSpinner;
     private Spinner locationSpinner;
     private DatePicker createdDate;
+    private int prevKey;
 
     private static int uniquekey = 4000000;
     private static int counter =1;
@@ -130,10 +135,26 @@ public class NewSighting extends AppCompatActivity {
         if (uncompleted){
             focusView.requestFocus();
         } else {
+            FirebaseDatabase mBase = FirebaseDatabase.getInstance();
+            Query prevReport = mBase.getReference().getRoot().limitToLast(1);
+            prevReport.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot prev: dataSnapshot.getChildren()) {
+                        prevKey = prev.child("Unique Key").getValue(Double.class).intValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             int day = createdDate.getDayOfMonth();
             int month = createdDate.getMonth() + 1;
             int year = createdDate.getYear();
-            RatReport newReport = new RatReport(4000000+counter*7,""+month+"/"+day+"/"+year,
+            prevKey+=1;
+            RatReport newReport = new RatReport(prevKey,""+month+"/"+day+"/"+year,
                     locationSpinner.getSelectedItem().toString(),zipView.getText().toString(),
                     addressView.getText().toString(),
                     cityView.getText().toString(), boroughSpinner.getSelectedItem().toString(),
