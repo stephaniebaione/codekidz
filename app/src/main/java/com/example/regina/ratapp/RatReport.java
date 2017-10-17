@@ -16,6 +16,18 @@ public class RatReport {
     static ArrayList<String> reportList;
     String data;
 
+    /**
+     * constructor to create rat report
+     * @param uniqueKey unique key
+     * @param createdData date created
+     * @param locationType what kind of location the rat was spotted
+     * @param incidentZip zip code of incident
+     * @param incidentAddress address of incident
+     * @param city city of incident
+     * @param borough neighborhoodo f incident
+     * @param latitude latitude of incident
+     * @param longitude longitude of incident
+     */
     public RatReport(int uniqueKey, String createdData, String locationType,
                      String incidentZip, String incidentAddress, String city,
                      String borough, double latitude, double longitude) {
@@ -35,6 +47,10 @@ public class RatReport {
     }
     public ArrayList<String> getReportList(){return reportList;}
 
+    /**
+     * turns unique key to string
+     * @return string of key
+     */
     public String uniqueKeyToString() { return String.valueOf(uniqueKey);}
 
     public void setUniqueKey(int uniqueKey) {
@@ -61,6 +77,10 @@ public class RatReport {
         return incidentZip;
     }
 
+    /**
+     * turns zip code to a string
+     * @return string of zip code
+     */
     public String incidentZipToString() { return String.valueOf(incidentZip);}
 
     public void setIncidentZip(String incidentZip) {
@@ -94,7 +114,10 @@ public class RatReport {
     public double getLatitude() {
         return latitude;
     }
-
+    /**
+     * turns latitude to a string
+     * @return string of latitude
+     */
     public String latitudeToString() { return String.valueOf(latitude);}
 
     public void setLatitude(double latitude) {
@@ -104,13 +127,21 @@ public class RatReport {
     public double getLongitude() {
         return longitude;
     }
-
+    /**
+     * turns longitude to a string
+     * @return string of longitude
+     */
     public String longitudeToString() { return String.valueOf(longitude);}
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
+    /**
+     * creates a string that list all the data of the report with a format
+     * @param ratReport report to be formatted
+     * @return string of formatted data
+     */
     public String createDataString(RatReport ratReport) {
         String thing = "Key: ";
         thing = thing + ratReport.uniqueKeyToString() + "\nCreated Data: "
@@ -121,6 +152,10 @@ public class RatReport {
         return thing;
     }
 
+    /**
+     * adds report to a list for tracking
+     * @param ratReport report to be added
+     */
     public void addToReportList(RatReport ratReport) {
         reportList.add(createDataString(ratReport));
     }

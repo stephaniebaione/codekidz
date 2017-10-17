@@ -36,7 +36,11 @@ public class NewSighting extends AppCompatActivity {
     private static int uniquekey = 4000000;
     private static int counter =1;
 
-
+    /**
+     * On create method, create all instances of the objects in whch the user inputs
+     * data of the rat report and the button to help the user navigate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +77,9 @@ public class NewSighting extends AppCompatActivity {
         });
     }
 
+    /**
+     * creates the spinners and populates them with choices
+     */
     public void instantiateSpinners() {
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
         boroughSpinner = (Spinner) findViewById(R.id.boroughSpinner);

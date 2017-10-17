@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Testing", "did access database");
         // Attach a listener to read the data at our posts reference
         query.addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             * operates when data is loaded in
+             * @param dataSnapshot instance of the data from database
+             */
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //troubleshooting
@@ -95,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
                 adapt.notifyDataSetChanged();
             }
 
+            /**
+             * operates if data is not loaded correctly
+             * @param databaseError error that occured
+             */
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
@@ -126,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //gets the instance of our firebase database
+    /**
+     * gets the instance of our firebase database
+     */
     public FirebaseDatabase getDatabase() {
         FirebaseDatabase mBase = FirebaseDatabase.getInstance();
         //mBase.setPersistenceEnabled(true);
@@ -134,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * loads and creates the buttons make them functional
+     */
     public void buttonClicks() {
         //button that logs the user out
         Button logoutBtn = (Button) findViewById(R.id.logOut);

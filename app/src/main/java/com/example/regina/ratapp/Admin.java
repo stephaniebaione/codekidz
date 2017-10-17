@@ -11,6 +11,11 @@ public class Admin {
     String password;
     static HashMap<String, String> adminList = new HashMap<>();
 
+    /**
+     * constructer for an admin user
+     * @param emailaddress email of the admin
+     * @param password password of the user
+     */
     public Admin(String emailaddress, String password){
         this.emailaddress = emailaddress;
         this.password = password;
@@ -30,6 +35,11 @@ public class Admin {
     }
     public HashMap<String,String> getAdmins() {return adminList;}
 
+    /**
+     * tells if the admin is in the system or not
+     * @param emailAddress email to be checked
+     * @return true if admin is in the system
+     */
     public Boolean doesAccountExist(String emailAddress) {
 
         return adminList.containsKey(emailAddress.toLowerCase());
