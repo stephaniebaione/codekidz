@@ -1,4 +1,4 @@
-package com.example.regina.ratapp;
+package com.example.regina.ratapp.Model;
 
 /**
  * Created by Abby on 9/27/2017.

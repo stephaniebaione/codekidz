@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".Controller.WelcomeActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +24,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Controller.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".Controller.MainActivity" />
+        <activity android:name=".Controller.RegisterActivity"></activity>
         <activity
-            android:name=".NewSighting"
+            android:name=".Controller.NewSighting"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_new_sighting"
             android:theme="@style/AppTheme" />

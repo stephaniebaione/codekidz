@@ -1,4 +1,4 @@
-package com.example.regina.ratapp;
+package com.example.regina.ratapp.Model;
 
 
 import java.util.ArrayList;
