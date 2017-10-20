@@ -161,5 +161,13 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),NewSighting.class);
             startActivity(i);
         }});
+
+        Button mapBtn = (Button) findViewById(R.id.mapButton);
+        mapBtn.setOnClickListener(new View.OnClickListener(){ @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),MapsActivity.class);
+            startActivity(i);
+        }});
     }
 }
