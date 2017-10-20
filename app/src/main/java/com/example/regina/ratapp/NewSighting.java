@@ -159,6 +159,10 @@ public class NewSighting extends AppCompatActivity {
             int day = createdDate.getDayOfMonth();
             int month = createdDate.getMonth() + 1;
             int year = createdDate.getYear();
+            //base case
+            if (11464394 <= prevKey && prevKey<= 37018532){
+                prevKey=37100000;
+            }
             prevKey+=7;
             RatReport newReport = new RatReport(prevKey,""+month+"/"+day+"/"+year,
                     locationSpinner.getSelectedItem().toString(),zipView.getText().toString(),
