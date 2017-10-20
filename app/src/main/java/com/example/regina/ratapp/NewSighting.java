@@ -136,10 +136,14 @@ public class NewSighting extends AppCompatActivity {
             uncompleted = true;
             focusView=latView;
             latView.setError("Field cannot be empty.");
-        } else if (checkIfEmpty(longView)){
+        } else if (checkIfEmpty(longView)) {
             uncompleted = true;
-            focusView=longView;
+            focusView = longView;
             longView.setError("Field cannot be empty.");
+        } else if (zipView.getText().toString().trim().length() < 5) {
+            uncompleted = true;
+            focusView=zipView;
+            zipView.setError("Zipcode must be 5 numbers.");
         }
         /*
          else if (locationSpinner.getSelectedItemPosition() == 0) {
@@ -162,7 +166,7 @@ public class NewSighting extends AppCompatActivity {
                     cityView.getText().toString(), boroughSpinner.getSelectedItem().toString(),
                     Double.parseDouble(latView.getText().toString()),Double.parseDouble(longView.getText().toString()));
             counter++;
-            pushRatDataToFirebase(newReport);
+//            pushRatDataToFirebase(newReport);  //UNCOMMENT THIS WHEN WE WANT THE DATA TO ACTUALLY BE PUSHED TO FIREBASE
             Intent back = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(back);
         }
