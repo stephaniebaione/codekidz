@@ -55,7 +55,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Controller.MapsActivity"
+            android:name=".Model.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
     </application>
 
