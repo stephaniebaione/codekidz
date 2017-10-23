@@ -168,7 +168,7 @@ public class NewSighting extends AppCompatActivity {
                     cityView.getText().toString(), boroughSpinner.getSelectedItem().toString(),
                     Double.parseDouble(latView.getText().toString()),Double.parseDouble(longView.getText().toString()));
             counter++;
-//            pushRatDataToFirebase(newReport);  //UNCOMMENT THIS WHEN WE WANT THE DATA TO ACTUALLY BE PUSHED TO FIREBASE
+            pushRatDataToFirebase(newReport);  //UNCOMMENT THIS WHEN WE WANT THE DATA TO ACTUALLY BE PUSHED TO FIREBASE
             Intent back = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(back);
         }
