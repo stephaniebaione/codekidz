@@ -35,6 +35,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    public int month(String s) {
+        String[] parts = s.split("/");
+        String month = parts[0];
+        int result = Integer.parseInt(month);
+        return result;
+    }
+    public int year(String s) {
+        String[] parts = s.split("/");
+        String last = parts[parts.length - 1];
+        String year = last.substring(0, 4);
+        int result = Integer.parseInt(year);
+        return result;
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
