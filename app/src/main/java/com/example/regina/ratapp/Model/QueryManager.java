@@ -34,7 +34,8 @@ public class QueryManager {
      * @param lastYear the same year or next year the user wants to view
      * @return
      */
-    public HashMap<Integer, RatReport> getDateDataList(final String firstMonth, final String lastMonth, final String firstYear, final String lastYear) {
+    public HashMap<Integer, RatReport> getDateDataList(final String firstMonth, final String lastMonth,
+                                                       final String firstYear, final String lastYear) {
         DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -49,7 +50,7 @@ public class QueryManager {
                     Log.d("BAAAAAAA", "meh" + ratData.getChildrenCount());
                     String[] parts = date.split("/");
                     int month = Integer.parseInt(parts[0]);
-                    int year = Integer.parseInt(parts[2].substring(0,4));
+                    int year = Integer.parseInt(parts[parts.length - 1].substring(0,4));
                     //Checks if dates chosen are through the same year
                     if (year == firstYearInt && firstYearInt == lastYearInt) {
                         // Checks if dates are between the two chosen months
