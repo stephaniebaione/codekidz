@@ -75,6 +75,12 @@ public class User {
         this.title = title;
     }
 
+    public String toString(){
+        String str = "Email:"+this.getEmailaddress() + "\n Reports Made:" + this.getNumberOfReports()+
+                "\n Title:" + this.getTitle();
+        return str;
+    }
+
     /**
      * Looks at the account list to see if there is an email in the system
      * @param emailAddress
