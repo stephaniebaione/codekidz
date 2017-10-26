@@ -16,6 +16,7 @@
 
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_new_sighting">New Sighting</string>
+    <string name="title_user_settings">User Settings</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
