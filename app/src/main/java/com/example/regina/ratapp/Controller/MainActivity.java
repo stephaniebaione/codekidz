@@ -35,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //creates our listview
         listView= (ListView) findViewById(R.id.ratList);
         Log.d("Testing", "created things");
+        Log.d("debugging",getIntent().getExtras().getString("Email").toString());
         //our database references
         FirebaseDatabase database = getDatabase();
         Query query = database.getReference().getRoot().limitToLast(50);
@@ -159,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             // TODO Auto-generated method stub
             Intent i = new Intent(getApplicationContext(),NewSighting.class);
+            i.putExtra("Email",getIntent().getExtras().getString("Email").toString());
+            Log.d("debugging",getIntent().getExtras().getString("Email").toString());
             startActivity(i);
         }});
 

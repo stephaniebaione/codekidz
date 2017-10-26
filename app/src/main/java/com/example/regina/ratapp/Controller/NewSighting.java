@@ -3,6 +3,7 @@ package com.example.regina.ratapp.Controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.EditText;
 
 import com.example.regina.ratapp.Model.RatReport;
+import com.example.regina.ratapp.Model.User;
 import com.example.regina.ratapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +61,7 @@ public class NewSighting extends AppCompatActivity {
         longView= (EditText) findViewById(R.id.longitudeEdit);
         createdDate = (DatePicker) findViewById(R.id.datePicker);
 
+        Log.d("debugging",getIntent().getExtras().getString("Email").toString());
         FirebaseDatabase mBase = FirebaseDatabase.getInstance();
         Query prevReport = mBase.getReference().getRoot().limitToLast(1);
         prevReport.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,6 +173,7 @@ public class NewSighting extends AppCompatActivity {
                     Double.parseDouble(latView.getText().toString()),Double.parseDouble(longView.getText().toString()));
             counter++;
             pushRatDataToFirebase(newReport);  //UNCOMMENT THIS WHEN WE WANT THE DATA TO ACTUALLY BE PUSHED TO FIREBASE
+            //userUpdate();
             Intent back = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(back);
         }
@@ -184,6 +189,18 @@ public class NewSighting extends AppCompatActivity {
             return false;
 
         return true;
+    }
+
+    public void userUpdate(){
+        User dum = new User("Fake","fake");
+        String userEmail = getIntent().getExtras().getString("Email").toString();
+        Log.d("debugging",getIntent().getExtras().getString("Email").toString());
+        ArrayList<User> listUser = dum.getUserInformation();
+        User curr = listUser.get(listUser.indexOf(userEmail));
+        curr.setNumberOfReports(curr.getNumberOfReports()+1);
+        curr.updateUserTitle();
+        Log.d("debugging", curr.toString());
+
     }
 
     /**

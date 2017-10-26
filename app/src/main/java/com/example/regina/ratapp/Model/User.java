@@ -75,6 +75,22 @@ public class User {
         this.title = title;
     }
 
+    public ArrayList<User> getUserInformation() {
+        return userInformation;
+    }
+
+    public void updateUserTitle() {
+        if (this.getNumberOfReports() > 40){
+            this.setTitle(userTitle.PIEDPIPER);
+        }else if (this.getNumberOfReports() > 30){
+            this.setTitle(userTitle.SNITCH);
+        }else if (this.getNumberOfReports() > 20){
+            this.setTitle(userTitle.DIRTYRAT);
+        }else if (this.getNumberOfReports() > 10){
+            this.setTitle(userTitle.RAT);
+        }
+    }
+
     public String toString(){
         String str = "Email:"+this.getEmailaddress() + "\n Reports Made:" + this.getNumberOfReports()+
                 "\n Title:" + this.getTitle();
