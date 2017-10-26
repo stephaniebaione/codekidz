@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         //creates our listview
         listView= (ListView) findViewById(R.id.ratList);
         Log.d("Testing", "created things");
-        Log.d("debugging",getIntent().getExtras().getString("Email").toString());
+        //Log.d("debugging",getIntent().getExtras().getString("Email").toString());
         //our database references
         FirebaseDatabase database = getDatabase();
         Query query = database.getReference().getRoot().limitToLast(50);
