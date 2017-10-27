@@ -69,16 +69,16 @@ public class QueryManager {
                                 && month <= lastMonthInt)) {
                             RatReport ratReport = createReport(ratData);
                             addtoRightDateList(ratReport);
-
+                            Log.d("whhhhyyyyy", "newval" + " " + rightDateList.size());
                         }
                     }
                 }
-
+                Log.d("whhhhyyyyy", "final" + " " + rightDateList.size());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                System.out.println("The read failed: " + databaseError.getCode());
             }
         });
         Log.d("YOOOOOOOOO", "check" + " " + rightDateList.size());

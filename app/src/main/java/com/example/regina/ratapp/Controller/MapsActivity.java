@@ -58,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        thing.getDateDataList("01", "12", "0", "2017").putAll(reportList);
+        thing.getDateDataList("01", "02", "2017", "2017").putAll(reportList);
         Log.d("Boi", "size: " + reportList.size());
 
         // Add a marker in Sydney and move the camera
