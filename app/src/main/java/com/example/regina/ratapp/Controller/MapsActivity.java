@@ -20,7 +20,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     HashMap<Integer, RatReport> reportList = new HashMap<Integer, RatReport>();
-    private QueryManager thing;
+    private QueryManager thing = new QueryManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //reportList = thing.getDateDataList("01", "10", "2017", "2017");
-        //Log.d("Boi", "size: " + reportList.size());
+        thing.getDateDataList("01", "12", "0", "2017").putAll(reportList);
+        Log.d("Boi", "size: " + reportList.size());
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);

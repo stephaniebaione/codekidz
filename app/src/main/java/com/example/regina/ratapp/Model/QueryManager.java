@@ -36,6 +36,7 @@ public class QueryManager {
      */
     public HashMap<Integer, RatReport> getDateDataList(final String firstMonth, final String lastMonth,
                                                        final String firstYear, final String lastYear) {
+        Log.d("Testing", "get here");
         DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
