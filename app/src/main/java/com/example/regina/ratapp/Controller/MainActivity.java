@@ -181,5 +181,13 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),GraphActivity.class);
             startActivity(i);
         }});
+
+        Button userBtn = (Button) findViewById(R.id.settingsButton);
+        graphBtn.setOnClickListener(new View.OnClickListener(){ @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Intent i = new Intent(getApplicationContext(),UserSettingsActivity.class);
+            startActivity(i);
+        }});
     }
 }
