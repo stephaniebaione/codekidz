@@ -43,7 +43,7 @@
                 android:id="@+id/locationSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"/>
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/addressText"
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType= "number"
+                android:inputType="number"
                 android:maxLength="5" />
 
             <TextView
@@ -107,7 +107,7 @@
                 android:id="@+id/boroughSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"/>
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/latitudeText"
@@ -152,8 +152,8 @@
                 android:id="@+id/cancelNR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:layout_weight="0.13" />
+                android:layout_weight="0.13"
+                android:text="Cancel" />
 
         </LinearLayout>
     </ScrollView>
