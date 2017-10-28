@@ -1,9 +1,17 @@
 package com.example.regina.ratapp.Model;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.AsyncTaskLoader;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.example.regina.ratapp.Controller.*;
+import com.example.regina.ratapp.Controller.MapsActivity;
 import com.example.regina.ratapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,10 +19,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -25,7 +35,16 @@ import java.util.HashMap;
 
 public class QueryManager {
      HashMap<Integer, RatReport> rightDateList = new HashMap<Integer, RatReport>();
+    public MapsActivity activity;
 
+
+    public QueryManager(MapsActivity activity) {
+        this.activity = activity;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
     /**
      * Sorts Data and saves the data that falls within the selected date range
      * @param firstMonth the earliest month chosen for viewing
@@ -34,6 +53,7 @@ public class QueryManager {
      * @param lastYear the same year or next year the user wants to view
      * @return
      */
+
     public HashMap<Integer, RatReport> getDateDataList(final String firstMonth, final String lastMonth,
                                                        final String firstYear, final String lastYear) {
         Log.d("Testing", "get here");
@@ -128,6 +148,88 @@ public class QueryManager {
                 ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
         );
         return ratR;
+    }
+    public DateSearcher getDateSearcherTask() {
+        return new DateSearcher();
+    }
+
+    public class DateSearcher extends AsyncTask<String, Void, Integer> {
+        Dialog dialog = new ProgressDialog(activity);
+
+        @Override
+        public Integer doInBackground(String...args) {
+            Query firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
+            final HashMap<Integer, RatReport> rightDateList = new HashMap<>();
+            final String firstMonth = args[0];
+            final String firstYear = args[2];
+            final String lastMonth = args[1];
+            final String lastYear = args[3];
+
+            //mMap.addMarker(new MarkerOptions().position(new LatLng(100,100)).title("yo"));
+            firebaseDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.d("Debug","listened");
+
+                    int firstMonthInt = Integer.parseInt(firstMonth);
+                    int lastMonthInt = Integer.parseInt(lastMonth);
+                    int firstYearInt = Integer.parseInt(firstYear);
+                    int lastYearInt = Integer.parseInt(lastYear);
+                    //int count = 2;
+                    for (DataSnapshot ratData: dataSnapshot.getChildren()) {
+                        String date = ratData.child("Created Date").getValue().toString();
+                        String[] parts = date.split("/");
+                        int month = Integer.parseInt(parts[0]);
+                        int year = Integer.parseInt(parts[2].substring(0,4));
+                        //Checks if dates chosen are through the same year
+                        if (year == firstYearInt && firstYearInt == lastYearInt) {
+                            // Checks if dates are between the two chosen months
+                            if(month >= firstMonthInt
+                                    && month <= lastMonthInt) {
+                                RatReport ratReport = createReport(ratData);
+                                LatLng sydney = new LatLng(ratReport.getLatitude(), ratReport.getLongitude());
+                                //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
+                                activity.addMarkers(ratReport);
+                                Log.d("hhhhhhhhhhhhhhh", "being added" + rightDateList.size());
+                            }
+                            // Check statement for a span of more than one year
+                        } else {
+                            if ((year == firstYearInt && month >= firstMonthInt) || (year > firstYearInt
+                                    && year < lastYearInt) || (year == lastYearInt
+                                    && month <= lastMonthInt)) {
+                                RatReport ratReport = createReport(ratData);
+                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
+
+                            }
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("Debug", "Canceled");
+                }
+            });
+            Log.d("hhh22222", "second" + rightDateList.size());
+            return 7;
+
+        }
+
+        protected void onPreExecute() {
+            dialog.setTitle("Loading");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+        protected void onPostExecute(Integer searched) {
+            //activity.addMarkers(searched);
+            dialog.dismiss();
+            Log.d("Debug", "executed");
+
+        }
+
+
     }
 
 

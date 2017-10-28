@@ -1,5 +1,6 @@
 package com.example.regina.ratapp.Controller;
 
+import android.content.Loader;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,13 +15,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     HashMap<Integer, RatReport> reportList = new HashMap<Integer, RatReport>();
-    private QueryManager thing = new QueryManager();
+    //private QueryManager thing = new QueryManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        thing.getDateDataList("01", "02", "2017", "2017").putAll(reportList);
-        Log.d("Boi", "size: " + reportList.size());
-
+        //thing.getDateDataList("01", "02", "2017", "2017").putAll(reportList);
+        //Log.d("Boi", "size: " + reportList.size());
+        QueryManager datesearch = new QueryManager(MapsActivity.this);
+        QueryManager.DateSearcher newsearch = datesearch.getDateSearcherTask();
+        newsearch.execute("01", "02", "2015","2015");
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+    public void addMarkers(RatReport addList) {
+       // for (RatReport value: addList.values()) {
+            LatLng marker = new LatLng(addList.getLatitude(), addList.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(marker).title("Marker in Sydney"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
+        //}
+
+    }
+
+
 }
