@@ -83,9 +83,21 @@ public class QueryManager {
     public DateSearcher getDateSearcherTask() {
         return new DateSearcher();
     }
+    public Boolean validDates(int firstMonth, int lastMonth, int firstYear, int lastYear) {
+        if (firstYear > lastYear) {
+            return false;
+        } else if(firstYear == lastYear) {
+            if (firstMonth > lastMonth) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return true;
+    }
 
 
-    public class DateSearcher extends AsyncTask<String, Void, Integer> {
+    public class DateSearcher extends AsyncTask<Integer, Void, Integer> {
         Dialog dialog = new ProgressDialog(activity);
 
         /**
@@ -94,23 +106,20 @@ public class QueryManager {
          * @return a dummy int to move on
          */
         @Override
-        public Integer doInBackground(String...args) {
+        public Integer doInBackground(Integer...args) {
             Query firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
             final HashMap<Integer, RatReport> rightDateList = new HashMap<>();
-            final String firstMonth = args[0];
-            final String firstYear = args[2];
-            final String lastMonth = args[1];
-            final String lastYear = args[3];
+            final Integer firstMonthInt = args[0];
+            final Integer firstYearInt = args[2];
+            final Integer lastMonthInt = args[1];
+            final Integer lastYearInt = args[3];
 
             firebaseDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("Debug","listened");
 
-                    int firstMonthInt = Integer.parseInt(firstMonth);
-                    int lastMonthInt = Integer.parseInt(lastMonth);
-                    int firstYearInt = Integer.parseInt(firstYear);
-                    int lastYearInt = Integer.parseInt(lastYear);
+
                     //int count = 2;
                     for (DataSnapshot ratData: dataSnapshot.getChildren()) {
                         String date = ratData.child("Created Date").getValue().toString();

@@ -1,9 +1,13 @@
 package com.example.regina.ratapp.Controller;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Loader;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.regina.ratapp.Model.QueryManager;
 import com.example.regina.ratapp.Model.RatReport;
@@ -33,6 +37,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Button filterButton = (Button) findViewById(R.id.button2);
+
     }
 
 
@@ -58,25 +64,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int result = Integer.parseInt(year);
         return result;
     }
+        
+
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //thing.getDateDataList("01", "02", "2017", "2017").putAll(reportList);
-        //Log.d("Boi", "size: " + reportList.size());
-        QueryManager datesearch = new QueryManager(MapsActivity.this);
-        QueryManager.DateSearcher newsearch = datesearch.getDateSearcherTask();
-        newsearch.execute("01", "02", "2015","2015");
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        Button filterButton = (Button) findViewById(R.id.button2);
+        final QueryManager datesearch = new QueryManager(MapsActivity.this);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int startMonthSpinner = Integer.parseInt(findViewById(R.id.spinner2).toString());
+                int startYearSpinner = Integer.parseInt(findViewById(R.id.spinner4).toString());
+                int lastMonthSpinner = Integer.parseInt(findViewById(R.id.spinner5).toString());
+                int lastYearSpinner = Integer.parseInt(findViewById(R.id.spinner3).toString());
+                if (datesearch.validDates(startMonthSpinner,lastMonthSpinner,startYearSpinner,
+                        lastYearSpinner)) {
+                    QueryManager.DateSearcher newsearch = datesearch.getDateSearcherTask();
+                    newsearch.execute(startMonthSpinner, lastMonthSpinner,
+                            startYearSpinner,lastYearSpinner);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(40.7128, 74.0060)));
+                } else {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(MapsActivity.this);
+                    dialog.setCancelable(true);
+                    dialog.setTitle("Sorry something is not right");
+                    dialog.setMessage("The dates entered are not in the right order." +
+                            " Please make sure your start date is before the end date");
+                    dialog.setCancelable(true);
+                    AlertDialog alertDialog = dialog.show();
+                }
+
+            }
+        }
+        );
+
+
+
     }
     public void addMarkers(RatReport addList) {
-       // for (RatReport value: addList.values()) {
             LatLng marker = new LatLng(addList.getLatitude(), addList.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(marker).title("Marker in Sydney"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
-        //}
+            mMap.addMarker(new MarkerOptions().position(marker).title("Unique Key:" + " "
+                    + addList.getUniqueKey() + " " + "Created Date:" + addList.getCreatedData()));
 
     }
 
