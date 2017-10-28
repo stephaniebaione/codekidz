@@ -165,7 +165,6 @@ public class QueryManager {
             final String lastMonth = args[1];
             final String lastYear = args[3];
 
-            //mMap.addMarker(new MarkerOptions().position(new LatLng(100,100)).title("yo"));
             firebaseDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -200,7 +199,7 @@ public class QueryManager {
                                     && month <= lastMonthInt)) {
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
-
+                                activity.addMarkers(ratReport);
                             }
                         }
                     }
@@ -213,6 +212,11 @@ public class QueryManager {
                 }
             });
             Log.d("hhh22222", "second" + rightDateList.size());
+            try {
+                Thread.sleep(70000);
+            } catch (InterruptedException e) {
+                int x = 7;
+            }
             return 7;
 
         }
@@ -221,6 +225,90 @@ public class QueryManager {
             dialog.setTitle("Loading");
             dialog.setCancelable(false);
             dialog.show();
+        }
+        protected void onPostExecute(Integer searched) {
+            //activity.addMarkers(searched);
+            dialog.dismiss();
+            Log.d("Debug", "executed");
+
+        }
+
+
+    }
+    //*****************************************************************************************
+    public class DateSearcher2 extends AsyncTask<Void, Void, Integer> {
+        Dialog dialog = new ProgressDialog(activity);
+        DateSearcher2(String firstMonth,String firstYear, String lastMonth, String lastYear) {
+            this.firstMonth = firstMonth;
+            this.firstYear = firstYear;
+            this.lastMonth = lastMonth;
+            this.lastYear = lastYear;
+        }
+        final String firstMonth;
+        final String firstYear;
+        final String lastMonth;
+        final String lastYear;
+        @Override
+        public Integer doInBackground(Void...params) {
+
+            return 7;
+
+        }
+
+        protected void onPreExecute() {
+            dialog.setTitle("Loading");
+            dialog.setCancelable(false);
+            dialog.show();
+            Query firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
+            final HashMap<Integer, RatReport> rightDateList = new HashMap<>();
+
+            firebaseDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.d("Debug","listened");
+
+                    int firstMonthInt = Integer.parseInt(firstMonth);
+                    int lastMonthInt = Integer.parseInt(lastMonth);
+                    int firstYearInt = Integer.parseInt(firstYear);
+                    int lastYearInt = Integer.parseInt(lastYear);
+                    //int count = 2;
+                    for (DataSnapshot ratData: dataSnapshot.getChildren()) {
+                        String date = ratData.child("Created Date").getValue().toString();
+                        String[] parts = date.split("/");
+                        int month = Integer.parseInt(parts[0]);
+                        int year = Integer.parseInt(parts[2].substring(0,4));
+                        //Checks if dates chosen are through the same year
+                        if (year == firstYearInt && firstYearInt == lastYearInt) {
+                            // Checks if dates are between the two chosen months
+                            if(month >= firstMonthInt
+                                    && month <= lastMonthInt) {
+                                RatReport ratReport = createReport(ratData);
+                                LatLng sydney = new LatLng(ratReport.getLatitude(), ratReport.getLongitude());
+                                //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
+                                activity.addMarkers(ratReport);
+                                Log.d("hhhhhhhhhhhhhhh", "being added" + rightDateList.size());
+                            }
+                            // Check statement for a span of more than one year
+                        } else {
+                            if ((year == firstYearInt && month >= firstMonthInt) || (year > firstYearInt
+                                    && year < lastYearInt) || (year == lastYearInt
+                                    && month <= lastMonthInt)) {
+                                RatReport ratReport = createReport(ratData);
+                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
+                                activity.addMarkers(ratReport);
+                            }
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("Debug", "Canceled");
+                }
+            });
+            Log.d("hhh22222", "second" + rightDateList.size());
         }
         protected void onPostExecute(Integer searched) {
             //activity.addMarkers(searched);
