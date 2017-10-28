@@ -4,7 +4,10 @@ import android.content.Loader;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
+import com.example.regina.ratapp.Model.Month;
 import com.example.regina.ratapp.Model.QueryManager;
 import com.example.regina.ratapp.Model.RatReport;
 import com.example.regina.ratapp.R;
@@ -21,6 +24,11 @@ import java.util.Iterator;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private Spinner stM;
+    private Spinner stY;
+    private Spinner endY;
+    private Spinner endM;
+
     private GoogleMap mMap;
     HashMap<Integer, RatReport> reportList = new HashMap<Integer, RatReport>();
     //private QueryManager thing = new QueryManager();
@@ -33,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        makeSpinners();
     }
 
 
@@ -78,6 +87,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
         //}
 
+    }
+
+    public void makeSpinners(){
+        stM = (Spinner) findViewById(R.id.spinner2);
+        stY = (Spinner) findViewById(R.id.spinner4);
+        endM = (Spinner) findViewById(R.id.spinner5);
+        endY = (Spinner) findViewById(R.id.spinner3);
+        ArrayAdapter<CharSequence> yearAdapt = ArrayAdapter.createFromResource(this, R.array.years, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> monthAdapt = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Month.values());
+
+        yearAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        monthAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        stY.setAdapter(yearAdapt);
+        endY.setAdapter(yearAdapt);
+        stM.setAdapter(monthAdapt);
+        endM.setAdapter(monthAdapt);
     }
 
 
