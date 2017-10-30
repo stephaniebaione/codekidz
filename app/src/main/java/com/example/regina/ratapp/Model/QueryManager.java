@@ -129,14 +129,15 @@ public class QueryManager {
                         //Checks if dates chosen are through the same year
                         if (year == firstYearInt && firstYearInt == lastYearInt) {
                             // Checks if dates are between the two chosen months
-                            if(month >= firstMonthInt
-                                    && month <= lastMonthInt) {
+                            if (month == firstMonthInt && firstMonthInt == lastMonthInt) {
                                 RatReport ratReport = createReport(ratData);
-                                LatLng sydney = new LatLng(ratReport.getLatitude(), ratReport.getLongitude());
-                                //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
                                 activity.addMarkers(ratReport);
-                                Log.d("hhhhhhhhhhhhhhh", "being added" + rightDateList.size());
+                            } else if(month >= firstMonthInt
+                                    && month <= lastMonthInt) {
+                                RatReport ratReport = createReport(ratData);
+                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
+                                activity.addMarkers(ratReport);
                             }
                             // Check statement for a span of more than one year
                         } else {
