@@ -87,10 +87,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int lastYear = Integer.parseInt((String)lastYearSpinner.getSelectedItem());
                 if (datesearch.validDates(startMonthValue,lastMonthValue,startYear,
                         lastYear)) {
+                    mMap.clear();
                     QueryManager.DateSearcher newsearch = datesearch.getDateSearcherTask();
                     newsearch.execute(startMonthValue, lastMonthValue,
                             startYear,lastYear);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(40.7128, 74.0060)));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(40.7128, -74.0060)));
                 } else {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(MapsActivity.this);
                     dialog.setCancelable(true);
