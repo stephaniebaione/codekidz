@@ -1,15 +1,27 @@
 package com.example.regina.ratapp.Controller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.regina.ratapp.Model.GraphQueryManager;
 import com.example.regina.ratapp.Model.Month;
+import com.example.regina.ratapp.Model.QueryManager;
 import com.example.regina.ratapp.R;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GraphActivity extends AppCompatActivity {
 
@@ -17,6 +29,8 @@ public class GraphActivity extends AppCompatActivity {
     private Spinner stY;
     private Spinner endY;
     private Spinner endM;
+    private GraphView graph;
+    //DataPoint[] dataArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,17 +38,70 @@ public class GraphActivity extends AppCompatActivity {
         setContentView(R.layout.activity_graph);
         createSpinners();
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
+        graph = (GraphView) findViewById(R.id.graph);
+        graphManipulate();
+    }
+
+    /**
+     * gets the data from the spinners and passes into the GraphQueryManager Class to manipulate it.
+     */
+    private void graphManipulate(){
+        Button grapher = (Button) findViewById(R.id.graphAgain);
+        final GraphQueryManager dateSearch = new GraphQueryManager(GraphActivity.this);
+        grapher.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Month startM = (Month) stM.getSelectedItem();
+                int startMV = Integer.parseInt(startM.getMonthCode());
+                int startYear = Integer.parseInt((String)stY.getSelectedItem());
+                Month endMonth = (Month) endM.getSelectedItem();
+                int endMV = Integer.parseInt(endMonth.getMonthCode());
+                int endYear = Integer.parseInt((String)endY.getSelectedItem());
+
+                if (dateSearch.validDates(startMV, endMV, startYear,endYear)){
+                    graph.removeAllSeries();
+                    GraphQueryManager.DateSearcher newSearch = dateSearch.getDateSearcherTask();
+                    newSearch.execute(startMV, endMV, startYear, endYear);
+
+                }else {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(GraphActivity.this);
+                    dialog.setCancelable(true);
+                    dialog.setTitle("Oh rats! Something is not right");
+                    dialog.setMessage("The dates entered are not in the right order." +
+                            " Please make sure your start date is before the end date");
+                    dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.setCancelable(true);
+                    AlertDialog alertDialog = dialog.show();
+                }
+
+            }
         });
+    }
+
+    /**
+     * creates the bars on the graph and graph.
+     * @param dataList list of number of reports made each month
+     */
+    public void createGraph(HashMap<String,Integer> dataList){
+        ArrayList<DataPoint> dataArray = new ArrayList<DataPoint>();
+        for (Map.Entry<String, Integer> entry: dataList.entrySet()) {
+            DataPoint point = new DataPoint(Integer.parseInt(entry.getKey()),entry.getValue());
+            dataArray.add(point);
+            Log.d("graphing", entry.getKey() + " "+ entry.getValue());
+        }
+        DataPoint[] points = dataArray.toArray(new DataPoint[dataArray.size()]);
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
         graph.addSeries(series);
     }
 
+    /**
+     * creates the spinners and populates them with choices
+     */
     public void createSpinners(){
         stM = (Spinner) findViewById(R.id.spinner2);
         stY = (Spinner) findViewById(R.id.spinner3);

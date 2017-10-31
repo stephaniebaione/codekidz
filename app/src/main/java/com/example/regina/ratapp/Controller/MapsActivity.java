@@ -61,12 +61,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
+     *
+     * @param googleMap map that we manipulate
      */
-
-        
-
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -115,6 +112,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+
+    /**
+     * adds the markers with descriptions to the map
+     * @param addList list of reports to be added
+     */
     public void addMarkers(RatReport addList) {
             LatLng marker = new LatLng(addList.getLatitude(), addList.getLongitude());
             mMap.addMarker(new MarkerOptions().position(marker).title("Unique Key:" + " "
@@ -122,6 +124,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * instantiates spinners and populates them
+     */
     public void makeSpinners(){
         stM = (Spinner) findViewById(R.id.spinner2);
         stY = (Spinner) findViewById(R.id.spinner4);
