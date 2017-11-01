@@ -1,46 +1,29 @@
 package com.example.regina.ratapp.Model;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.AsyncTaskLoader;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.example.regina.ratapp.Controller.*;
-import com.example.regina.ratapp.Controller.MapsActivity;
-import com.example.regina.ratapp.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.Timer;
 
 /**
- * Created by Abby on 10/26/2017.
+ * Created by Regina on 10/31/2017.
  */
 
-public class QueryManager {
-     HashMap<Integer, RatReport> rightDateList = new HashMap<Integer, RatReport>();
-    public MapsActivity activity;
+public class GraphQueryManager {
+    HashMap<Integer, RatReport> rightDateList = new HashMap<Integer, RatReport>();
+    public com.example.regina.ratapp.Controller.GraphActivity activity;
 
 
-    public QueryManager(MapsActivity activity) {
+    public GraphQueryManager(com.example.regina.ratapp.Controller.GraphActivity activity) {
         this.activity = activity;
     }
 
@@ -80,8 +63,8 @@ public class QueryManager {
         );
         return ratR;
     }
-    public DateSearcher getDateSearcherTask() {
-        return new DateSearcher();
+    public GraphQueryManager.DateSearcher getDateSearcherTask() {
+        return new GraphQueryManager.DateSearcher();
     }
     public Boolean validDates(int firstMonth, int lastMonth, int firstYear, int lastYear) {
         if (firstYear > lastYear) {
@@ -109,6 +92,7 @@ public class QueryManager {
         public Integer doInBackground(Integer...args) {
             Query firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
             final HashMap<Integer, RatReport> rightDateList = new HashMap<>();
+            final HashMap<String,Integer> dataPointList=new HashMap<>();
             final int firstMonthInt = args[0];
             final int firstYearInt = args[2];
             final int lastMonthInt = args[1];
@@ -133,16 +117,32 @@ public class QueryManager {
                             if (month == firstMonthInt && firstMonthInt == lastMonthInt) {
                                 Log.d("aaaaaaaacheck2", " " + year + " first " + firstMonthInt + " second " + lastMonthInt );
 
+                                if (dataPointList.containsKey(month+"")){
+                                    int prevCount = dataPointList.get(month+"");
+                                    prevCount++;
+                                    dataPointList.remove(month+"");
+                                    dataPointList.put(month+"",prevCount);
+                                } else {
+                                    dataPointList.put(month+"",1);
+                                }
+
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
-                                activity.addMarkers(ratReport);
                             } else if(month >= firstMonthInt
                                     && month <= lastMonthInt) {
                                 Log.d("aaaaaaaacheck3", " " + year + " first " + firstMonthInt + " second " + lastMonthInt );
 
+                                if (dataPointList.containsKey(month+"")){
+                                    int prevCount = dataPointList.get(month+"");
+                                    prevCount++;
+                                    dataPointList.remove(month+"");
+                                    dataPointList.put(month+"",prevCount);
+                                } else {
+                                    dataPointList.put(month+"",1);
+                                }
+
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
-                                activity.addMarkers(ratReport);
                             }
                             // Check statement for a span of more than one year
                         } else {
@@ -152,12 +152,21 @@ public class QueryManager {
                                 Log.d("aaaaaaaacheck4", " " + year + " " + month +  " first " + firstYearInt + " second " + lastYearInt );
                                 Log.d("aaaaaaaacheck4", " " + year + " first " + firstMonthInt + " second " + lastMonthInt );
 
+                                if (dataPointList.containsKey(year+month+"")){
+                                    int prevCount = dataPointList.get(year+month+"");
+                                    prevCount++;
+                                    dataPointList.remove(year+month+"");
+                                    dataPointList.put(year+month+"",prevCount);
+                                } else {
+                                    dataPointList.put(year+month+"",1);
+                                }
+
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
-                                activity.addMarkers(ratReport);
                             }
                         }
                     }
+                    activity.createGraph(dataPointList);
 
                 }
 
@@ -194,7 +203,3 @@ public class QueryManager {
 
 
 }
-
-
-
-
