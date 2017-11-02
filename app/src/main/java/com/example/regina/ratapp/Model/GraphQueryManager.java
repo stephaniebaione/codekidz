@@ -102,6 +102,7 @@ public class GraphQueryManager {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("Debug","listened");
+                    Boolean sameY = false;
 
 
                     //int count = 2;
@@ -143,7 +144,9 @@ public class GraphQueryManager {
 
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
+
                             }
+                            sameY = true;
                             // Check statement for a span of more than one year
                         } else {
                             if ((year == firstYearInt && month >= firstMonthInt) || (year > firstYearInt
@@ -152,21 +155,29 @@ public class GraphQueryManager {
                                 Log.d("aaaaaaaacheck4", " " + year + " " + month +  " first " + firstYearInt + " second " + lastYearInt );
                                 Log.d("aaaaaaaacheck4", " " + year + " first " + firstMonthInt + " second " + lastMonthInt );
 
-                                if (dataPointList.containsKey(year+month+"")){
-                                    int prevCount = dataPointList.get(year+month+"");
-                                    prevCount++;
-                                    dataPointList.remove(year+month+"");
-                                    dataPointList.put(year+month+"",prevCount);
+                                String formatMonth;
+                                if (month < 10){
+                                    formatMonth = "0"+month;
                                 } else {
-                                    dataPointList.put(year+month+"",1);
+                                    formatMonth = month+"";
+                                }
+                                double testMonth = (month-1)/12.0;
+                                if (dataPointList.containsKey(year+testMonth+"")){
+                                    int prevCount = dataPointList.get(year+testMonth+"");
+                                    prevCount++;
+                                    dataPointList.remove(year+testMonth+"");
+                                    dataPointList.put(year+testMonth+"",prevCount);
+                                } else {
+                                    dataPointList.put(year+testMonth+"",1);
                                 }
 
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
                             }
+                            sameY = false;
                         }
                     }
-                    activity.createGraph(dataPointList);
+                    activity.createGraph(dataPointList,sameY);
 
                 }
 

@@ -2,6 +2,7 @@ package com.example.regina.ratapp.Controller;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,10 @@ public class GraphActivity extends AppCompatActivity {
         createSpinners();
 
         graph = (GraphView) findViewById(R.id.graph);
+        graph.getViewport().setScrollable(true); // enables horizontal scrolling
+        graph.getViewport().setScrollableY(true); // enables vertical scrolling
+        graph.getViewport().setScalable(true); // enables horizontal zooming and scrolling
+        graph.getViewport().setScalableY(true);
         graphManipulate();
     }
 
@@ -87,16 +92,39 @@ public class GraphActivity extends AppCompatActivity {
      * creates the bars on the graph and graph.
      * @param dataList list of number of reports made each month
      */
-    public void createGraph(HashMap<String,Integer> dataList){
+    public void createGraph(HashMap<String,Integer> dataList, Boolean sameYear){
         ArrayList<DataPoint> dataArray = new ArrayList<DataPoint>();
+        double minX = 500000;
+        if (sameYear) {
+            dataArray.add(new DataPoint(0, 0));
+            Log.d("graphing", "datapoint is 0");
+        } else {
+            dataArray.add(new DataPoint(201000,0));
+            Log.d("graphing", "datapoint is 09");
+        }
+        double maxX = 0;
         for (Map.Entry<String, Integer> entry: dataList.entrySet()) {
-            DataPoint point = new DataPoint(Integer.parseInt(entry.getKey()),entry.getValue());
+            DataPoint point = new DataPoint(Double.parseDouble(entry.getKey()),entry.getValue());
             dataArray.add(point);
+            if (Double.parseDouble(entry.getKey()) > maxX){
+                maxX = Double.parseDouble(entry.getKey());
+            }
+            if (Double.parseDouble(entry.getKey()) < minX){
+                minX = Double.parseDouble(entry.getKey());
+            }
             Log.d("graphing", entry.getKey() + " "+ entry.getValue());
         }
         DataPoint[] points = dataArray.toArray(new DataPoint[dataArray.size()]);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
+        //series.setSpacing(10);
         graph.addSeries(series);
+        series.setDrawValuesOnTop(true);
+        series.setValuesOnTopColor(Color.RED);
+        //graph.onDataChanged(false,false);
+        graph.getViewport().setMaxX(maxX + 1);
+        graph.getViewport().setMinX(minX - 1);
+
+
     }
 
     /**
