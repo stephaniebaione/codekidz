@@ -116,13 +116,13 @@ public class GraphActivity extends AppCompatActivity {
         }
         DataPoint[] points = dataArray.toArray(new DataPoint[dataArray.size()]);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
-        //series.setSpacing(10);
+        series.setSpacing(50);
         graph.addSeries(series);
         series.setDrawValuesOnTop(true);
         series.setValuesOnTopColor(Color.RED);
         //graph.onDataChanged(false,false);
-        graph.getViewport().setMaxX(maxX + 1);
-        graph.getViewport().setMinX(minX - 1);
+        graph.getViewport().setMaxX(maxX );
+        graph.getViewport().setMinX(minX );
 
 
     }

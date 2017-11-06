@@ -80,9 +80,21 @@ public class QueryManager {
         );
         return ratR;
     }
+    /**
+     * initializes the date searching class so we can use it
+     * @return the date searcher instance
+     */
     public DateSearcher getDateSearcherTask() {
         return new DateSearcher();
     }
+    /**
+     * evaluates whether a date is valid and able to be mapped
+     * @param firstMonth start month
+     * @param lastMonth end month
+     * @param firstYear start year
+     * @param lastYear end year
+     * @return whether this date range is valid or not
+     */
     public Boolean validDates(int firstMonth, int lastMonth, int firstYear, int lastYear) {
         if (firstYear > lastYear) {
             return false;

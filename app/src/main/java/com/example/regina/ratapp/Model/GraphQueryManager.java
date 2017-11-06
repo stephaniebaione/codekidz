@@ -22,7 +22,10 @@ public class GraphQueryManager {
     HashMap<Integer, RatReport> rightDateList = new HashMap<Integer, RatReport>();
     public com.example.regina.ratapp.Controller.GraphActivity activity;
 
-
+    /**
+     * constructor for this class
+     * @param activity what activity is passed in
+     */
     public GraphQueryManager(com.example.regina.ratapp.Controller.GraphActivity activity) {
         this.activity = activity;
     }
@@ -63,9 +66,23 @@ public class GraphQueryManager {
         );
         return ratR;
     }
+
+    /**
+     * initializes the date searching class so we can use it
+     * @return the date searcher instance
+     */
     public GraphQueryManager.DateSearcher getDateSearcherTask() {
         return new GraphQueryManager.DateSearcher();
     }
+
+    /**
+     * evaluates whether a date is valid and able to be graphed
+     * @param firstMonth start month
+     * @param lastMonth end month
+     * @param firstYear start year
+     * @param lastYear end year
+     * @return whether this date range is valid or not
+     */
     public Boolean validDates(int firstMonth, int lastMonth, int firstYear, int lastYear) {
         if (firstYear > lastYear) {
             return false;
