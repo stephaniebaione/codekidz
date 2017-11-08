@@ -1,7 +1,7 @@
 package com.example.regina.ratapp.Model;
 
 /**
- * Created by mrobjectionman on 10/28/2017.
+ * Created by Evan on 10/28/2017.
  */
 
 public enum Month {

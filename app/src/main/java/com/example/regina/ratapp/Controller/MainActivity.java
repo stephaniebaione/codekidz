@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //troubleshooting
-                Log.d("Testing", "data changed caleled");
+                Log.d("Testing", "data changed canceled");
                 if (dataSnapshot.hasChildren()){
                     Log.d("Testing", "Has children");
                 }
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     reportHashMap.put(ratR.getUniqueKey(), ratR);
                     String address = ""+ ratR.getUniqueKey();
                     PROJ.add(address);
-                    Log.d("Testing", "actul add2");
+                    Log.d("Testing", "actual add2");
                 }
                 Log.d("Testing", "gained adapter");
                 adapt.notifyDataSetChanged();
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
             /**
              * operates if data is not loaded correctly
-             * @param databaseError error that occured
+             * @param databaseError error that occurred
              */
             @Override
             public void onCancelled(DatabaseError databaseError) {

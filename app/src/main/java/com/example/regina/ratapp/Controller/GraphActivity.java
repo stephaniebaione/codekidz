@@ -51,9 +51,9 @@ public class GraphActivity extends AppCompatActivity {
      * gets the data from the spinners and passes into the GraphQueryManager Class to manipulate it.
      */
     private void graphManipulate(){
-        Button grapher = (Button) findViewById(R.id.graphAgain);
+        Button graphing = (Button) findViewById(R.id.graphAgain);
         final GraphQueryManager dateSearch = new GraphQueryManager(GraphActivity.this);
-        grapher.setOnClickListener(new View.OnClickListener(){
+        graphing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Month startM = (Month) stM.getSelectedItem();
@@ -97,10 +97,10 @@ public class GraphActivity extends AppCompatActivity {
         double minX = 500000;
         if (sameYear) {
             dataArray.add(new DataPoint(0, 0));
-            Log.d("graphing", "datapoint is 0");
+            Log.d("graphing", "data_point is 0");
         } else {
             dataArray.add(new DataPoint(201000,0));
-            Log.d("graphing", "datapoint is 09");
+            Log.d("graphing", "data_point is 09");
         }
         double maxX = 0;
         for (Map.Entry<String, Integer> entry: dataList.entrySet()) {

@@ -68,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Button filterButton = (Button) findViewById(R.id.button2);
-        final QueryManager datesearch = new QueryManager(MapsActivity.this);
+        final QueryManager date_search = new QueryManager(MapsActivity.this);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,11 +82,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int lastMonthValue = Integer.parseInt(lastMonth.getMonthCode());
                 Spinner lastYearSpinner = (Spinner)findViewById(R.id.spinner3);
                 int lastYear = Integer.parseInt((String)lastYearSpinner.getSelectedItem());
-                if (datesearch.validDates(startMonthValue,lastMonthValue,startYear,
+                if (date_search.validDates(startMonthValue,lastMonthValue,startYear,
                         lastYear)) {
                     mMap.clear();
-                    QueryManager.DateSearcher newsearch = datesearch.getDateSearcherTask();
-                    newsearch.execute(startMonthValue, lastMonthValue,
+                    QueryManager.DateSearcher new_search = date_search.getDateSearcherTask();
+                    new_search.execute(startMonthValue, lastMonthValue,
                             startYear,lastYear);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(40.7128, -74.0060)));
                 } else {

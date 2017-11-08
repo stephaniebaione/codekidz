@@ -7,23 +7,23 @@ import java.util.HashMap;
  */
 
 public class Admin {
-    String emailaddress;
+    String email_address;
     String password;
     static HashMap<String, String> adminList = new HashMap<>();
 
     /**
-     * constructer for an admin user
-     * @param emailaddress email of the admin
+     * constructor for an admin user
+     * @param email_address email of the admin
      * @param password password of the user
      */
-    public Admin(String emailaddress, String password){
-        this.emailaddress = emailaddress;
+    public Admin(String email_address, String password){
+        this.email_address = email_address;
         this.password = password;
     }
 
-    public String getEmailaddress(){return emailaddress;}
-    public void setEmailaddress(String emailaddress) {
-        this.emailaddress = emailaddress;
+    public String getEmail_address(){return email_address;}
+    public void setEmail_address(String email_address) {
+        this.email_address = email_address;
     }
 
     public String getPassword() {
@@ -37,19 +37,19 @@ public class Admin {
 
     /**
      * tells if the admin is in the system or not
-     * @param emailAddress email to be checked
+     * @param email_Address email to be checked
      * @return true if admin is in the system
      */
-    public Boolean doesAccountExist(String emailAddress) {
+    public Boolean doesAccountExist(String email_Address) {
 
-        return adminList.containsKey(emailAddress.toLowerCase());
+        return adminList.containsKey(email_Address.toLowerCase());
     }
 
     /*  adds user to list of users and adds their email to the account list... I think the account
     list might be able to be deleted
      */
     public void addNewAdmin(Admin newUser) {
-        adminList.put(newUser.getEmailaddress().toLowerCase(),
+        adminList.put(newUser.getEmail_address().toLowerCase(),
                 newUser.getPassword());
 
     }

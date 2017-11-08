@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private User dum;
-    private Admin dummer;
+    private Admin dumber;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "MainActivity";
@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         dum = new User("foo@example.com","hello");
         //dum.addNewUser(dum);
-        dummer = new Admin("admin@test.com", "pass");
-        //dummer.addNewAdmin(dummer);
+        dumber = new Admin("admin@test.com", "pass");
+        //dumber.addNewAdmin(dumber);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {

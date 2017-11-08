@@ -130,11 +130,11 @@ public class GraphQueryManager {
                         int year = Integer.parseInt(parts[2].substring(0,4));
                         //Checks if dates chosen are through the same year
                         if ((year == firstYearInt) && (firstYearInt == lastYearInt)) {
-                            Log.d("aaaaaaaacheck1", " " + year + " first " +
+                            Log.d("check", " " + year + " first " +
                                     firstYearInt + " second " + lastYearInt );
                             // Checks if dates are between the two chosen months
                             if (month == firstMonthInt && firstMonthInt == lastMonthInt) {
-                                Log.d("aaaaaaaacheck2", " " + year + " first " +
+                                Log.d("check", " " + year + " first " +
                                         firstMonthInt + " second " + lastMonthInt );
 
                                 if (dataPointList.containsKey(month+"")){
@@ -150,7 +150,7 @@ public class GraphQueryManager {
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
                             } else if(month >= firstMonthInt
                                     && month <= lastMonthInt) {
-                                Log.d("aaaaaaaacheck3", " " + year + " first " +
+                                Log.d("check", " " + year + " first " +
                                         firstMonthInt + " second " + lastMonthInt );
 
                                 if (dataPointList.containsKey(month+"")){
@@ -172,9 +172,9 @@ public class GraphQueryManager {
                             if ((year == firstYearInt && month >= firstMonthInt)
                                     || (year > firstYearInt && year < lastYearInt)
                                     || (year == lastYearInt && month <= lastMonthInt)) {
-                                Log.d("aaaaaaaacheck4", " " + year + " " + month
+                                Log.d("check", " " + year + " " + month
                                         +  " first " + firstYearInt + " second " + lastYearInt );
-                                Log.d("aaaaaaaacheck4", " " + year + " first "
+                                Log.d("check", " " + year + " first "
                                         + firstMonthInt + " second " + lastMonthInt );
 
                                 String formatMonth;

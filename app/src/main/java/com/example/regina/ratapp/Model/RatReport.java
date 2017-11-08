@@ -24,7 +24,7 @@ public class RatReport {
      * @param incidentZip zip code of incident
      * @param incidentAddress address of incident
      * @param city city of incident
-     * @param borough neighborhoodo f incident
+     * @param borough neighborhood f incident
      * @param latitude latitude of incident
      * @param longitude longitude of incident
      */

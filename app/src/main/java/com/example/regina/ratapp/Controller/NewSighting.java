@@ -43,7 +43,7 @@ public class NewSighting extends AppCompatActivity {
     private static int counter =1;
 
     /**
-     * On create method, create all instances of the objects in whch the user inputs
+     * On create method, create all instances of the objects in which the user inputs
      * data of the rat report and the button to help the user navigate
      * @param savedInstanceState
      */
