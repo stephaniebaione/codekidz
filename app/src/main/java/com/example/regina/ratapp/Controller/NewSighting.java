@@ -119,7 +119,8 @@ public class NewSighting extends AppCompatActivity {
         boroughSpinner.setAdapter(boroughAdapter);
     }
 
-    //check if any entry is empty or invalid then either alerts the user to a mistake or makes the report
+    //check if any entry is empty or invalid then either alerts the user to a mistake or
+    // makes the report
     private void attemptReport(){
         View focusView = null;
         if (checkIfEmpty(addressView)){
@@ -151,7 +152,8 @@ public class NewSighting extends AppCompatActivity {
          else if (locationSpinner.getSelectedItemPosition() == 0) {
             longView.setError("Field cannot be empty.");
 
-            //this crashes, but this is the idea of what we want to do if we are adding a "PLEASE SELECT ONE" item for the spinners
+            //this crashes, but this is the idea of what we want to do if we are adding a
+            "PLEASE SELECT ONE" item for the spinners
         }
          */
         if (uncompleted){
@@ -170,9 +172,11 @@ public class NewSighting extends AppCompatActivity {
                     locationSpinner.getSelectedItem().toString(),zipView.getText().toString(),
                     addressView.getText().toString(),
                     cityView.getText().toString(), boroughSpinner.getSelectedItem().toString(),
-                    Double.parseDouble(latView.getText().toString()),Double.parseDouble(longView.getText().toString()));
+                    Double.parseDouble(latView.getText().toString()),
+                    Double.parseDouble(longView.getText().toString()));
             counter++;
-            pushRatDataToFirebase(newReport);  //UNCOMMENT THIS WHEN WE WANT THE DATA TO ACTUALLY BE PUSHED TO FIREBASE
+            pushRatDataToFirebase(newReport);  //UNCOMMENT THIS WHEN WE WANT THE DATA TO ACTUALLY BE
+                                               // PUSHED TO FIREBASE
             //userUpdate();
             Intent back = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(back);
@@ -185,7 +189,7 @@ public class NewSighting extends AppCompatActivity {
      * @return a boolean value representing whether the EditText was empty
      */
     private boolean checkIfEmpty(EditText etText) {
-        if (etText.getText().toString().trim().length() > 0)
+        if (!etText.getText().toString().trim().isEmpty())
             return false;
 
         return true;

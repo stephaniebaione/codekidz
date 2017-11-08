@@ -136,8 +136,10 @@ public class GraphActivity extends AppCompatActivity {
         endM = (Spinner) findViewById(R.id.spinner);
         endY = (Spinner) findViewById(R.id.spinner4);
 
-        ArrayAdapter<CharSequence> yearAdapt = ArrayAdapter.createFromResource(this, R.array.years, android.R.layout.simple_spinner_item);
-        ArrayAdapter<String> monthAdapt = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Month.values());
+        ArrayAdapter<CharSequence> yearAdapt = ArrayAdapter.createFromResource(this,
+                R.array.years, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> monthAdapt = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, Month.values());
 
         yearAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monthAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

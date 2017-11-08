@@ -168,7 +168,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             mPasswordView.setError("Log in attempt failed");
                         } else {
                             showProgress(true);
-                            mAuthTask = new UserLoginTask(mEmailView.getText().toString(), mPasswordView.getText().toString());
+                            mAuthTask = new UserLoginTask(mEmailView.getText().toString(),
+                                    mPasswordView.getText().toString());
                             mAuthTask.execute((Void) null);
                             Intent i = new Intent(getApplicationContext(),MainActivity.class);
                             i.putExtra("Email", mEmailView.getText().toString());

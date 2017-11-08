@@ -61,7 +61,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * @param lastYear the same year or next year the user wants to view
      * @return
      */
-    public HashMap<Integer, RatReport> MapDataDateSearch(final String firstMonth, final String lastMonth, final String firstYear, final String lastYear) {
+    public HashMap<Integer, RatReport> MapDataDateSearch(final String firstMonth,
+                                                         final String lastMonth,
+                                                         final String firstYear,
+                                                         final String lastYear) {
         Query firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
         final HashMap<Integer, RatReport> rightDateList = new HashMap<>();
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {

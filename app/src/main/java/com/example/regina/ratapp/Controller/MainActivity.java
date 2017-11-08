@@ -111,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
         buttonClicks();
         Log.d("Testing", "what the what");
         //adapter for list view and puts data in view
-        adapt = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,PROJ);
+        adapt = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1,PROJ);
         listView.setAdapter(adapt);
         Log.d("Testing", "Size is: " + PROJ.size());
 

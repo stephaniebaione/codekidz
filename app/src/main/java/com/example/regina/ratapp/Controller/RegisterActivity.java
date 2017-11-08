@@ -114,8 +114,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-    // a helper that checks if account information exists already. If not it checks if it is a user or admin and then adds
-    // information to account list
+    // a helper that checks if account information exists already. If not it checks if it is a user
+    // or admin and then adds information to account list
 
     public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
         User newUser = new User(emailAddress, givenPassword);

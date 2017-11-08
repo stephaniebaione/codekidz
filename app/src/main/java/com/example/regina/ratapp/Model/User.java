@@ -92,8 +92,8 @@ public class User {
     }
 
     public String toString(){
-        String str = "Email:"+this.getEmailaddress() + "\n Reports Made:" + this.getNumberOfReports()+
-                "\n Title:" + this.getTitle();
+        String str = "Email:"+this.getEmailaddress() + "\n Reports Made:" +
+                this.getNumberOfReports()+ "\n Title:" + this.getTitle();
         return str;
     }
 
