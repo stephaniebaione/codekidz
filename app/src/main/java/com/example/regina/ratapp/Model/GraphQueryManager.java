@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.regina.ratapp.Controller.*;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -15,12 +14,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 /**
- * Created by Regina on 10/31/2017.
+ * Manager that sorts through the selected date range chosen by the user and calculates the reports
+ * made in each month.
  */
 
 public class GraphQueryManager {
-    HashMap<Integer, RatReport> rightDateList = new HashMap<Integer, RatReport>();
-    public com.example.regina.ratapp.Controller.GraphActivity activity;
+
+    private final com.example.regina.ratapp.Controller.GraphActivity activity;
 
     /**
      * constructor for this class
@@ -36,7 +36,7 @@ public class GraphQueryManager {
      * @param ratSnapshot Data from Snapshot
      * @return a RatReport based on the firebase data
      */
-    public RatReport createReport(DataSnapshot ratSnapshot) {
+    private RatReport createReport(DataSnapshot ratSnapshot) {
         Double latitude;
         try {
             latitude = ratSnapshot.child("Latitude").getValue(Double.class);
@@ -55,7 +55,7 @@ public class GraphQueryManager {
         }
         //creates a new rat report and then adds it to a hashmap for later reference
         //and adds the key to an arraylist so it can be viewed in app
-        RatReport ratR = new RatReport(
+        return new RatReport(
                 ratSnapshot.child("Unique Key").getValue(Integer.class),
                 ratSnapshot.child("Created Date").getValue().toString(),
                 ratSnapshot.child("Location Type").getValue().toString(),
@@ -64,7 +64,6 @@ public class GraphQueryManager {
                 ratSnapshot.child("City").getValue().toString(),
                 ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
         );
-        return ratR;
     }
 
     /**
@@ -98,7 +97,7 @@ public class GraphQueryManager {
 
 
     public class DateSearcher extends AsyncTask<Integer, Void, Integer> {
-        Dialog dialog = new ProgressDialog(activity);
+        final Dialog dialog = new ProgressDialog(activity);
 
         /**
          *
@@ -120,8 +119,6 @@ public class GraphQueryManager {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("Debug","listened");
                     Boolean sameY = false;
-
-
                     //int count = 2;
                     for (DataSnapshot ratData: dataSnapshot.getChildren()) {
                         String date = ratData.child("Created Date").getValue().toString();
@@ -130,13 +127,8 @@ public class GraphQueryManager {
                         int year = Integer.parseInt(parts[2].substring(0,4));
                         //Checks if dates chosen are through the same year
                         if ((year == firstYearInt) && (firstYearInt == lastYearInt)) {
-                            Log.d("check", " " + year + " first " +
-                                    firstYearInt + " second " + lastYearInt );
                             // Checks if dates are between the two chosen months
-                            if (month == firstMonthInt && firstMonthInt == lastMonthInt) {
-                                Log.d("check", " " + year + " first " +
-                                        firstMonthInt + " second " + lastMonthInt );
-
+                            if ((month == firstMonthInt) && (firstMonthInt == lastMonthInt)) {
                                 if (dataPointList.containsKey(month+"")){
                                     int prevCount = dataPointList.get(month+"");
                                     prevCount++;
@@ -148,11 +140,8 @@ public class GraphQueryManager {
 
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
-                            } else if(month >= firstMonthInt
-                                    && month <= lastMonthInt) {
-                                Log.d("check", " " + year + " first " +
-                                        firstMonthInt + " second " + lastMonthInt );
-
+                            } else if((month >= firstMonthInt)
+                                    && (month <= lastMonthInt)) {
                                 if (dataPointList.containsKey(month+"")){
                                     int prevCount = dataPointList.get(month+"");
                                     prevCount++;
@@ -161,28 +150,15 @@ public class GraphQueryManager {
                                 } else {
                                     dataPointList.put(month+"",1);
                                 }
-
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
-
                             }
                             sameY = true;
                             // Check statement for a span of more than one year
                         } else {
-                            if ((year == firstYearInt && month >= firstMonthInt)
-                                    || (year > firstYearInt && year < lastYearInt)
-                                    || (year == lastYearInt && month <= lastMonthInt)) {
-                                Log.d("check", " " + year + " " + month
-                                        +  " first " + firstYearInt + " second " + lastYearInt );
-                                Log.d("check", " " + year + " first "
-                                        + firstMonthInt + " second " + lastMonthInt );
-
-                                String formatMonth;
-                                if (month < 10){
-                                    formatMonth = "0"+month;
-                                } else {
-                                    formatMonth = month+"";
-                                }
+                            if (((year == firstYearInt) && (month >= firstMonthInt))
+                                    || ((year > firstYearInt) && (year < lastYearInt))
+                                    || ((year == lastYearInt) && (month <= lastMonthInt))) {
                                 double testMonth = (month-1)/12.0;
                                 if (dataPointList.containsKey(year+testMonth+"")){
                                     int prevCount = dataPointList.get(year+testMonth+"");
@@ -192,7 +168,6 @@ public class GraphQueryManager {
                                 } else {
                                     dataPointList.put(year+testMonth+"",1);
                                 }
-
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
                             }
@@ -200,7 +175,6 @@ public class GraphQueryManager {
                         }
                     }
                     activity.createGraph(dataPointList,sameY);
-
                 }
 
                 @Override
@@ -218,6 +192,7 @@ public class GraphQueryManager {
 
         }
         // creates a dialog box to show the user it is processing
+        @Override
         protected void onPreExecute() {
             dialog.setTitle("Loading");
             dialog.setCancelable(false);
@@ -225,6 +200,7 @@ public class GraphQueryManager {
 
         }
         //closes dialog when done
+        @Override
         protected void onPostExecute(Integer searched) {
             dialog.dismiss();
             Log.d("Debug", "executed");
