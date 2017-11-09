@@ -45,7 +45,6 @@ import java.util.List;
  */
 public class LoginActivity extends AppCompatActivity {
 
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -165,6 +164,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void callLoginForTesting() {
+        attemptLogin();
     }
 
     /**
