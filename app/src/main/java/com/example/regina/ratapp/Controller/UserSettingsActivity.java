@@ -10,7 +10,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     /**
      * On create method, create all instances of the objects in which the user inputs
      * data of the rat report and the button to help the user navigate
-     * @param savedInstanceState
+     * @param savedInstanceState an instance of userSettingsActivity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     }
 
     /**
-     * sets the email textview to have the current user's email
+     * sets the email textView to have the current user's email
      */
     public void populateEmail() {
         String em = getIntent().getExtras().getString("Email");

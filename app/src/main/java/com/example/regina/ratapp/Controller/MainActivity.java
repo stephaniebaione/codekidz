@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,10 +27,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public ListView listView;
-    public ArrayAdapter adapt;
-    public HashMap<Integer, RatReport> reportHashMap = new HashMap<>();
-    public List<String> PROJ = new ArrayList<String>();
+    private ListView listView;
+    private ArrayAdapter adapt;
+    private final SparseArray<RatReport> reportHashMap = new SparseArray<>();
+    private final List<String> PROJ = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,17 +138,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * gets the instance of our firebase database
      */
-    public FirebaseDatabase getDatabase() {
-        FirebaseDatabase mBase = FirebaseDatabase.getInstance();
-        //mBase.setPersistenceEnabled(true);
-        return mBase;
-
+    private FirebaseDatabase getDatabase() {
+        return FirebaseDatabase.getInstance();
     }
 
     /**
      * loads and creates the buttons make them functional
      */
-    public void buttonClicks() {
+    private void buttonClicks() {
         //button that logs the user out
         Button logoutBtn = (Button) findViewById(R.id.logOut);
         logoutBtn.setOnClickListener(new View.OnClickListener(){ @Override
@@ -162,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             // TODO Auto-generated method stub
             Intent i = new Intent(getApplicationContext(),NewSighting.class);
-            i.putExtra("Email",getIntent().getExtras().getString("Email").toString());
-            Log.d("debugging",getIntent().getExtras().getString("Email").toString());
+            i.putExtra("Email",getIntent().getExtras().getString("Email"));
+            Log.d("debugging",getIntent().getExtras().getString("Email"));
             startActivity(i);
         }});
 
@@ -188,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             // TODO Auto-generated method stub
             Intent i = new Intent(getApplicationContext(),UserSettingsActivity.class);
-            i.putExtra("Email",getIntent().getExtras().getString("Email").toString());
+            i.putExtra("Email",getIntent().getExtras().getString("Email"));
             startActivity(i);
         }});
     }
