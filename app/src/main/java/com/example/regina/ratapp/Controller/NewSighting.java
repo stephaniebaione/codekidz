@@ -3,7 +3,6 @@ package com.example.regina.ratapp.Controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import android.widget.Spinner;
 import android.widget.EditText;
 
 import com.example.regina.ratapp.Model.RatReport;
-import com.example.regina.ratapp.Model.User;
 import com.example.regina.ratapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,11 +19,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Activity that will create a new report and add it to the database based on what the user inputs.
+ */
 public class NewSighting extends AppCompatActivity {
 
     private EditText cityView;
@@ -39,13 +38,11 @@ public class NewSighting extends AppCompatActivity {
     private DatePicker createdDate;
     private int prevKey;
 
-    private static int uniquekey = 4000000;
-    private static int counter =1;
 
     /**
      * On create method, create all instances of the objects in which the user inputs
      * data of the rat report and the button to help the user navigate
-     * @param savedInstanceState
+     * @param savedInstanceState state the app is in
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +58,6 @@ public class NewSighting extends AppCompatActivity {
         longView= (EditText) findViewById(R.id.longitudeEdit);
         createdDate = (DatePicker) findViewById(R.id.datePicker);
 
-        Log.d("debugging",getIntent().getExtras().getString("Email").toString());
         FirebaseDatabase mBase = FirebaseDatabase.getInstance();
         Query prevReport = mBase.getReference().getRoot().limitToLast(1);
         prevReport.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -85,7 +81,6 @@ public class NewSighting extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
         }});
@@ -103,7 +98,7 @@ public class NewSighting extends AppCompatActivity {
     /**
      * creates the spinners and populates them with choices
      */
-    public void instantiateSpinners() {
+    private void instantiateSpinners() {
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
         boroughSpinner = (Spinner) findViewById(R.id.boroughSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -148,23 +143,14 @@ public class NewSighting extends AppCompatActivity {
             focusView=zipView;
             zipView.setError("Zipcode must be 5 numbers.");
         }
-        /*
-         else if (locationSpinner.getSelectedItemPosition() == 0) {
-            longView.setError("Field cannot be empty.");
-
-            //this crashes, but this is the idea of what we want to do if we are adding a
-            "PLEASE SELECT ONE" item for the spinners
-        }
-         */
         if (uncompleted){
             focusView.requestFocus();
         } else {
-
             int day = createdDate.getDayOfMonth();
             int month = createdDate.getMonth() + 1;
             int year = createdDate.getYear();
             //base case
-            if (11464394 <= prevKey && prevKey<= 37018532){
+            if ((11464394 <= prevKey) && (prevKey <= 37018532)){
                 prevKey=37100000;
             }
             prevKey+=7;
@@ -174,7 +160,6 @@ public class NewSighting extends AppCompatActivity {
                     cityView.getText().toString(), boroughSpinner.getSelectedItem().toString(),
                     Double.parseDouble(latView.getText().toString()),
                     Double.parseDouble(longView.getText().toString()));
-            counter++;
             pushRatDataToFirebase(newReport);  //UNCOMMENT THIS WHEN WE WANT THE DATA TO ACTUALLY BE
                                                // PUSHED TO FIREBASE
             //userUpdate();
@@ -189,29 +174,15 @@ public class NewSighting extends AppCompatActivity {
      * @return a boolean value representing whether the EditText was empty
      */
     private boolean checkIfEmpty(EditText etText) {
-        if (!etText.getText().toString().trim().isEmpty())
-            return false;
-
-        return true;
+        return etText.getText().toString().trim().isEmpty();
     }
 
-    public void userUpdate(){
-        User dum = new User("Fake","fake");
-        String userEmail = getIntent().getExtras().getString("Email").toString();
-        Log.d("debugging",getIntent().getExtras().getString("Email").toString());
-        ArrayList<User> listUser = dum.getUserInformation();
-        User curr = listUser.get(listUser.indexOf(userEmail));
-        curr.setNumberOfReports(curr.getNumberOfReports()+1);
-        curr.updateUserTitle();
-        Log.d("debugging", curr.toString());
-
-    }
 
     /**
      *  Method that makes a HashMap from the RatReport and pushes the data to Firebase
      * @param rat takes in a Rat Report that needs to be added to Firebase
      */
-    public void pushRatDataToFirebase(RatReport rat) {
+    private void pushRatDataToFirebase(RatReport rat) {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         Map newRatReport = new HashMap();
         newRatReport.put("Unique Key", rat.getUniqueKey());

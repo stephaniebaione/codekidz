@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private View mLoginFormView;
     */
 
+    public RegisterActivity() {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

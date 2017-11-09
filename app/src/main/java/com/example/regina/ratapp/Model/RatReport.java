@@ -4,17 +4,15 @@ package com.example.regina.ratapp.Model;
 import java.util.ArrayList;
 
 public class RatReport {
-    int uniqueKey;
-    String createdData;
-    String locationType; //gonna change to enum
-    String incidentZip;
-    String incidentAddress;
-    String city; //might change to enum
-    String borough; //gonna change to enum
-    double latitude;
-    double longitude;
-    static ArrayList<String> reportList;
-    String data;
+    private int uniqueKey;
+    private String createdData;
+    private String locationType; //gonna change to enum
+    private String incidentZip;
+    private String incidentAddress;
+    private String city; //might change to enum
+    private String borough; //gonna change to enum
+    private double latitude;
+    private double longitude;
 
     /**
      * constructor to create rat report
@@ -45,13 +43,13 @@ public class RatReport {
     public int getUniqueKey() {
         return uniqueKey;
     }
-    public ArrayList<String> getReportList(){return reportList;}
+    // --Commented out by Inspection (11/9/2017 2:37 PM):public ArrayList<String> getReportList(){return reportList;}
 
     /**
      * turns unique key to string
      * @return string of key
      */
-    public String uniqueKeyToString() { return String.valueOf(uniqueKey);}
+    private String uniqueKeyToString() { return String.valueOf(uniqueKey);}
 
     public void setUniqueKey(int uniqueKey) {
         this.uniqueKey = uniqueKey;
@@ -81,7 +79,7 @@ public class RatReport {
      * turns zip code to a string
      * @return string of zip code
      */
-    public String incidentZipToString() { return String.valueOf(incidentZip);}
+    private String incidentZipToString() { return String.valueOf(incidentZip);}
 
     public void setIncidentZip(String incidentZip) {
         this.incidentZip = incidentZip;
@@ -118,7 +116,7 @@ public class RatReport {
      * turns latitude to a string
      * @return string of latitude
      */
-    public String latitudeToString() { return String.valueOf(latitude);}
+    private String latitudeToString() { return String.valueOf(latitude);}
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
@@ -131,7 +129,7 @@ public class RatReport {
      * turns longitude to a string
      * @return string of longitude
      */
-    public String longitudeToString() { return String.valueOf(longitude);}
+    private String longitudeToString() { return String.valueOf(longitude);}
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
@@ -153,13 +151,5 @@ public class RatReport {
                 ratReport.getBorough() + "\nLatitude: "
                 + ratReport.latitudeToString() + "\nLongitude: " + ratReport.longitudeToString();
         return thing;
-    }
-
-    /**
-     * adds report to a list for tracking
-     * @param ratReport report to be added
-     */
-    public void addToReportList(RatReport ratReport) {
-        reportList.add(createDataString(ratReport));
     }
 }

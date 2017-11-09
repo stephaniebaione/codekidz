@@ -5,22 +5,25 @@ import java.util.HashMap;
 
 /**
  * Created by Abby on 9/27/2017.
+ * User class that represents a user in the system.
+ * It has email, password, and user titles, and can
+ * be locked and unlocked.
  */
 
 public class User {
-    String emailaddress;
-    String password;
+    private String emailaddress;
+    private String password;
     Boolean locked;
-    int numberOfReports;
-    userTitle title;
-    static HashMap<String, String> accountList = new HashMap<>();
-    static ArrayList<User> userInformation = new ArrayList<>();
-    static HashMap<String, Boolean> lockList = new HashMap<>();
+    private int numberOfReports;
+    private userTitle title;
+    private static final HashMap<String, String> accountList = new HashMap<>();
+    private static final ArrayList<User> userInformation = new ArrayList<>();
+    private static final HashMap<String, Boolean> lockList = new HashMap<>();
 
     /**
      * Constructor for creating a user. Sets username and password, also title
-     * @param emailaddress
-     * @param password
+     * @param emailaddress user's email address
+     * @param password user's password
      */
     public User(String emailaddress, String password) {
         this.emailaddress = emailaddress;
@@ -30,7 +33,7 @@ public class User {
         numberOfReports = 0;
     }
 
-    public String getEmailaddress() {
+    private String getEmailaddress() {
         return emailaddress;
     }
 
@@ -38,7 +41,7 @@ public class User {
         this.emailaddress = emailaddress;
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 
@@ -54,7 +57,7 @@ public class User {
         this.locked = locked;
     }
 
-    public int getNumberOfReports() {
+    private int getNumberOfReports() {
         return numberOfReports;
     }
 
@@ -71,7 +74,7 @@ public class User {
     }
     public HashMap<String, String> getAccounts() {return accountList;}
 
-    public void setTitle(userTitle title) {
+    private void setTitle(userTitle title) {
         this.title = title;
     }
 
@@ -92,14 +95,13 @@ public class User {
     }
 
     public String toString(){
-        String str = "Email:"+this.getEmailaddress() + "\n Reports Made:" +
+        return "Email:"+ this.getEmailaddress() + "\n Reports Made:" +
                 this.getNumberOfReports()+ "\n Title:" + this.getTitle();
-        return str;
     }
 
     /**
      * Looks at the account list to see if there is an email in the system
-     * @param emailAddress
+     * @param emailAddress user's email address
      * @return Boolean stating whether the account exists or not
      */
     public Boolean doesAccountExist(String emailAddress) {
@@ -111,7 +113,7 @@ public class User {
      * Passes the new user in ands their information to the account list. It also checks whether the
      * username is associated with a locked account. If it is associated with a locked account it
      * will not create the new user
-     * @param newUser
+     * @param newUser new user to be added
      */
 
 
