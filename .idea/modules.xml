@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\mrobjectionman\Documents\CS2340\codekidz\RatApp.iml" filepath="C:\Users\mrobjectionman\Documents\CS2340\codekidz\RatApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../../../mrobjectionman/Documents/CS2340/codekidz/RatApp.iml" filepath="$PROJECT_DIR$/../../../../../mrobjectionman/Documents/CS2340/codekidz/RatApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/codekidz.iml" filepath="$PROJECT_DIR$/codekidz.iml" />
     </modules>

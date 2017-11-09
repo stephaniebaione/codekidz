@@ -159,27 +159,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         boolean cancel = false;
         View focusView = null;
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail: onComplete:" + task.isSuccessful());
-                        if (!task.isSuccessful()) {
-                            mPasswordView.setError("Log in attempt failed");
-                        } else {
-                            showProgress(true);
-                            mAuthTask = new UserLoginTask(mEmailView.getText().toString(),
-                                    mPasswordView.getText().toString());
-                            mAuthTask.execute((Void) null);
-                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                            i.putExtra("Email", mEmailView.getText().toString());
-                            Log.d("debugging", mEmailView.getText().toString());
-                            startActivity(i);
-                        }
-                    }
-
-
-                });
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                //Log.d(TAG, "signInWithEmail: onComplete:" + task.isSuccessful());
+                if (!task.isSuccessful()) {
+                    mPasswordView.setError("Log in attempt failed");
+                } else {
+                    showProgress(true);
+                    mAuthTask = new UserLoginTask(mEmailView.getText().toString(),
+                            mPasswordView.getText().toString());
+                    mAuthTask.execute((Void) null);
+                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                    i.putExtra("Email", mEmailView.getText().toString());
+                    Log.d("debugging", mEmailView.getText().toString());
+                    startActivity(i);
+                }
+            }
+        });
     }
 
     /**
