@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< Updated upstream
+=======
+      <module fileurl="file://$PROJECT_DIR$/RatApp.iml" filepath="$PROJECT_DIR$/RatApp.iml" />
+>>>>>>> Stashed changes
       <module fileurl="file://$PROJECT_DIR$/../../../../../mrobjectionman/Documents/CS2340/codekidz/RatApp.iml" filepath="$PROJECT_DIR$/../../../../../mrobjectionman/Documents/CS2340/codekidz/RatApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/codekidz.iml" filepath="$PROJECT_DIR$/codekidz.iml" />
