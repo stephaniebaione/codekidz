@@ -1,43 +1,27 @@
 package com.example.regina.ratapp.Model;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.AsyncTaskLoader;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
-import com.example.regina.ratapp.Controller.*;
 import com.example.regina.ratapp.Controller.MapsActivity;
-import com.example.regina.ratapp.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.Timer;
 
 /**
  * Created by Abby on 10/26/2017.
+ * Class is used for searching through the data
  */
 
 public class QueryManager {
-     HashMap<Integer, RatReport> rightDateList = new HashMap<Integer, RatReport>();
-    public MapsActivity activity;
+    //HashMap<Integer, RatReport> rightDateList = new HashMap<Integer, RatReport>();
+    private final MapsActivity activity;
+    private final ArrayList<RatReport> rightDateList = new ArrayList<>();
 
 
     public QueryManager(MapsActivity activity) {
@@ -46,39 +30,73 @@ public class QueryManager {
 
 
     /**
-     * Helper Function that makes a rat Report from given firebase data
+     * Helper Function that makes a rat Report from given Firebase data
      * @param ratSnapshot Data from Snapshot
-     * @return a RatReport based on the firebase data
+     * @return a RatReport based on the Firebase data
      */
-    public RatReport createReport(DataSnapshot ratSnapshot) {
+    private RatReport createReport(DataSnapshot ratSnapshot) {
         Double latitude;
+        Double longitude;
+        int uniqueKey;
+        String createdDate;
+        String locationType;
+        String incidentZip;
+        String incidentAddress;
+        String city;
+        String borough;
+
         try {
             latitude = ratSnapshot.child("Latitude").getValue(Double.class);
             latitude+=5;
             latitude-=5;
-        } catch (Exception e) {
-            latitude = 0.0;
-        }
-        Double longitude;
-        try {
             longitude = ratSnapshot.child("Longitude").getValue(Double.class);
             longitude+=5;
             longitude-=5;
         } catch (Exception e) {
+            latitude = 0.0;
             longitude = 0.0;
         }
-        //creates a new rat report and then adds it to a hashmap for later reference
-        //and adds the key to an arraylist so it can be viewed in app
-        RatReport ratR = new RatReport(
-                ratSnapshot.child("Unique Key").getValue(Integer.class),
-                ratSnapshot.child("Created Date").getValue().toString(),
-                ratSnapshot.child("Location Type").getValue().toString(),
-                ratSnapshot.child("Incident Zip").getValue().toString(),
-                ratSnapshot.child("Incident Address").getValue().toString(),
-                ratSnapshot.child("City").getValue().toString(),
-                ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
+        if (ratSnapshot.child("Unique Key") != null) {
+            uniqueKey = ratSnapshot.child("Unique Key").getValue(Integer.class);
+        } else{
+            uniqueKey = 0;
+        }
+        if (ratSnapshot.child("Created Date").getValue() != null) {
+            createdDate = ratSnapshot.child("Created Date").getValue().toString();
+        } else {
+            createdDate = "00/00/0000";
+        }
+        if (ratSnapshot.child("Location Type").getValue() != null) {
+            locationType = ratSnapshot.child("Location Type").getValue().toString();
+        } else {
+            locationType = "None";
+        }
+        if (ratSnapshot.child("Incident Zip").getValue() != null) {
+            incidentZip = ratSnapshot.child("Incident Zip").getValue().toString();
+        } else {
+            incidentZip = "other";
+        }
+        if (ratSnapshot.child("Incident Address").getValue() != null) {
+            incidentAddress = ratSnapshot.child("Incident Address").getValue().toString();
+        } else {
+            incidentAddress = "Unknown";
+        }
+        if (ratSnapshot.child("City").getValue() != null) {
+            city = ratSnapshot.child("City").getValue().toString();
+        } else {
+            city = "Unknown";
+        }
+        if (ratSnapshot.child("Borough").getValue() != null) {
+            borough = ratSnapshot.child("Borough").getValue().toString();
+        } else {
+            borough = "unknown";
+        }
+        //creates a new rat report and then adds it to a Hash Map for later reference
+        //and adds the key to an array list so it can be viewed in app
+        return new RatReport(uniqueKey, createdDate, locationType,incidentZip, incidentAddress,city,
+                borough, latitude,longitude
+
         );
-        return ratR;
     }
     /**
      * initializes the date searching class so we can use it
@@ -101,16 +119,14 @@ public class QueryManager {
         } else if(firstYear == lastYear) {
             if (firstMonth > lastMonth) {
                 return false;
-            } else {
-                return true;
             }
         }
         return true;
     }
 
 
-    public class DateSearcher extends AsyncTask<Integer, Void, Integer> {
-        Dialog dialog = new ProgressDialog(activity);
+    public class DateSearcher extends AsyncTask<Integer, Void, ArrayList<RatReport>> {
+        final Dialog dialog = new ProgressDialog(activity);
 
         /**
          *
@@ -118,60 +134,45 @@ public class QueryManager {
          * @return a dummy int to move on
          */
         @Override
-        public Integer doInBackground(Integer...args) {
+        public ArrayList<RatReport> doInBackground(Integer...args) {
             Query firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
-            final HashMap<Integer, RatReport> rightDateList = new HashMap<>();
+            //HashMap<Integer, RatReport> rightDateList = new HashMap<>();
             final int firstMonthInt = args[0];
             final int firstYearInt = args[2];
             final int lastMonthInt = args[1];
             final int lastYearInt = args[3];
-
             firebaseDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.d("Debug","listened");
-
-
                     //int count = 2;
+                    String date;
+
                     for (DataSnapshot ratData: dataSnapshot.getChildren()) {
-                        String date = ratData.child("Created Date").getValue().toString();
+                        if (ratData.child("Created Date").getValue() != null) {
+                             date = ratData.child("Created Date").getValue().toString();
+                        } else {
+                            date = "00/00/0000";
+                        }
                         String[] parts = date.split("/");
                         int month = Integer.parseInt(parts[0]);
                         int year = Integer.parseInt(parts[2].substring(0,4));
                         //Checks if dates chosen are through the same year
                         if ((year == firstYearInt) && (firstYearInt == lastYearInt)) {
-                            Log.d("aaaaaaaacheck1", " " + year + " first " +
-                                    firstYearInt + " second " + lastYearInt );
                             // Checks if dates are between the two chosen months
-                            if (month == firstMonthInt && firstMonthInt == lastMonthInt) {
-                                Log.d("aaaaaaaacheck2", " " + year + " first " +
-                                        firstMonthInt + " second " + lastMonthInt );
+                            if ((month == firstMonthInt && firstMonthInt == lastMonthInt)
+                                    || (month >= firstMonthInt
+                                    && month <= lastMonthInt)) {
 
                                 RatReport ratReport = createReport(ratData);
-                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
-                                activity.addMarkers(ratReport);
-                            } else if(month >= firstMonthInt
-                                    && month <= lastMonthInt) {
-                                Log.d("aaaaaaaacheck3", " " + year + " first " +
-                                        firstMonthInt + " second " + lastMonthInt );
-
-                                RatReport ratReport = createReport(ratData);
-                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
-                                activity.addMarkers(ratReport);
+                                rightDateList.add(ratReport);
                             }
                             // Check statement for a span of more than one year
                         } else {
                             if ((year == firstYearInt && month >= firstMonthInt)
                                     || (year > firstYearInt && year < lastYearInt)
                                     || (year == lastYearInt && month <= lastMonthInt)) {
-                                Log.d("aaaaaaaacheck4", " " + year + " " + month +
-                                        " first " + firstYearInt + " second " + lastYearInt );
-                                Log.d("aaaaaaaacheck4", " " + year + " first " +
-                                        firstMonthInt + " second " + lastMonthInt );
-
                                 RatReport ratReport = createReport(ratData);
-                                rightDateList.put(ratReport.getUniqueKey(), ratReport);
-                                activity.addMarkers(ratReport);
+                                rightDateList.add(ratReport);
                             }
                         }
                     }
@@ -183,13 +184,13 @@ public class QueryManager {
                     Log.d("Debug", "Canceled");
                 }
             });
-            Log.d("hhh22222", "second" + rightDateList.size());
             try {
                 Thread.sleep(70000);
             } catch (InterruptedException e) {
-                int x = 7;
+                return rightDateList;
             }
-            return 7;
+            return rightDateList;
+
 
         }
         // creates a dialog box to show the user it is processing
@@ -200,9 +201,11 @@ public class QueryManager {
 
         }
         //closes dialog when done
-        protected void onPostExecute(Integer searched) {
+        protected void onPostExecute(ArrayList<RatReport> searched) {
+            for (RatReport value: searched) {
+                activity.addMarkers(value);
+            }
             dialog.dismiss();
-            Log.d("Debug", "executed");
 
         }
 
