@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
-    private FirebaseAuth.AuthStateListener mAuthListener;
     /* UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -47,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View v) {
 
 
-            // TODO Auto-generated method stub
+            // Brings the user back to the welcome screen
             Intent i = new Intent(getApplicationContext(),WelcomeActivity.class);
             startActivity(i);
         }});
@@ -61,8 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
     //This gets all of the information the user put into the Register page
     private void register() {
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -82,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         // Creates a Firebase User based on email and password passed in
-        mAuth.createUserWithEmailAndPassword(emailString, passwordString)
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailString, passwordString)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -100,18 +98,19 @@ public class RegisterActivity extends AppCompatActivity {
         final RadioGroup userButton = (RadioGroup) findViewById(R.id.userType);
         Button registerButton = (Button) findViewById(R.id.buttonR);
         registerButton.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        int userTypeId = userButton.getCheckedRadioButtonId();
-                        RadioButton radioButton = (RadioButton) userButton.findViewById(userTypeId);
-                        String userType = radioButton.getText().toString();
-                        if (makeNewAccount(email.getText().toString(),password.getText().toString(),
-                                userType)) {
-                            Intent r = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(r);
-                        }
+            @Override
+            public void onClick(View v) {
+                int userTypeId = userButton.getCheckedRadioButtonId();
+                RadioButton radioButton = (RadioButton) userButton.findViewById(userTypeId);
+                String userType = radioButton.getText().toString();
+                if (makeNewAccount(email.getText().toString(),password.getText().toString(),
+                        userType)) {
+                    Intent r = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(r);
+                }
 
 
-                    }
+            }
         });
 
     }
