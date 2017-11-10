@@ -4,12 +4,13 @@ import java.util.HashMap;
 
 /**
  * Created by Regina on 9/28/2017.
+ * This is a page for administrator that has special features
  */
 
 public class Admin {
-    String email_address;
-    String password;
-    static HashMap<String, String> adminList = new HashMap<>();
+    private String email_address;
+    private String password;
+    private static final HashMap<String, String> adminList = new HashMap<>();
 
     /**
      * constructor for an admin user
@@ -21,12 +22,12 @@ public class Admin {
         this.password = password;
     }
 
-    public String getEmail_address(){return email_address;}
+    private String getEmail_address(){return email_address;}
     public void setEmail_address(String email_address) {
         this.email_address = email_address;
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 

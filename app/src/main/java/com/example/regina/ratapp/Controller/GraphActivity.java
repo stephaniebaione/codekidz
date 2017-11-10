@@ -13,13 +13,10 @@ import android.widget.Spinner;
 
 import com.example.regina.ratapp.Model.GraphQueryManager;
 import com.example.regina.ratapp.Model.Month;
-import com.example.regina.ratapp.Model.QueryManager;
 import com.example.regina.ratapp.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,7 +78,7 @@ public class GraphActivity extends AppCompatActivity {
                         }
                     });
                     dialog.setCancelable(true);
-                    AlertDialog alertDialog = dialog.show();
+                    dialog.show();
                 }
 
             }
@@ -93,7 +90,7 @@ public class GraphActivity extends AppCompatActivity {
      * @param dataList list of number of reports made each month
      */
     public void createGraph(HashMap<String,Integer> dataList, Boolean sameYear){
-        ArrayList<DataPoint> dataArray = new ArrayList<DataPoint>();
+        ArrayList<DataPoint> dataArray = new ArrayList<>();
         double minX = 500000;
         if (sameYear) {
             dataArray.add(new DataPoint(0, 0));
@@ -130,7 +127,7 @@ public class GraphActivity extends AppCompatActivity {
     /**
      * creates the spinners and populates them with choices
      */
-    public void createSpinners(){
+    private void createSpinners(){
         stM = (Spinner) findViewById(R.id.spinner2);
         stY = (Spinner) findViewById(R.id.spinner3);
         endM = (Spinner) findViewById(R.id.spinner);
@@ -138,7 +135,7 @@ public class GraphActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> yearAdapt = ArrayAdapter.createFromResource(this,
                 R.array.years, android.R.layout.simple_spinner_item);
-        ArrayAdapter<String> monthAdapt = new ArrayAdapter(this,
+        ArrayAdapter<Month> monthAdapt = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, Month.values());
 
         yearAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
