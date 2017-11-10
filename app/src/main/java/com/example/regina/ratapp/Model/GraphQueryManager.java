@@ -94,6 +94,13 @@ public class GraphQueryManager {
         }
         return true;
     }
+    public Boolean sameYear (int firstYearInt, int lastYearInt) {
+        if (firstYearInt == lastYearInt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     public class DateSearcher extends AsyncTask<Integer, Void, Integer> {
@@ -114,11 +121,11 @@ public class GraphQueryManager {
             final int lastMonthInt = args[1];
             final int lastYearInt = args[3];
 
+
             firebaseDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("Debug","listened");
-                    Boolean sameY = false;
                     //int count = 2;
                     for (DataSnapshot ratData: dataSnapshot.getChildren()) {
                         String date = ratData.child("Created Date").getValue().toString();
@@ -153,7 +160,6 @@ public class GraphQueryManager {
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
                             }
-                            sameY = true;
                             // Check statement for a span of more than one year
                         } else {
                             if (((year == firstYearInt) && (month >= firstMonthInt))
@@ -171,10 +177,9 @@ public class GraphQueryManager {
                                 RatReport ratReport = createReport(ratData);
                                 rightDateList.put(ratReport.getUniqueKey(), ratReport);
                             }
-                            sameY = false;
                         }
                     }
-                    activity.createGraph(dataPointList,sameY);
+                    activity.createGraph(dataPointList,sameYear(firstYearInt, lastYearInt));
                 }
 
                 @Override

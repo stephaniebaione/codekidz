@@ -25,13 +25,7 @@ import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private Spinner stM;
-    private Spinner stY;
-    private Spinner endY;
-    private Spinner endM;
-
     private GoogleMap mMap;
-    HashMap<Integer, RatReport> reportList = new HashMap<Integer, RatReport>();
     //private QueryManager thing = new QueryManager();
 
     @Override
@@ -123,10 +117,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * instantiates spinners and populates them
      */
     public void makeSpinners(){
-        stM = (Spinner) findViewById(R.id.spinner2);
-        stY = (Spinner) findViewById(R.id.spinner4);
-        endM = (Spinner) findViewById(R.id.spinner5);
-        endY = (Spinner) findViewById(R.id.spinner3);
+        Spinner stM = (Spinner) findViewById(R.id.spinner2);
+        Spinner stY = (Spinner) findViewById(R.id.spinner4);
+        Spinner endM = (Spinner) findViewById(R.id.spinner5);
+        Spinner endY = (Spinner) findViewById(R.id.spinner3);
         ArrayAdapter<CharSequence> yearAdapt = ArrayAdapter.createFromResource(this,
                 R.array.years, android.R.layout.simple_spinner_item);
         ArrayAdapter<String> monthAdapt = new ArrayAdapter(this,
