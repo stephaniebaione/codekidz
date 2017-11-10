@@ -2,6 +2,7 @@ package com.example.regina.ratapp.Model;
 
 /**
  * Created by Evan on 10/28/2017.
+ * Enum for months to be used to select dates
  */
 
 public enum Month {

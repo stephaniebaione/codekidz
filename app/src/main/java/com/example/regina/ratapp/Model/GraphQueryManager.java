@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -86,11 +87,7 @@ public class GraphQueryManager {
         if (firstYear > lastYear) {
             return false;
         } else if(firstYear == lastYear) {
-            if (firstMonth > lastMonth) {
-                return false;
-            } else {
-                return true;
-            }
+            return firstMonth <= lastMonth;
         }
         return true;
     }
@@ -114,7 +111,7 @@ public class GraphQueryManager {
         @Override
         public Integer doInBackground(Integer...args) {
             Query firebaseDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
-            final HashMap<Integer, RatReport> rightDateList = new HashMap<>();
+            final SparseArray<RatReport> rightDateList = new SparseArray<>();
             final HashMap<String,Integer> dataPointList=new HashMap<>();
             final int firstMonthInt = args[0];
             final int firstYearInt = args[2];
