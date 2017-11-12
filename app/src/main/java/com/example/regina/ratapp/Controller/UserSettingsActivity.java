@@ -24,7 +24,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     /**
      * sets the email textView to have the current user's email
      */
-    public void populateEmail() {
+    private void populateEmail() {
         String em = getIntent().getExtras().getString("Email");
         ((TextView) findViewById(R.id.EmailBlank)).setText(em);
     }

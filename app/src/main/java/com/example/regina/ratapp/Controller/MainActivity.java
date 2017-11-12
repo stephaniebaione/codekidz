@@ -22,12 +22,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView listView;
     private ArrayAdapter adapt;
     private final SparseArray<RatReport> reportHashMap = new SparseArray<>();
     private final List<String> PROJ = new ArrayList<>();
@@ -38,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //creates our listview
-        listView= (ListView) findViewById(R.id.ratList);
+        ListView listView = (ListView) findViewById(R.id.ratList);
         Log.d("Testing", "created things");
         //Log.d("debugging",getIntent().getExtras().getString("Email").toString());
         //our database references
         FirebaseDatabase database = getDatabase();
         Query query = database.getReference().getRoot().limitToLast(50);
         final DatabaseReference ratData = database.getReference("dirtyrat-72570");
-        DatabaseReference topRef = ratData.child("dirtyrat-72570");
+//        DatabaseReference topRef = ratData.child("dirtyrat-72570");
         Log.d("Testing", "did access database");
         // Attach a listener to read the data at our posts reference
         query.addListenerForSingleValueEvent(new ValueEventListener() {
