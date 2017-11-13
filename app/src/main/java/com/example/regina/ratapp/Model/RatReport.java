@@ -1,7 +1,6 @@
 package com.example.regina.ratapp.Model;
 
 
-import java.util.ArrayList;
 
 public class RatReport {
     private int uniqueKey;

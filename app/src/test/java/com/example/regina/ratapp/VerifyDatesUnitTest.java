@@ -1,9 +1,5 @@
 package com.example.regina.ratapp;
 
-/**
- * Created by Abby on 11/12/2017.
- * Tests the ValidDates Method in Query Manager
- */
 
 import com.example.regina.ratapp.Controller.MapsActivity;
 import com.example.regina.ratapp.Model.QueryManager;
@@ -12,6 +8,10 @@ import org.junit.Test;
 
 
 import static org.junit.Assert.*;
+/**
+ * Created by Abby on 11/12/2017.
+ * Tests the ValidDates Method in Query Manager
+ */
 public class VerifyDatesUnitTest {
    // tests if the First Year is Greater than The Second year, months are the same
     @Test
