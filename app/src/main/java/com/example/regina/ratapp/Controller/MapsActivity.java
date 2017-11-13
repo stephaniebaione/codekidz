@@ -21,8 +21,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.HashMap;
-
+/**
+ * Map Activity used to display data of rat reports based on a certain time frame the user
+ * decides
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -116,7 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * instantiates spinners and populates them
      */
-    public void makeSpinners(){
+    private void makeSpinners(){
         Spinner stM = (Spinner) findViewById(R.id.spinner2);
         Spinner stY = (Spinner) findViewById(R.id.spinner4);
         Spinner endM = (Spinner) findViewById(R.id.spinner5);

@@ -8,7 +8,8 @@ import com.example.regina.ratapp.Controller.GraphActivity;
 import com.example.regina.ratapp.Model.GraphQueryManager;
 
 /**
- * Created by mrobjectionman on 11/10/2017.
+ * Created by Evan Brook on 11/10/2017.
+ * Used to test the SameYearUnit method in the GraphQueryManager
  */
 
 public class SameYearUnitTest {

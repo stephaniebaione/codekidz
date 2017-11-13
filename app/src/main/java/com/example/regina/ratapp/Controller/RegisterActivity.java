@@ -23,17 +23,19 @@ import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.FirebaseUser;
 
-
+/**
+ * This method is designed to register new Users and Admins and add them to the firebase database.
+ * It checks if the user already exists, and if not, they can create a new account with the press
+ * of a button.
+ */
 public class RegisterActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
-    /* UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
-    */
 
+    /**
+     * Creates the Register screen allowing people to create a new account, and cancel and go back
+     * to the welcome screen.
+     */
     public RegisterActivity() {}
 
     @Override
@@ -87,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         // if it cannot make new account then it will give a message saying why
                         if (!task.isSuccessful()) {
-                            email.setError(task.getException().getMessage().toString());
+                            email.setError(task.getException().getMessage());
                             email.requestFocus();
                         }
 
@@ -114,15 +116,17 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-    // a helper that checks if account information exists already. If not it checks if it is a user
-    // or admin and then adds information to account list
 
+    /**
+     * a helper that checks if account information exists already. If not it checks if it is a user
+     *or admin and then adds information to account list
+     */
     public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
         User newUser = new User(emailAddress, givenPassword);
         Admin newAdmin = new Admin(emailAddress, givenPassword);
 
         if (!(newUser.doesAccountExist(emailAddress))) {
-            if (userType.equals("User")) {
+            if ("User".equals(userType)) {
                 newUser.addNewUser(newUser);
                 if (newUser.getAccounts().containsKey(emailAddress)) {
                     return true;
@@ -130,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
         if (!(newAdmin.doesAccountExist(emailAddress))) {
-            if (userType.equals("Admin")) {
+            if ("Admin".equals(userType)) {
                 newAdmin.addNewAdmin(newAdmin);
                 if (newAdmin.getAdmins().containsKey(emailAddress)) {
                     return true;
