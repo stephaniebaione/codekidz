@@ -33,37 +33,72 @@ public class GraphQueryManager {
 
 
     /**
-     * Helper Function that makes a rat Report from given firebase data
+     * Helper Function that makes a rat Report from given Firebase data
      * @param ratSnapshot Data from Snapshot
-     * @return a RatReport based on the firebase data
+     * @return a RatReport based on the Firebase data
      */
     private RatReport createReport(DataSnapshot ratSnapshot) {
         Double latitude;
+        Double longitude;
+        int uniqueKey;
+        String createdDate;
+        String locationType;
+        String incidentZip;
+        String incidentAddress;
+        String city;
+        String borough;
+
         try {
             latitude = ratSnapshot.child("Latitude").getValue(Double.class);
             latitude+=5;
             latitude-=5;
-        } catch (Exception e) {
-            latitude = 0.0;
-        }
-        Double longitude;
-        try {
             longitude = ratSnapshot.child("Longitude").getValue(Double.class);
             longitude+=5;
             longitude-=5;
         } catch (Exception e) {
+            latitude = 0.0;
             longitude = 0.0;
         }
-        //creates a new rat report and then adds it to a hashmap for later reference
-        //and adds the key to an arraylist so it can be viewed in app
-        return new RatReport(
-                ratSnapshot.child("Unique Key").getValue(Integer.class),
-                ratSnapshot.child("Created Date").getValue().toString(),
-                ratSnapshot.child("Location Type").getValue().toString(),
-                ratSnapshot.child("Incident Zip").getValue().toString(),
-                ratSnapshot.child("Incident Address").getValue().toString(),
-                ratSnapshot.child("City").getValue().toString(),
-                ratSnapshot.child("Borough").getValue().toString(),latitude,longitude
+        if (ratSnapshot.child("Unique Key") != null) {
+            uniqueKey = ratSnapshot.child("Unique Key").getValue(Integer.class);
+        } else{
+            uniqueKey = 0;
+        }
+        if (ratSnapshot.child("Created Date").getValue() != null) {
+            createdDate = ratSnapshot.child("Created Date").getValue().toString();
+        } else {
+            createdDate = "00/00/0000";
+        }
+        if (ratSnapshot.child("Location Type").getValue() != null) {
+            locationType = ratSnapshot.child("Location Type").getValue().toString();
+        } else {
+            locationType = "None";
+        }
+        if (ratSnapshot.child("Incident Zip").getValue() != null) {
+            incidentZip = ratSnapshot.child("Incident Zip").getValue().toString();
+        } else {
+            incidentZip = "other";
+        }
+        if (ratSnapshot.child("Incident Address").getValue() != null) {
+            incidentAddress = ratSnapshot.child("Incident Address").getValue().toString();
+        } else {
+            incidentAddress = "Unknown";
+        }
+        if (ratSnapshot.child("City").getValue() != null) {
+            city = ratSnapshot.child("City").getValue().toString();
+        } else {
+            city = "Unknown";
+        }
+        if (ratSnapshot.child("Borough").getValue() != null) {
+            borough = ratSnapshot.child("Borough").getValue().toString();
+        } else {
+            borough = "unknown";
+        }
+        //creates a new rat report and then adds it to a Hash Map for later reference
+        //and adds the key to an array list so it can be viewed in app
+        return new RatReport(uniqueKey, createdDate, locationType,incidentZip, incidentAddress,city,
+                borough, latitude,longitude
+
         );
     }
 
@@ -94,9 +129,9 @@ public class GraphQueryManager {
     public Boolean sameYear (int firstYearInt, int lastYearInt) {
         if (firstYearInt == lastYearInt) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
 
@@ -188,9 +223,9 @@ public class GraphQueryManager {
             try {
                 Thread.sleep(70000);
             } catch (InterruptedException e) {
-                int x = 7;
+                return 0;
             }
-            return 7;
+            return 1;
 
         }
         // creates a dialog box to show the user it is processing

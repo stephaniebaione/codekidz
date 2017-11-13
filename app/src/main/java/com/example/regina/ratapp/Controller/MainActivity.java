@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         //our database references
         FirebaseDatabase database = getDatabase();
         Query query = database.getReference().getRoot().limitToLast(50);
-        final DatabaseReference ratData = database.getReference("dirtyrat-72570");
 //        DatabaseReference topRef = ratData.child("dirtyrat-72570");
         Log.d("Testing", "did access database");
         // Attach a listener to read the data at our posts reference
