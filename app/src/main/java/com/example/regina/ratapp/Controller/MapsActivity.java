@@ -21,10 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * Map Activity used to display data of rat reports based on a certain time frame the user
- * decides
- */
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -38,7 +35,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Button filterButton = (Button) findViewById(R.id.button2);
 
         makeSpinners();
     }
@@ -93,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     });
                     dialog.setCancelable(true);
-                    AlertDialog alertDialog = dialog.show();
+                    dialog.show();
                 }
 
             }
@@ -125,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Spinner endY = (Spinner) findViewById(R.id.spinner3);
         ArrayAdapter<CharSequence> yearAdapt = ArrayAdapter.createFromResource(this,
                 R.array.years, android.R.layout.simple_spinner_item);
-        ArrayAdapter<String> monthAdapt = new ArrayAdapter(this,
+        ArrayAdapter<Month> monthAdapt = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, Month.values());
 
         yearAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

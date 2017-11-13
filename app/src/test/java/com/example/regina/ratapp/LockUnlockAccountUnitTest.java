@@ -29,7 +29,7 @@ public class LockUnlockAccountUnitTest {
         assertTrue(user.getLocked());
     }
     @Test
-    public void userAlreadUnlocked() {
+    public void userAlreadyUnlocked() {
         admin.unlockAccount(user);
         assertFalse(user.getLocked());
     }

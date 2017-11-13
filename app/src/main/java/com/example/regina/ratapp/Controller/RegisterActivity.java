@@ -89,7 +89,11 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         // if it cannot make new account then it will give a message saying why
                         if (!task.isSuccessful()) {
-                            email.setError(task.getException().getMessage());
+                            if (task.getException() != null) {
+                                email.setError(task.getException().getMessage());
+                            } else {
+                                email.setError("There was an error");
+                            }
                             email.requestFocus();
                         }
 

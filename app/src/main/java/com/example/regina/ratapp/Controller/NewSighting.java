@@ -64,7 +64,12 @@ public class NewSighting extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot prev: dataSnapshot.getChildren()) {
-                    prevKey = prev.child("Unique Key").getValue(Double.class).intValue();
+                        if (prev.child("Unique Key").getValue(Double.class) != null) {
+                            prevKey = prev.child("Unique Key").getValue(Double.class).intValue();
+                        } else {
+                            prevKey = 900000000;
+                        }
+
                 }
             }
 
@@ -144,7 +149,10 @@ public class NewSighting extends AppCompatActivity {
             zipView.setError("Zipcode must be 5 numbers.");
         }
         if (uncompleted){
-            focusView.requestFocus();
+
+                assert focusView != null;
+                focusView.requestFocus();
+
         } else {
             int day = createdDate.getDayOfMonth();
             int month = createdDate.getMonth() + 1;
@@ -184,7 +192,7 @@ public class NewSighting extends AppCompatActivity {
      */
     private void pushRatDataToFirebase(RatReport rat) {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        Map newRatReport = new HashMap();
+        Map<String, Object> newRatReport = new HashMap<>();
         newRatReport.put("Unique Key", rat.getUniqueKey());
         newRatReport.put("Borough", rat.getBorough());
         newRatReport.put("City", rat.getCity());
