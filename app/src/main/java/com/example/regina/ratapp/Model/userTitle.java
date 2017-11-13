@@ -6,5 +6,5 @@ package com.example.regina.ratapp.Model;
  */
 
 public enum userTitle {
-    MOUSE, RAT, DIRTYRAT, SNITCH, PIEDPIPER;
+    MOUSE, RAT, DIRTYRAT, SNITCH, PIEDPIPER
 }

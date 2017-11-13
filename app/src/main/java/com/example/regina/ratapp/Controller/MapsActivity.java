@@ -21,7 +21,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -36,7 +35,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Button filterButton = (Button) findViewById(R.id.button2);
 
         makeSpinners();
     }
@@ -91,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     });
                     dialog.setCancelable(true);
-                    AlertDialog alertDialog = dialog.show();
+                    dialog.show();
                 }
 
             }
@@ -116,14 +114,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * instantiates spinners and populates them
      */
-    public void makeSpinners(){
+    private void makeSpinners(){
         Spinner stM = (Spinner) findViewById(R.id.spinner2);
         Spinner stY = (Spinner) findViewById(R.id.spinner4);
         Spinner endM = (Spinner) findViewById(R.id.spinner5);
         Spinner endY = (Spinner) findViewById(R.id.spinner3);
         ArrayAdapter<CharSequence> yearAdapt = ArrayAdapter.createFromResource(this,
                 R.array.years, android.R.layout.simple_spinner_item);
-        ArrayAdapter<String> monthAdapt = new ArrayAdapter(this,
+        ArrayAdapter<Month> monthAdapt = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, Month.values());
 
         yearAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
