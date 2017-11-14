@@ -8,7 +8,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.assertFalse;
 
 /**
- * Created by Stephanie on 11/8/2017.
+ * Created by Stephanie Baione on 11/8/2017.
  */
 
 public class MakeNewAccountJunitTest {
