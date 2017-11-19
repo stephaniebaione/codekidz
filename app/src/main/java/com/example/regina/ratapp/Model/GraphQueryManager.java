@@ -127,10 +127,7 @@ public class GraphQueryManager {
         return true;
     }
     public Boolean sameYear (int firstYearInt, int lastYearInt) {
-        if (firstYearInt == lastYearInt) {
-            return true;
-        }
-        return false;
+        return firstYearInt == lastYearInt;
 
     }
 

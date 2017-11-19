@@ -29,7 +29,8 @@ import com.google.firebase.auth.FirebaseUser;
  * of a button.
  */
 public class RegisterActivity extends AppCompatActivity {
-    private static FirebaseAuth mAuth;
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseUser user = mAuth.getCurrentUser();
     private static final String TAG = "MainActivity";
 
     /**
@@ -95,6 +96,18 @@ public class RegisterActivity extends AppCompatActivity {
                                 email.setError("There was an error");
                             }
                             email.requestFocus();
+                        } else {
+
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+                                            }
+
+                                        }
+                                    });
                         }
 
                     }
