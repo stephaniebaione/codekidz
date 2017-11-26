@@ -1,5 +1,8 @@
 package com.example.regina.ratapp.Controller;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.regina.ratapp.Model.Admin;
 import com.example.regina.ratapp.Model.User;
@@ -124,7 +128,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String userType = radioButton.getText().toString();
                 if (makeNewAccount(email.getText().toString(),password.getText().toString(),
                         userType)) {
-                    Intent r = new Intent(getApplicationContext(), MainActivity.class);
+                    //Intent r = new Intent(getApplicationContext(), MainActivity.class);
+                    CharSequence text = "Thanks for registering! Please verify your email so we can" +
+                            " connect you to our system! Once that is done, Please log in";
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getApplicationContext());
+                    dialog.setMessage(text);
+                    Intent r = new Intent(getApplicationContext(), LoginActivity.class);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     startActivity(r);
                 }
 
