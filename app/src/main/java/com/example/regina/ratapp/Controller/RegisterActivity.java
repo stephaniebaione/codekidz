@@ -3,6 +3,7 @@ package com.example.regina.ratapp.Controller;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private final FirebaseUser user = mAuth.getCurrentUser();
     private static final String TAG = "MainActivity";
+    private final RegisterActivity registerActivity = RegisterActivity.this;
 
     /**
      * Creates the Register screen allowing people to create a new account, and cancel and go back
@@ -131,12 +133,18 @@ public class RegisterActivity extends AppCompatActivity {
                     //Intent r = new Intent(getApplicationContext(), MainActivity.class);
                     CharSequence text = "Thanks for registering! Please verify your email so we can" +
                             " connect you to our system! Once that is done, Please log in";
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(getApplicationContext());
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(registerActivity);
                     dialog.setMessage(text);
-                    Intent r = new Intent(getApplicationContext(), LoginActivity.class);
-                    dialog.setCancelable(true);
+                    dialog.setNegativeButton("cool", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
+                        }
+                    });
                     dialog.show();
-                    startActivity(r);
+
+
                 }
 
 
