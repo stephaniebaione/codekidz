@@ -21,6 +21,16 @@
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/run_animation"
+        android:src="@drawable/ratan1" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,12 +47,13 @@
             tools:ignore="UselessParent">
 
             <Button
-            android:id="@+id/signInWelc"
-            style="?metaButtonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sign In" />
+                android:id="@+id/signInWelc"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sign In" />
+
             <Button
                 android:id="@+id/register"
                 style="?metaButtonBarButtonStyle"

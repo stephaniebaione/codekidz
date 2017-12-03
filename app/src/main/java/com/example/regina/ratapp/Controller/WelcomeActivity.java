@@ -2,6 +2,7 @@ package com.example.regina.ratapp.Controller;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.regina.ratapp.R;
 
@@ -17,6 +19,8 @@ import com.example.regina.ratapp.R;
  * status bar and navigation/system bar) with user interaction.
  */
 public class WelcomeActivity extends AppCompatActivity {
+    //animation stuff
+    private ImageView img;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -126,6 +130,14 @@ public class WelcomeActivity extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),RegisterActivity.class);
             startActivity(i);
         }});
+        //animation stuff
+        img = (ImageView)findViewById(R.id.img);
+        img.post(new Runnable() {
+            @Override
+            public void run() {
+                ((AnimationDrawable) img.getBackground()).start();
+            }
+        });
 
     }
 
