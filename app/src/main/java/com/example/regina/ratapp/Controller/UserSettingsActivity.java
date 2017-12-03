@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,23 +38,34 @@ public class UserSettingsActivity extends AppCompatActivity {
         changePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder dialog1 = new AlertDialog.Builder(UserSettingsActivity.this);
+                dialog1.setCancelable(true);
+                dialog1.setTitle("Reset Password");
+                dialog1.setMessage("An email will be sent to your email address.");
+                dialog1.setPositiveButton("Ok", null);
+                dialog1.show();
+                Log.d("resting", "button clicked");
                 mAuth.sendPasswordResetEmail(uEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("resting", "thing complete");
                         if (task.isSuccessful()){
+                            Log.d("resting", "email sent");
                             AlertDialog.Builder dialog = new AlertDialog.Builder(UserSettingsActivity.this);
                             dialog.setCancelable(true);
                             dialog.setTitle("Reset Password");
                             dialog.setMessage("An email has been sent. Check your email to change.");
                             dialog.setPositiveButton("Ok", null);
                             dialog.show();
+
                         } else {
-                            AlertDialog.Builder dialog = new AlertDialog.Builder(UserSettingsActivity.this);
-                            dialog.setCancelable(true);
-                            dialog.setTitle("Reset Password");
-                            dialog.setMessage("Email failed to send. Try again.");
-                            dialog.setPositiveButton("Ok", null);
-                            dialog.show();
+                            Log.d("resting", "not sent");
+                            AlertDialog.Builder dialog2 = new AlertDialog.Builder(UserSettingsActivity.this);
+                            dialog2.setCancelable(true);
+                            dialog2.setTitle("Reset Password");
+                            dialog2.setMessage("Email failed to send. Try again.");
+                            dialog2.setPositiveButton("Ok", null);
+                            dialog2.show();
                         }
                     }
                 });
