@@ -126,31 +126,36 @@ public class LoginActivity extends AppCompatActivity {
         String password = mPasswordView.getText().toString();
 
         View focusView = null;
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                //Log.d(TAG, "signInWithEmail: onComplete:" + task.isSuccessful());
-                if (!task.isSuccessful()) {
+        int blankCheck = 1;
+        if (!email.equals("") && !password.equals("")) {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    //Log.d(TAG, "signInWithEmail: onComplete:" + task.isSuccessful());
+                    if (!task.isSuccessful()) {
 
-                    mPasswordView.setError("Log in attempt failed");
-                } else {
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    if(user.isEmailVerified()) {
-                        showProgress(true);
-                        mAuthTask = new UserLoginTask(mEmailView.getText().toString(),
-                                mPasswordView.getText().toString());
-                        mAuthTask.execute((Void) null);
-                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                        i.putExtra("Email", mEmailView.getText().toString());
-                        Log.d("debugging", mEmailView.getText().toString());
-                        startActivity(i);
+                        mPasswordView.setError("Log in attempt failed");
                     } else {
-                        mEmailView.setError("Please verify your email by clicking on the link that" +
-                                " was previously sent to your email address");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user.isEmailVerified()) {
+                            showProgress(true);
+                            mAuthTask = new UserLoginTask(mEmailView.getText().toString(),
+                                    mPasswordView.getText().toString());
+                            mAuthTask.execute((Void) null);
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            i.putExtra("Email", mEmailView.getText().toString());
+                            Log.d("debugging", mEmailView.getText().toString());
+                            startActivity(i);
+                        } else {
+                            mEmailView.setError("Please verify your email by clicking on the link that" +
+                                    " was previously sent to your email address");
+                        }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            mPasswordView.setError("Log in attempt failed");
+        }
     }
 
     /**

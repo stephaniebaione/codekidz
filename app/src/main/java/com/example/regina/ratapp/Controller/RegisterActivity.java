@@ -89,46 +89,48 @@ public class RegisterActivity extends AppCompatActivity {
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         // Creates a Firebase User based on email and password passed in
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailString, passwordString)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        // if it cannot make new account then it will give a message saying why
-                        if (!task.isSuccessful()) {
-                            if (task.getException() != null) {
-                                email.setError(task.getException().getMessage());
+        if (!emailString.equals("") && !passwordString.equals("")) {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailString, passwordString)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            // if it cannot make new account then it will give a message saying why
+                            if (!task.isSuccessful()) {
+                                if (task.getException() != null) {
+                                    email.setError(task.getException().getMessage());
+                                } else {
+                                    email.setError("There was an error");
+                                }
+                                email.requestFocus();
                             } else {
-                                email.setError("There was an error");
-                            }
-                            email.requestFocus();
-                        } else {
 
-                            user.sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
-                                                CharSequence text = "Thanks for registering! Please verify your email so we can" +
-                                                        " connect you to our system! Once that is done, Please log in";
-                                                AlertDialog.Builder dialog = new AlertDialog.Builder(registerActivity);
-                                                dialog.setMessage(text);
-                                                dialog.setNegativeButton("cool", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        dialog.cancel();
-                                                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                                    }
-                                                });
-                                                dialog.show();
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "Email sent.");
+                                                    CharSequence text = "Thanks for registering! Please verify your email so we can" +
+                                                            " connect you to our system! Once that is done, Please log in";
+                                                    AlertDialog.Builder dialog = new AlertDialog.Builder(registerActivity);
+                                                    dialog.setMessage(text);
+                                                    dialog.setNegativeButton("cool", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.cancel();
+                                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                                        }
+                                                    });
+                                                    dialog.show();
+                                                }
+
                                             }
+                                        });
+                            }
 
-                                        }
-                                    });
                         }
-
-                    }
-                });
+                    });
+        }
 
 //        Button registerButton = (Button) findViewById(R.id.buttonR);
 //        registerButton.setOnClickListener(new View.OnClickListener() {
