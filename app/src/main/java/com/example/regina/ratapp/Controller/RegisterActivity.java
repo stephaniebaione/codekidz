@@ -89,35 +89,37 @@ public class RegisterActivity extends AppCompatActivity {
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         // Creates a Firebase User based on email and password passed in
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailString, passwordString)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        // if it cannot make new account then it will give a message saying why
-                        if (!task.isSuccessful()) {
-                            if (task.getException() != null) {
-                                email.setError(task.getException().getMessage());
+        if (!passwordString.equals("")) {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailString, passwordString)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            // if it cannot make new account then it will give a message saying why
+                            if (!task.isSuccessful()) {
+                                if (task.getException() != null) {
+                                    email.setError(task.getException().getMessage());
+                                } else {
+                                    email.setError("There was an error");
+                                }
+                                email.requestFocus();
                             } else {
-                                email.setError("There was an error");
-                            }
-                            email.requestFocus();
-                        } else {
 
-                            user.sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "Email sent.");
+                                                }
+
                                             }
+                                        });
+                            }
 
-                                        }
-                                    });
                         }
-
-                    }
-                });
+                    });
+        }
 
 
         final RadioGroup userButton = (RadioGroup) findViewById(R.id.userType);
@@ -164,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
         User newUser = new User(emailAddress, givenPassword);
         Admin newAdmin = new Admin(emailAddress, givenPassword);
-
+        if (givenPassword.equals("")) {return false;}
         if (!(newUser.doesAccountExist(emailAddress))) {
             if ("User".equals(userType)) {
                 newUser.addNewUser(newUser);
