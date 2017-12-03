@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +23,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="257dp"
         android:background="#ffffff">
 
         <LinearLayout
@@ -72,6 +73,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Sign in"
                 android:textStyle="bold" />
+
             <Button
                 android:id="@+id/cancel"
                 style="?android:textAppearanceSmall"
@@ -83,4 +85,10 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ratboi" />
 </LinearLayout>

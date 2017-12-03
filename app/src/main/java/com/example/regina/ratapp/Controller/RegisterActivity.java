@@ -89,67 +89,70 @@ public class RegisterActivity extends AppCompatActivity {
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         // Creates a Firebase User based on email and password passed in
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailString, passwordString)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        // if it cannot make new account then it will give a message saying why
-                        if (!task.isSuccessful()) {
-                            if (task.getException() != null) {
-                                email.setError(task.getException().getMessage());
+        if (!passwordString.equals("")) {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailString, passwordString)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            // if it cannot make new account then it will give a message saying why
+                            if (!task.isSuccessful()) {
+                                if (task.getException() != null) {
+                                    email.setError(task.getException().getMessage());
+                                } else {
+                                    email.setError("There was an error");
+                                }
+                                email.requestFocus();
                             } else {
-                                email.setError("There was an error");
-                            }
-                            email.requestFocus();
-                        } else {
 
-                            user.sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "Email sent.");
+                                                    CharSequence text = "Thanks for registering! Please verify your email so we can" +
+                                                            " connect you to our system! Once that is done, Please log in";
+                                                    AlertDialog.Builder dialog = new AlertDialog.Builder(registerActivity);
+                                                    dialog.setMessage(text);
+                                                    dialog.setNegativeButton("cool", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.cancel();
+                                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                                        }
+                                                    });
+                                                    dialog.show();
+                                                }
+
                                             }
-
-                                        }
-                                    });
-                        }
-
-                    }
-                });
-
-
-        final RadioGroup userButton = (RadioGroup) findViewById(R.id.userType);
-        Button registerButton = (Button) findViewById(R.id.buttonR);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int userTypeId = userButton.getCheckedRadioButtonId();
-                RadioButton radioButton = (RadioButton) userButton.findViewById(userTypeId);
-                String userType = radioButton.getText().toString();
-                if (makeNewAccount(email.getText().toString(),password.getText().toString(),
-                        userType)) {
-                    //Intent r = new Intent(getApplicationContext(), MainActivity.class);
-                    CharSequence text = "Thanks for registering! Please verify your email so we can" +
-                            " connect you to our system! Once that is done, Please log in";
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(registerActivity);
-                    dialog.setMessage(text);
-                    dialog.setNegativeButton("cool", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        });
+                            }
 
                         }
                     });
-                    dialog.show();
+        }
 
-
-                }
-
-
-            }
-        });
+//        Button registerButton = (Button) findViewById(R.id.buttonR);
+//        registerButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                int userTypeId = userButton.getCheckedRadioButtonId();
+////                RadioButton radioButton = (RadioButton) userButton.findViewById(userTypeId);
+////                String userType = radioButton.getText().toString();
+//                    //Intent r = new Intent(getApplicationContext(), MainActivity.class);
+//                CharSequence text = "Thanks for registering! Please verify your email so we can" +
+//                        " connect you to our system! Once that is done, Please log in";
+//                AlertDialog.Builder dialog = new AlertDialog.Builder(registerActivity);
+//                dialog.setMessage(text);
+//                dialog.setNegativeButton("cool", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//                    }
+//                });
+//                dialog.show();
+//                }
+//            });
 
     }
 
@@ -161,27 +164,27 @@ public class RegisterActivity extends AppCompatActivity {
      * @param userType The users type, either User or Admin
      * @return returns whether or not the account already exists or not
      */
-    public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
-        User newUser = new User(emailAddress, givenPassword);
-        Admin newAdmin = new Admin(emailAddress, givenPassword);
-
-        if (!(newUser.doesAccountExist(emailAddress))) {
-            if ("User".equals(userType)) {
-                newUser.addNewUser(newUser);
-                if (newUser.getAccounts().containsKey(emailAddress)) {
-                    return true;
-                }
-            }
-        }
-        if (!(newAdmin.doesAccountExist(emailAddress))) {
-            if ("Admin".equals(userType)) {
-                newAdmin.addNewAdmin(newAdmin);
-                if (newAdmin.getAdmins().containsKey(emailAddress)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean makeNewAccount(String emailAddress, String givenPassword, String userType) {
+//        User newUser = new User(emailAddress, givenPassword);
+//        Admin newAdmin = new Admin(emailAddress, givenPassword);
+//        if (givenPassword.equals("")) {return false;}
+//        if (!(newUser.doesAccountExist(emailAddress))) {
+//            if ("User".equals(userType)) {
+//                newUser.addNewUser(newUser);
+//                if (newUser.getAccounts().containsKey(emailAddress)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        if (!(newAdmin.doesAccountExist(emailAddress))) {
+//            if ("Admin".equals(userType)) {
+//                newAdmin.addNewAdmin(newAdmin);
+//                if (newAdmin.getAdmins().containsKey(emailAddress)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
 }

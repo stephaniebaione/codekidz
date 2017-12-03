@@ -63,21 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.11" />
 
-    <Button
-        android:id="@+id/ChangeProfileImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change Profile Picture" />
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.11" />
-
-    <Button
-        android:id="@+id/DeleteAccountButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Account" />
 
 </LinearLayout>
