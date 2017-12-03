@@ -55,7 +55,7 @@
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="466dp"
         android:gravity="center"
         android:keepScreenOn="true"
         android:text="You Dirty Rat!"
