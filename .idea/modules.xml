@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< Updated upstream
 <<<<<<< HEAD
       <module fileurl="file://C:\Users\mrobjectionman\Documents\CS2340\codekidz\RatApp.iml" filepath="C:\Users\mrobjectionman\Documents\CS2340\codekidz\RatApp.iml" />
       <module fileurl="file://C:\Users\Paige\Desktop\cs2340\codekidz\RatApp.iml" filepath="C:\Users\Paige\Desktop\cs2340\codekidz\RatApp.iml" />
@@ -11,6 +12,11 @@
       <module fileurl="file://$PROJECT_DIR$/RatApp.iml" filepath="$PROJECT_DIR$/RatApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
 >>>>>>> master
+=======
+      <module fileurl="file://C:\Users\mrobjectionman\Documents\CS2340\codekidz\RatApp.iml" filepath="C:\Users\mrobjectionman\Documents\CS2340\codekidz\RatApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/codekidz.iml" filepath="$PROJECT_DIR$/codekidz.iml" />
+>>>>>>> Stashed changes
       <module fileurl="file://C:\Users\Regina\Documents\cs2340\u dirty rat\RatApp\codekidz.iml" filepath="C:\Users\Regina\Documents\cs2340\u dirty rat\RatApp\codekidz.iml" />
     </modules>
   </component>
