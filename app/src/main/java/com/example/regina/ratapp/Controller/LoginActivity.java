@@ -10,10 +10,13 @@ import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -21,11 +24,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.regina.ratapp.R;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 
 
@@ -53,22 +64,13 @@ public class LoginActivity extends AppCompatActivity {
     private View mLoginFormView;
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
+    private CallbackManager mCallbackManager;
+    private static boolean facebookUsed = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
-        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Log.d(TAG, "onAuthStateChanged: signed_in:" + user.getUid());
-                } else {
-                    Log.d(TAG, "onAuthStateChanged: signed_out");
-                }
-            }
-        };
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -104,8 +106,37 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
         }});
 
+        LoginButton loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+        loginButton.setReadPermissions("email");
+        mCallbackManager = CallbackManager.Factory.create();
+
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                facebookUsed = true;
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+
+        });
 
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -191,6 +222,11 @@ public class LoginActivity extends AppCompatActivity {
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+    public static void logOut() {
+        if (facebookUsed) {
+            LoginManager.getInstance().logOut();
         }
     }
 
